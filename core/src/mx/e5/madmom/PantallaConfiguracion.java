@@ -41,7 +41,7 @@ public class PantallaConfiguracion extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoCreditos.jpg");
+        texturaFondoConfig = new Texture("fondoMenu.jpg");
         texturaBtnBackConfig = new Texture("btnBack.png");
     }
 
@@ -54,7 +54,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón back
         TextureRegionDrawable trdBtnBack = new TextureRegionDrawable(new TextureRegion(texturaBtnBackConfig));
         ImageButton btnBack = new ImageButton(trdBtnBack);
-        btnBack.setPosition(3*btnBack.getWidth()/4, ALTO - 6*btnBack.getHeight()/4);
+        btnBack.setPosition(3*btnBack.getWidth()/4, 2*btnBack.getHeight()/4);
         escenaConfig.addActor(btnBack);
 
         // Acción botón
