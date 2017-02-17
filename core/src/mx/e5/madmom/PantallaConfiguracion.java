@@ -61,7 +61,7 @@ public class PantallaConfiguracion extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("clicked", "Me hicieron CLICK");
+
                 madMom.setScreen(new PantallaMenu(madMom));
             }
         });
