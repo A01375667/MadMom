@@ -60,7 +60,7 @@ public class PantallaMenu extends Pantalla
         //Botón play
         TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(texturaBtnPlayMenu));
         ImageButton btnPlay = new ImageButton(trdBtnPlay);
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, 3*btnPlay.getHeight()/4);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, 8*btnPlay.getHeight()/4);
         escenaMenu.addActor(btnPlay);
         // Acción botón play
         btnPlay.addListener(new ClickListener(){
