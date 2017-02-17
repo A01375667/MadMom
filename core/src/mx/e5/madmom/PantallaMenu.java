@@ -17,82 +17,75 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by MrSpecter on 13/02/17.
+ * Created by Jorge Jiménez on 13/02/17.
  */
-public class PantallaMenu implements Screen
+public class PantallaMenu extends Pantalla
 {
     private final MadMom madMom;
 
-    private static final float ANCHO = 1280;
-    private static final float ALTO = 800;
-
-    //Camara, vista
-    private OrthographicCamera camera;
-    private Viewport vista;
-
     //Texturas
-    private Texture texturaFondo;
-    private Texture texturaBtnPlay;
-    private Texture texturaBtnConfiguracion;
+    private Texture texturaFondoMenu;
+    private Texture texturaBtnPlayMenu;
+    private Texture texturaBtnConfiguracionMenu;
 
     //SpriteBatch
-    private SpriteBatch batch;//hacer trazos en la pantalla
+    private SpriteBatch batch;
 
     //Escenas
     private Stage escenaMenu;
-
-
 
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
         this.madMom = madMom;
     }
 
-
-
     @Override
     public void show() {
-        crearCamara();
         cargarTexturas();
         crearObjetos();
     }
 
-    private void crearCamara() {
-        camera = new OrthographicCamera(ANCHO, ALTO);
-        camera.position.set(ANCHO/2, ALTO/2, 0);
-        camera.update();
-        vista = new StretchViewport(ANCHO, ALTO, camera);
-    }
-
     private void cargarTexturas() {
-        texturaFondo = new Texture("fondoMenu.jpg");
-        texturaBtnPlay = new Texture("btnPlayMenu.png");
-        texturaBtnConfiguracion = new Texture("btnConfigMenu.png");
+        texturaFondoMenu = new Texture("fondoMenu.jpg");
+        texturaBtnPlayMenu = new Texture("btnPlay1.png");
+        texturaBtnConfiguracionMenu = new Texture("btnAjustes.png");
     }
 
     private void crearObjetos() {
         batch = new SpriteBatch();
         escenaMenu = new Stage(vista, batch);
-        Image imgFondo = new Image(texturaFondo);
+        Image imgFondo = new Image(texturaFondoMenu);
         escenaMenu.addActor(imgFondo);
 
-        //boton
-        TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(texturaBtnPlay));
+        //Botón play
+        TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(texturaBtnPlayMenu));
         ImageButton btnPlay = new ImageButton(trdBtnPlay);
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, 3*ALTO/4-btnPlay.getHeight()/2);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, 3*btnPlay.getHeight()/4);
         escenaMenu.addActor(btnPlay);
-
+        // Acción botón play
         btnPlay.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("clicked", "Me dieron click");
-                madMom.setScreen( new PantallaConfiguracion(madMom));
+                Gdx.app.log("clicked", "Me hicieron CLICK");
+                madMom.setScreen(new MataCucarachas(madMom));
+            }
+        });
+
+        //Botón de configuración
+        TextureRegionDrawable trdBtnConfig = new TextureRegionDrawable(new TextureRegion(texturaBtnConfiguracionMenu));
+        ImageButton btnConfig = new ImageButton(trdBtnConfig);
+        btnConfig.setPosition(ANCHO-btnConfig.getWidth()*2, 2*btnConfig.getHeight()/4);
+        escenaMenu.addActor(btnConfig);
+        // Acción botón configuración
+        btnConfig.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.log("clicked", "Me hicieron CLICK");
+                madMom.setScreen(new PantallaConfiguracion(madMom));
             }
         });
 
         Gdx.input.setInputProcessor(escenaMenu);
-
-
         Gdx.input.setCatchBackKey(false);
     }
 
@@ -102,16 +95,6 @@ public class PantallaMenu implements Screen
         escenaMenu.draw();
     }
 
-    private void borrarPantalla() {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        vista.update(width, height);
-    }
-
     @Override
     public void pause() {
 
@@ -119,11 +102,6 @@ public class PantallaMenu implements Screen
 
     @Override
     public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
 
     }
 
