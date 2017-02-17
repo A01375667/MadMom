@@ -41,7 +41,7 @@ public class MataCucarachas extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoMataCucarachas = new Texture("fondoCreditos.jpg");
+        texturaFondoMataCucarachas = new Texture("fondoBaño.jpg");
         texturaBtnPausaMataCuc = new Texture("btnPausa.png");
     }
 
@@ -54,7 +54,7 @@ public class MataCucarachas extends Pantalla
         //Botón back
         TextureRegionDrawable trdBtnPausa = new TextureRegionDrawable(new TextureRegion(texturaBtnPausaMataCuc));
         ImageButton btnPausa = new ImageButton(trdBtnPausa);
-        btnPausa.setPosition(3*btnPausa.getWidth()/4, 2*btnPausa.getHeight()/4);
+        btnPausa.setPosition(ANCHO - 6*btnPausa.getWidth()/4, 18*btnPausa.getHeight()/4);
         escenaMataCucarachas.addActor(btnPausa);
 
         // Acción botón
