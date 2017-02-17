@@ -85,6 +85,7 @@ public class PantallaMenu extends Pantalla
             }
         });
 
+
         Gdx.input.setInputProcessor(escenaMenu);
         Gdx.input.setCatchBackKey(false);
     }

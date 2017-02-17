@@ -8,9 +8,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by Jorge Jiménez on 16/02/17.
+ * Created by AnaPaulaMq on 16/02/2017.
  */
-
 public abstract class Pantalla implements Screen
 {
     public static final float ANCHO = 1280;
