@@ -7,4 +7,8 @@ package mx.e5.madmom;
 public class MiniJuego
 {
 
+    int contadorJuego = 0;
+    int contadorTiempo =0;
+
+
 }
