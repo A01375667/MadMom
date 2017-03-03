@@ -1,7 +1,6 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,6 +21,8 @@ public class PantallaConfiguracion extends Pantalla
     // Imágenes que se utilizarán
     private Texture texturaFondoConfig;
     private Texture texturaBtnBackConfig;
+    private Texture texturaBtnCreditos;
+    private Texture texturaBtnSonido;
 
     // Dibujar
     private SpriteBatch batch;
@@ -41,8 +42,10 @@ public class PantallaConfiguracion extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoMenu.jpg");
+        texturaFondoConfig = new Texture("fondoBaño.jpg");  // CAMBIAR
         texturaBtnBackConfig = new Texture("btnBack.png");
+        texturaBtnCreditos = new Texture("btnPlay2.png"); // CAMBIAR
+        texturaBtnSonido = new Texture("btnPlay2.png");  // CAMBIAR
     }
 
     private void crearObjetos() {
@@ -56,13 +59,39 @@ public class PantallaConfiguracion extends Pantalla
         ImageButton btnBack = new ImageButton(trdBtnBack);
         btnBack.setPosition(3*btnBack.getWidth()/4, 2*btnBack.getHeight()/4);
         escenaConfig.addActor(btnBack);
-
-        // Acción botón
+        // Acción botón back
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
                 madMom.setScreen(new PantallaMenu(madMom));
+            }
+        });
+
+        //Botón créditos
+        TextureRegionDrawable trdBtnCreditos = new TextureRegionDrawable(new TextureRegion(texturaBtnCreditos));
+        ImageButton btnCreditos = new ImageButton(trdBtnCreditos);
+        btnCreditos.setPosition(ANCHO/2, ALTO/4);
+        escenaConfig.addActor(btnCreditos);
+        // Acción botón créditos
+        btnCreditos.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                madMom.setScreen(new PantallaCreditos(madMom));
+            }
+        });
+
+        //Botón sonido
+        TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnSonido));
+        ImageButton btnSonido = new ImageButton(trdBtnSonido);
+        btnSonido.setPosition(ANCHO/2, ALTO/2);
+        escenaConfig.addActor(btnSonido);
+        // Acción botón créditos
+        btnSonido.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                // CONTINUAR O EMPEZAR MÚSICA
+
             }
         });
 
