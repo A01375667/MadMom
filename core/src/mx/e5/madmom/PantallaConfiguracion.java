@@ -90,7 +90,7 @@ public class PantallaConfiguracion extends Pantalla
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                // CONTINUAR O EMPEZAR MÚSICA
+                //******** CONTINUAR O EMPEZAR MÚSICA *************************
 
             }
         });
