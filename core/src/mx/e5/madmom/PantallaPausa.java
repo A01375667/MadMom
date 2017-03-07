@@ -15,14 +15,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  * Created by Jorge Jiménez on 13/02/17.
  */
 
-public class PantallaPausa
+public class PantallaPausa extends Pantalla
 {
 
     private final MadMom madMom;
 
     // Imágenes que se utilizarán
     private Texture texturaFondoPausa;
-    private Texture texturaBtnContinuar;
+    private Texture texturaBtnMenu;
     private Texture texturaBtnQuit;
 
     // Dibujar
@@ -43,14 +43,15 @@ public class PantallaPausa
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoMenu.jpg");
-        texturaBtnBackConfig = new Texture("btnBack.png");
+        texturaFondoPausa = new Texture("fondoPausa.jpg");
+        texturaBtnMenu = new Texture("btnBack.png");
+        texturaBtnQuit= new Texture("btnBack.png");
     }
 
     private void crearObjetos() {
         batch = new SpriteBatch();
         escenaConfig = new Stage(vista, batch);
-        Image imgFondo = new Image(texturaFondoConfig);
+        Image imgFondo = new Image(texturaFondoPausa);
         escenaConfig.addActor(imgFondo);
 
         //Botón back
