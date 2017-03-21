@@ -55,7 +55,7 @@ public class PantallaPausa extends Pantalla
         escenaConfig.addActor(imgFondo);
 
         //Botón back
-        TextureRegionDrawable trdBtnBack = new TextureRegionDrawable(new TextureRegion(texturaBtnBackConfig));
+        TextureRegionDrawable trdBtnBack = new TextureRegionDrawable(new TextureRegion(texturaBtnQuit));
         ImageButton btnBack = new ImageButton(trdBtnBack);
         btnBack.setPosition(3*btnBack.getWidth()/4, 2*btnBack.getHeight()/4);
         escenaConfig.addActor(btnBack);

@@ -53,7 +53,7 @@ public class PantallaCreditos extends Pantalla
         //Botón back
         TextureRegionDrawable trdBtnBack = new TextureRegionDrawable(new TextureRegion(texturaBtnBackCreditos));
         ImageButton btnBack = new ImageButton(trdBtnBack);
-        btnBack.setPosition(3*btnBack.getWidth()/4, 2*btnBack.getHeight()/4);
+        btnBack.setPosition(2*btnBack.getWidth()/4, 18*btnBack.getHeight()/4);
         escenaCreditos.addActor(btnBack);
         // Acción botón back
         btnBack.addListener(new ClickListener(){

@@ -74,7 +74,7 @@ public class PantallaMenu extends Pantalla
         //Botón de configuración
         TextureRegionDrawable trdBtnConfig = new TextureRegionDrawable(new TextureRegion(texturaBtnConfiguracionMenu));
         ImageButton btnConfig = new ImageButton(trdBtnConfig);
-        btnConfig.setPosition(ANCHO-btnConfig.getWidth()*3, 6*btnConfig.getHeight()/4);
+        btnConfig.setPosition(ANCHO - 8*btnConfig.getWidth()/4, 3*btnConfig.getHeight()/4);
         escenaMenu.addActor(btnConfig);
         // Acción botón configuración
         btnConfig.addListener(new ClickListener(){

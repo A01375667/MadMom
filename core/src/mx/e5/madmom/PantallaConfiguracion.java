@@ -42,10 +42,10 @@ public class PantallaConfiguracion extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoBaño.jpg");  // CAMBIAR
+        texturaFondoConfig = new Texture("fondoAjustes.jpg");  // CAMBIAR
         texturaBtnBackConfig = new Texture("btnBack.png");
-        texturaBtnCreditos = new Texture("btnPlay2.png"); // CAMBIAR
-        texturaBtnSonido = new Texture("btnPlay2.png");  // CAMBIAR
+        texturaBtnCreditos = new Texture("btnCreditos.png"); // CAMBIAR
+        texturaBtnSonido = new Texture("btnAjustesLetra.png");  // CAMBIAR
     }
 
     private void crearObjetos() {
@@ -57,7 +57,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón back
         TextureRegionDrawable trdBtnBack = new TextureRegionDrawable(new TextureRegion(texturaBtnBackConfig));
         ImageButton btnBack = new ImageButton(trdBtnBack);
-        btnBack.setPosition(3*btnBack.getWidth()/4, 2*btnBack.getHeight()/4);
+        btnBack.setPosition(2*btnBack.getWidth()/4, 18*btnBack.getHeight()/4);
         escenaConfig.addActor(btnBack);
         // Acción botón back
         btnBack.addListener(new ClickListener(){
@@ -70,7 +70,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón créditos
         TextureRegionDrawable trdBtnCreditos = new TextureRegionDrawable(new TextureRegion(texturaBtnCreditos));
         ImageButton btnCreditos = new ImageButton(trdBtnCreditos);
-        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO/2);
+        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO - 7*btnCreditos.getHeight()/4);
         escenaConfig.addActor(btnCreditos);
         // Acción botón créditos
         btnCreditos.addListener(new ClickListener(){
@@ -83,7 +83,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón sonido
         TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnSonido));
         ImageButton btnSonido = new ImageButton(trdBtnSonido);
-        btnSonido.setPosition(ANCHO/2 - btnSonido.getWidth()/2, ALTO/4);
+        btnSonido.setPosition(ANCHO/2 - btnSonido.getWidth()/2, ALTO - 14*btnSonido.getHeight()/4);
         escenaConfig.addActor(btnSonido);
         // Acción botón créditos
         btnSonido.addListener(new ClickListener(){
@@ -91,6 +91,7 @@ public class PantallaConfiguracion extends Pantalla
             public void clicked(InputEvent event, float x, float y) {
 
                 //******** CONTINUAR O EMPEZAR MÚSICA *************************
+                madMom.setScreen(new PantallaCreditos(madMom));
 
             }
         });
