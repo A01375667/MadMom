@@ -10,16 +10,16 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class PantallaInicial extends Pantalla {
 
-    private float tiempoVisible = 1.2f;
+    private float tiempoVisible = 2.5f;
     // Es la referencia a la aplicación (la única que puede cambiar pantallas)
-    private MadMom juego;
+    private MadMom madMom;
 
     // Logo del tec
     private Texture texturaLogo;
     private Sprite spriteLogo;
 
     public PantallaInicial(MadMom madMom) {
-        this.juego = madMom;
+        this.madMom = madMom;
     }
 
 
@@ -56,12 +56,11 @@ public class PantallaInicial extends Pantalla {
             // Cambia a la pantalla del MENU
             //juego.setScreen(new PantallaMenu(juego));
             // AHORA cambia a la pantalla "Cargando..." y después al menú
-            juego.setScreen(new PantallaMenu(juego));
+            madMom.setScreen(new PantallaMenu(madMom));
 
         }
 
     }
-
 
     @Override
     public void actualizarVista() {
