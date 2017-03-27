@@ -11,11 +11,23 @@ public class MadMom extends Game
 {
 	SpriteBatch batch;
 	Texture img;
-	
+	private final AssetManager assetManager;
+
+	public MadMom() {
+		assetManager = new AssetManager();
+	}
+
+
 	@Override
 	public void create () {
-		setScreen(new PantallaMenu(this));
+		// Pone la pantalla inicial (Splash)
+		setScreen(new PantallaInicial(this));
 	}
+
+	public AssetManager getAssetManager() {
+		return assetManager;
+	}
+
 
 	@Override
 	public void dispose(){

@@ -32,6 +32,11 @@ public abstract class Pantalla implements Screen
     @Override
     public void resize(int width, int height) {
         vista.update(width, height);
+        actualizarVista();
+    }
+
+    protected void actualizarVista(){
+
     }
 
     @Override
