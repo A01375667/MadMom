@@ -2,6 +2,7 @@ package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -29,6 +30,9 @@ public class PantallaMenu extends Pantalla
     private Texture texturaBtnPlayMenu;
     private Texture texturaBtnConfiguracionMenu;
 
+    // Manager
+    private AssetManager manager;
+
     //SpriteBatch
     private SpriteBatch batch;
 
@@ -41,6 +45,7 @@ public class PantallaMenu extends Pantalla
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
         this.madMom = madMom;
+        this.manager = madMom.getAssetManager();
     }
 
     @Override
@@ -53,9 +58,16 @@ public class PantallaMenu extends Pantalla
         texturaFondoMenu = new Texture("fondoMenu.jpg");
         texturaBtnPlayMenu = new Texture("btnPlay1.png");
         texturaBtnConfiguracionMenu = new Texture("btnAjustes.png");
+        manager.load("musicaMenu.mp3", Music.class);
+        if(manager.update()){
+        }
     }
 
     private void crearObjetos() {
+        musicaFondo = manager.get("musicaMenu.mp3");
+        musicaFondo.setLooping(true);
+        musicaFondo.play();
+
         batch = new SpriteBatch();
         escenaMenu = new Stage(vista, batch);
         Image imgFondo = new Image(texturaFondoMenu);
