@@ -30,6 +30,7 @@ public class PantallaNivel extends Pantalla {
     //Texto
     private Texto textoNivel1;   // Para poner mensajes en la pantalla
     private Texto textoNivel2;
+    private Texto textoNivel;
 
     // Manager
     private AssetManager manager;
@@ -74,6 +75,7 @@ public class PantallaNivel extends Pantalla {
 
         textoNivel1 = new Texto("fuenteTiempo.fnt");
         textoNivel2 = new Texto("fuenteTiempo.fnt");
+        textoNivel = new Texto("fuenteTextoInstruccion.fnt");
 
 
         //Botón Nivel 1
@@ -130,8 +132,9 @@ public class PantallaNivel extends Pantalla {
         borrarPantalla();
         escenaNivel.draw();
         batch.begin();
-        textoNivel1.mostrarMensaje(batch, "Nivel 1:\nParque",4*ANCHO/16, 7*ALTO/32 );
-        textoNivel2.mostrarMensaje(batch, "Nivel 2:\nDisco",12*ANCHO/16, 7*ALTO/32);
+        textoNivel1.mostrarMensaje(batch, "Parque",4*ANCHO/16, 7*ALTO/32 );
+        textoNivel2.mostrarMensaje(batch, "Disco",12*ANCHO/16, 7*ALTO/32);
+        textoNivel.mostrarMensaje(batch,"Dificultad",ANCHO/2,2*ALTO/4);
         batch.end();
 
     }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -22,14 +23,13 @@ import java.util.Random;
 
 public class Cucaracha extends Objeto{
 
+    private EstadoMovimiento estado;
+
     private final float VELOCIDAD_X = 2;
     private final float VELOCIDAD_Y = 2;
 
     private float YActual; // El tamaño real actual (cambiando)
     private float YOriginal;   // Altura inicial (no cambia)
-
-    private float XActual; // El tamaño real actual (cambiando)
-    private float XOriginal;   // Altura inicial (no cambia)
 
     //Animacion
     private Animation<TextureRegion> spriteAnimado;         // Animación caminando
@@ -99,6 +99,14 @@ public class Cucaracha extends Objeto{
             case MUERTO:
         }
 
+    }
+
+    @Override
+    public boolean contiene(Vector3 v) {
+        if (estado==EstadoMovimiento.MOV_IZQUIERDA || estado==EstadoMovimiento.MOV_DERECHA) {
+            return super.contiene(v);
+        }
+        return false;
     }
 
 
