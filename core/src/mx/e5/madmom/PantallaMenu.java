@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PantallaMenu extends Pantalla
 {
     private final MadMom madMom;
+    private PantallaMenu pantallaMenu = this;
 
     //Texturas
     private Texture texturaFondoMenu;
@@ -92,7 +93,6 @@ public class PantallaMenu extends Pantalla
         btnConfig.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("clicked", "Me hicieron CLICK");
                 madMom.setScreen(new PantallaConfiguracion(madMom));
             }
         });

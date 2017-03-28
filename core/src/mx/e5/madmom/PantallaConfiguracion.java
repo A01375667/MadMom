@@ -27,16 +27,12 @@ public class PantallaConfiguracion extends Pantalla
     // Dibujar
     private SpriteBatch batch;
 
-    // Menu anterior
-    private PantallaMenu menuAnterior;
-
     // Escenas
     private Stage escenaConfig;
 
     // Constructor
-    public PantallaConfiguracion(MadMom madMom, PantallaMenu menuAnterior){
+    public PantallaConfiguracion(MadMom madMom){
         this.madMom = madMom;
-        this.menuAnterior = menuAnterior;
     }
 
     @Override
@@ -95,8 +91,7 @@ public class PantallaConfiguracion extends Pantalla
             public void clicked(InputEvent event, float x, float y) {
 
                 //******** CONTINUAR O EMPEZAR MÚSICA *************************
-
-                //madMom.setScreen(new PantallaMenu(madMom));
+                madMom.setScreen(new PantallaMenu(madMom));
 
             }
         });
