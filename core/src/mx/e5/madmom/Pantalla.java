@@ -32,6 +32,11 @@ public abstract class Pantalla implements Screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
     }
 
+    protected void borrarPantalla(int v1, int v2, int v3, int v4) {
+        Gdx.gl.glClearColor(v1, v2, v3, v4);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+
     @Override
     public void resize(int width, int height) {
         vista.update(width, height);

@@ -51,23 +51,19 @@ public class PantallaMenu extends Pantalla
     @Override
     public void show() {
         cargarTexturas();
+        musicaFondo = manager.get("musicaMenu.mp3");
+        musicaFondo.setLooping(true);
+        musicaFondo.play();
         crearObjetos();
     }
 
     private void cargarTexturas() {
-        texturaFondoMenu = new Texture("fondoMenu.jpg");
-        texturaBtnPlayMenu = new Texture("btnPlay1.png");
-        texturaBtnConfiguracionMenu = new Texture("btnAjustes.png");
-        manager.load("musicaMenu.mp3", Music.class);
-        if(manager.update()){
-        }
+        texturaFondoMenu = manager.get("fondoMenu.jpg");
+        texturaBtnPlayMenu = manager.get("btnPlay1.png");
+        texturaBtnConfiguracionMenu = manager.get("btnAjustes.png");
     }
 
     private void crearObjetos() {
-        musicaFondo = manager.get("musicaMenu.mp3");
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
-
         batch = new SpriteBatch();
         escenaMenu = new Stage(vista, batch);
         Image imgFondo = new Image(texturaFondoMenu);
