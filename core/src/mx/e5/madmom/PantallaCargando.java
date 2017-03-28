@@ -54,6 +54,10 @@ public class PantallaCargando extends Pantalla
             case MATACUCARACHAS:
                 cargarRecursosMataCucarachas();
                 break;
+            case NIVEL:
+                cargarRecursosNivel();
+                break;
+
         }
     }
 
@@ -71,6 +75,13 @@ public class PantallaCargando extends Pantalla
         manager.load("mario/moneda.mp3",Sound.class);
         manager.load("mario/padBack.png", Texture.class);
         manager.load("mario/padKnob.png", Texture.class);
+    }
+
+    private void cargarRecursosNivel() {
+        manager.load("fondoMenu.jpg", Texture.class);
+        manager.load("btnNIVELparque.png", Texture.class);
+        manager.load("btnNIVELdisco.png", Texture.class);
+        manager.load("btnBacke.png", Texture.class);
     }
 
     @Override

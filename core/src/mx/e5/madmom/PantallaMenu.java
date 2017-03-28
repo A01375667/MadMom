@@ -78,8 +78,7 @@ public class PantallaMenu extends Pantalla
         btnPlay.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-                madMom.setScreen(new MataCucarachas(madMom));
+                madMom.setScreen(new PantallaNivel(madMom));
             }
         });
 
@@ -92,7 +91,6 @@ public class PantallaMenu extends Pantalla
         btnConfig.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("clicked", "Me hicieron CLICK");
                 madMom.setScreen(new PantallaConfiguracion(madMom));
             }
         });
@@ -106,6 +104,7 @@ public class PantallaMenu extends Pantalla
     public void render(float delta) {
         borrarPantalla();
         escenaMenu.draw();
+
     }
 
     @Override
