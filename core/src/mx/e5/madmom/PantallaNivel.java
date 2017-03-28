@@ -134,7 +134,7 @@ public class PantallaNivel extends Pantalla {
         batch.begin();
         textoNivel1.mostrarMensaje(batch, "Parque",4*ANCHO/16, 7*ALTO/32 );
         textoNivel2.mostrarMensaje(batch, "Disco",12*ANCHO/16, 7*ALTO/32);
-        textoNivel.mostrarMensaje(batch,"Dificultad",ANCHO/2,2*ALTO/4);
+        textoNivel.mostrarMensaje(batch,"DIFICULTAD",ANCHO/2,8*ALTO/9);
         batch.end();
 
     }
