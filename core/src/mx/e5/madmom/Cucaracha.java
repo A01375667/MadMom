@@ -17,6 +17,9 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
+import static mx.e5.madmom.Pantalla.ALTO;
+import static mx.e5.madmom.Pantalla.ANCHO;
+
 /**
  * Created by AnaPau MQ on 16/02/2017.
  */
@@ -30,6 +33,8 @@ public class Cucaracha extends Objeto{
 
     private float YActual; // El tamaño real actual (cambiando)
     private float YOriginal;   // Altura inicial (no cambia)
+
+
 
     //Animacion
     private Animation<TextureRegion> spriteAnimado;         // Animación caminando
@@ -96,6 +101,7 @@ public class Cucaracha extends Objeto{
         switch (estadoMovimiento){
             case MOV_DERECHA:
                 moverHorizontal();
+                break;
             case MOV_IZQUIERDA:
             //case MUERTO:
         }
@@ -104,6 +110,7 @@ public class Cucaracha extends Objeto{
             case SUBIENDO:
             case BAJANDO:
                 moverVertical();
+                break;
         }
 
     }
@@ -113,13 +120,21 @@ public class Cucaracha extends Objeto{
     private void moverHorizontal() {
         // Ejecutar movimiento horizontal
         float nuevaX = sprite.getX();
+        float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_Y*100;
+
         // ¿Quiere ir a la Derecha?
         if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
-
+            sprite.setX(sprite.getX()+delta);
+            if(sprite.getX()>=ANCHO){
+                estadoMovimiento=EstadoMovimiento.MOV_IZQUIERDA;
+            }
         }
-
         // ¿Quiere ir a la izquierda?
         if ( estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
+            sprite.setX(sprite.getX()+delta);
+            if(sprite.getX()<=0){
+                estadoMovimiento= EstadoMovimiento.MOV_DERECHA;
+            }
 
         }
 
@@ -132,17 +147,17 @@ public class Cucaracha extends Objeto{
             case SUBIENDO:
                 sprite.rotate(22);
                 sprite.setY(sprite.getY()+delta);
-                if(){
-
-
+                if(sprite.getY()>=ALTO){
+                    estadoMovimientoVertical=EstadoMovimientoVertical.BAJANDO;
                 }
+                break;
 
             case BAJANDO:
                 sprite.rotate(203);
                 sprite.setY(sprite.getY()-delta);
-                if(){
-
+                if(sprite.getY()<=0){estadoMovimientoVertical=EstadoMovimientoVertical.SUBIENDO;
             }
+            break;
 
         }
 
