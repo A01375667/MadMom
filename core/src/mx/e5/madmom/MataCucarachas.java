@@ -75,7 +75,7 @@ public class MataCucarachas extends Pantalla
         textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
         textoTiempo = new Texto("fuenteTiempo.fnt");
 
-        //Botón back
+        //Botón pausa
         TextureRegionDrawable trdBtnPausa = new TextureRegionDrawable(new TextureRegion(texturaBtnPausaMataCuc));
         ImageButton btnPausa = new ImageButton(trdBtnPausa);
         btnPausa.setPosition(ANCHO - 6*btnPausa.getWidth()/4, 18*btnPausa.getHeight()/4);
@@ -145,7 +145,8 @@ public class MataCucarachas extends Pantalla
         }
 
         if(tiempoMiniJuego <= 0){
-            madMom.setScreen(new PantallaMenu(madMom));
+            madMom.vidasJugador--;
+            madMom.setScreen(new PantallaProgreso(madMom));
         }
 
         batch.end();

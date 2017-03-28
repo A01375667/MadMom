@@ -13,6 +13,8 @@ public class MadMom extends Game
 	SpriteBatch batch;
 	Texture img;
 	private final AssetManager assetManager;
+	public int vidasJugador = 3;
+	public int puntosJugador = 0;
 
 	public MadMom() {
 		assetManager = new AssetManager();
