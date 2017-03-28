@@ -32,6 +32,12 @@ public class MataCucarachas extends Pantalla
     private Texture texturaBtnPausaMataCuc;
     private Texture texturaCucaracha;
 
+    // Tiempo visible de instrucciones
+    private float tiempoVisibleInstrucciones = 2.0f;
+
+    // Tiempo del minijuego
+    private float tiempoMiniJuego = 10;
+
     // Dibujar
     private SpriteBatch batch;
 
@@ -40,6 +46,9 @@ public class MataCucarachas extends Pantalla
 
     //Arreglo con las cucarachas
     ArrayList<Cucaracha> arrCucas = new ArrayList<Cucaracha>();
+
+    private Texto textoInstruccion;   // Para poner mensajes en la pantalla
+    private Texto textoTiempo;
 
     // Constructor
     public MataCucarachas(MadMom madMom){
@@ -63,6 +72,8 @@ public class MataCucarachas extends Pantalla
         escenaMataCucarachas = new Stage(vista, batch);
         Image imgFondo = new Image(texturaFondoMataCucarachas);
         escenaMataCucarachas.addActor(imgFondo);
+        textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
+        textoTiempo = new Texto("fuenteTiempo.fnt");
 
         //Botón back
         TextureRegionDrawable trdBtnPausa = new TextureRegionDrawable(new TextureRegion(texturaBtnPausaMataCuc));
@@ -120,7 +131,24 @@ public class MataCucarachas extends Pantalla
             arrCucas.add(cuca);
         }
 
+        batch.begin();
 
+        tiempoMiniJuego -= delta;
+        // Tiempo restante
+        textoTiempo.mostrarMensaje(batch, "TIEMPO RESTANTE: ", 7*ANCHO/10, 5*ALTO/32);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10*ANCHO/11, 5*ALTO/32);
+
+        tiempoVisibleInstrucciones -= delta;
+        if(tiempoVisibleInstrucciones > 0){
+            // Instrucciones
+            textoInstruccion.mostrarMensaje(batch, "EVITA LA INVASION", ANCHO/2, 3*ALTO/4);
+        }
+
+        if(tiempoMiniJuego <= 0){
+            madMom.setScreen(new PantallaMenu(madMom));
+        }
+
+        batch.end();
     }
 
     private void dibujarCucas(ArrayList<Cucaracha> arreglo) {
