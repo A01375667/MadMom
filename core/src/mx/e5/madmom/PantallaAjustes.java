@@ -89,7 +89,7 @@ public class PantallaAjustes extends Pantalla
         //Botón sonido ON
         TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
         ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
-        btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3, ALTO/2 - btnSonidoOn.getHeight()/2);
+        btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
 
         //Botón sonido OFF
         TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
