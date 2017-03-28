@@ -24,6 +24,7 @@ import java.util.Random;
 
 public class MataCucarachas extends Pantalla
 {
+
     private final MadMom madMom;
 
     private AssetManager manager;
@@ -97,7 +98,7 @@ public class MataCucarachas extends Pantalla
         //Dibujar Cucarachas iniciales
 
 
-       /* Cucaracha cuca1 = new Cucaracha(texturaCucaracha,ALTO/2, ANCHO/2);
+        Cucaracha cuca1 = new Cucaracha(texturaCucaracha,ALTO/2, ANCHO/2);
         Cucaracha cuca2 = new Cucaracha(texturaCucaracha,ALTO/3, ANCHO/3);
         Cucaracha cuca3 = new Cucaracha(texturaCucaracha,ALTO/4, ANCHO/4);
         Cucaracha cuca4 = new Cucaracha(texturaCucaracha,ALTO/5, ANCHO/5);
@@ -110,17 +111,17 @@ public class MataCucarachas extends Pantalla
 
         Gdx.app.log("clicked", arrCucas.toString());
         Gdx.input.setInputProcessor(escenaMataCucarachas);
-        Gdx.input.setCatchBackKey(false);*/
+        Gdx.input.setCatchBackKey(false);
     }
 
     @Override
     public void render(float delta) {
 
-        /*Random rn = new Random();
+        Random rn = new Random();
         vueltaInicial+= rn.nextInt(50)+1;
         borrarPantalla();
         escenaMataCucarachas.draw();
-        arrCucas = moverCucas(arrCucas);
+        //arrCucas = moverCucas(arrCucas);
 
         if(vueltaInicial%100 == 0){ //Cucarachas nuevas
 
@@ -130,9 +131,11 @@ public class MataCucarachas extends Pantalla
             float maxX = xran.nextInt((int) Pantalla.ALTO)+1;
             float maxY = yran.nextInt((int) Pantalla.ALTO)+1;
 
+            /*
             Cucaracha cuca = new Cucaracha(texturaCucaracha, maxX, maxY);
             escenaMataCucarachas.addActor(cuca.cucaImg);
             arrCucas.add(cuca);
+            */
         }
 
         batch.begin();
@@ -153,19 +156,21 @@ public class MataCucarachas extends Pantalla
             madMom.setScreen(new PantallaProgreso(madMom));
         }
 
-        batch.end();*/
+        batch.end();
     }
 
     private void dibujarCucas(ArrayList<Cucaracha> arreglo) {
 
-       /* for (Cucaracha CUCA : arreglo) {
-
+       for (Cucaracha CUCA : arreglo) {
+            /*
             escenaMataCucarachas.addActor(CUCA.cucaImg);
-
-        }*/
+            */
+        }
     }
 
-    /*private ArrayList<Cucaracha> moverCucas(ArrayList<Cucaracha> arreglo){
+
+    /*
+    private ArrayList<Cucaracha> moverCucas(ArrayList<Cucaracha> arreglo){
 
         for (Cucaracha CUCA : arreglo) {
 
@@ -175,8 +180,8 @@ public class MataCucarachas extends Pantalla
         }
         return arreglo;
 
-    }*/
-
+    }
+    */
 
     @Override
     public void pause() {
@@ -193,4 +198,6 @@ public class MataCucarachas extends Pantalla
 
 
     }
+
+
 }
