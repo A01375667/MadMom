@@ -50,7 +50,7 @@ public class PantallaProgreso extends Pantalla
     private void cargarTexturas() {
         texturaFondoProgreso = new Texture("fondoAjustes.jpg");
         texturaBtnPausaProgreso = new Texture("btnPausa.png");
-        texturaVida = new Texture("btnBack.png");
+        texturaVida = new Texture("caraVida.png");
     }
 
     private void crearObjetos() {
@@ -74,9 +74,9 @@ public class PantallaProgreso extends Pantalla
             }
         });
 
-        vida1 = new Objeto(texturaVida, ANCHO/3 - texturaVida.getWidth()/2, 3*ALTO/4);
-        vida2 = new Objeto(texturaVida, ANCHO/2 - texturaVida.getWidth()/2, 3*ALTO/4);
-        vida3 = new Objeto(texturaVida, 2*ANCHO/3 - texturaVida.getWidth()/2, 3*ALTO/4);
+        vida1 = new Objeto(texturaVida, ANCHO/5 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
+        vida2 = new Objeto(texturaVida, ANCHO/2 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
+        vida3 = new Objeto(texturaVida, 4*ANCHO/5 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
 
         Gdx.input.setInputProcessor(escenaProgreso);
         Gdx.input.setCatchBackKey(false);
@@ -92,8 +92,8 @@ public class PantallaProgreso extends Pantalla
 
         batch.begin();
 
-        textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO/2, ALTO/2 + ALTO/8);
-        textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO/2, ALTO/2 - ALTO/16);
+        textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO/2, 6*ALTO/7);
+        textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO/2, 5*ALTO/7);
         dibujarVidas();
 
         batch.end();

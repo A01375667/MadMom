@@ -132,17 +132,20 @@ public class Cucaracha extends Objeto{
             case SUBIENDO:
                 sprite.rotate(22);
                 sprite.setY(sprite.getY()+delta);
+                /*
                 if(){
 
 
                 }
-
+                */
             case BAJANDO:
                 sprite.rotate(203);
                 sprite.setY(sprite.getY()-delta);
+                /*
                 if(){
 
-            }
+                }
+                */
 
         }
 
