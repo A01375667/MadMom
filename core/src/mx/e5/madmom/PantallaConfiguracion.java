@@ -91,6 +91,7 @@ public class PantallaConfiguracion extends Pantalla
             public void clicked(InputEvent event, float x, float y) {
 
                 //******** CONTINUAR O EMPEZAR MÚSICA *************************
+
                 madMom.setScreen(new PantallaMenu(madMom));
 
             }

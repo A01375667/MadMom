@@ -24,7 +24,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 public class PantallaMenu extends Pantalla
 {
     private final MadMom madMom;
-    private PantallaMenu pantallaMenu = this;
 
     //Texturas
     private Texture texturaFondoMenu;
