@@ -65,12 +65,9 @@ public class PantallaCargando extends Pantalla
     }
 
     private void cargarRecursosMataCucarachas() {
-        manager.load("mario/marioSprite.png", Texture.class);
-        manager.load("mario/mapaMario.tmx", TiledMap.class);
-        manager.load("mario/marioBros.mp3",Music.class);
-        manager.load("mario/moneda.mp3",Sound.class);
-        manager.load("mario/padBack.png", Texture.class);
-        manager.load("mario/padKnob.png", Texture.class);
+        manager.load("fondoBaño.jpg", Texture.class);
+        manager.load("btnPausa.png", Texture.class);
+        manager.load("cucaracha.png",Texture.class);
     }
 
     @Override

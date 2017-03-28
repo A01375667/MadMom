@@ -40,7 +40,7 @@ public class PantallaMenu extends Pantalla
     private Stage escenaMenu;
 
     // Música
-    private Music musicaFondo;
+    public Music musicaFondo;
 
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
@@ -79,7 +79,7 @@ public class PantallaMenu extends Pantalla
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                madMom.setScreen(new MataCucarachas(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
             }
         });
 

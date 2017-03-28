@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,6 +25,8 @@ import java.util.Random;
 public class MataCucarachas extends Pantalla
 {
     private final MadMom madMom;
+
+    private AssetManager manager;
 
     int vueltaInicial = 0;
 
@@ -53,6 +56,7 @@ public class MataCucarachas extends Pantalla
     // Constructor
     public MataCucarachas(MadMom madMom){
         this.madMom = madMom;
+        this.manager = madMom.getAssetManager();
     }
 
     @Override
@@ -62,9 +66,9 @@ public class MataCucarachas extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoMataCucarachas = new Texture("fondoBaño.jpg");
-        texturaBtnPausaMataCuc = new Texture("btnPausa.png");
-        texturaCucaracha = new Texture("cucaracha.png");
+        texturaFondoMataCucarachas = manager.get("fondoBaño.jpg");
+        texturaBtnPausaMataCuc = manager.get("btnPausa.png");
+        texturaCucaracha = manager.get("cucaracha.png");
     }
 
     private void crearObjetos() {
