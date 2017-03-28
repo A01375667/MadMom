@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -42,10 +43,10 @@ public class PantallaConfiguracion extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoAjustes.jpg");  // CAMBIAR
+        texturaFondoConfig = new Texture("fondoAjustes.jpg");
         texturaBtnBackConfig = new Texture("btnBack.png");
-        texturaBtnCreditos = new Texture("btnCreditos.png"); // CAMBIAR
-        texturaBtnSonido = new Texture("btnAjustesLetra.png");  // CAMBIAR
+        texturaBtnCreditos = new Texture("btnCreditos.png");
+        texturaBtnSonido = new Texture("btnAjustesLetra.png");
     }
 
     private void crearObjetos() {
@@ -89,11 +90,7 @@ public class PantallaConfiguracion extends Pantalla
         btnSonido.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-                //******** CONTINUAR O EMPEZAR MÚSICA *************************
-
-                madMom.setScreen(new PantallaMenu(madMom));
-
+                madMom.setScreen(new PantallaAjustes(madMom));
             }
         });
 

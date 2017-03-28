@@ -16,6 +16,7 @@ public class MadMom extends Game
 	private final AssetManager assetManager;
 	public int vidasJugador = 3;
 	public int puntosJugador = 0;
+	public EstadoMusica estadoMusica = EstadoMusica.PLAY;
 
 	public MadMom() {
 		assetManager = new AssetManager();

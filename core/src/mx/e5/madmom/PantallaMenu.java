@@ -40,7 +40,7 @@ public class PantallaMenu extends Pantalla
     private Stage escenaMenu;
 
     // Música
-    private Music musicaFondo;
+    public Music musicaFondo;
 
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
@@ -51,9 +51,17 @@ public class PantallaMenu extends Pantalla
     @Override
     public void show() {
         cargarTexturas();
-        musicaFondo = manager.get("musicaMenu.mp3");
-        musicaFondo.setLooping(true);
-        musicaFondo.play();
+        switch (madMom.estadoMusica) {
+            case PLAY:
+                musicaFondo = manager.get("musicaMenu.mp3");
+                musicaFondo.setLooping(true);
+                musicaFondo.play();
+                break;
+            case STOP:
+                musicaFondo = manager.get("musicaMenu.mp3");
+                musicaFondo.stop();
+                break;
+        }
         crearObjetos();
     }
 
