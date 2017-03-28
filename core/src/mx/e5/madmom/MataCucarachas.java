@@ -1,7 +1,9 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -26,7 +29,26 @@ public class MataCucarachas extends Pantalla
 {
     private final MadMom madMom;
 
-    private AssetManager manager;
+
+    // AssetManager
+    private final AssetManager manager;
+    private MadMom juego;
+    private EstadoJuego estado = EstadoJuego.JUGANDO;
+    private EscenaPausa escenaPausa;
+
+    // Los 9 topos en el juego
+    private final int NUM_Cucarachas = 10;
+    private Array<Objeto> arrCucarachas;
+
+
+    private final Procesador procesadorEntrada = new Procesador();
+
+    //Tiempo para cambiar direccion
+    public int lastChangedDirectionTime = 0; //milliseconds
+    public final int CHANGE_DIRECTION_PERIOD = 1000; //milliseconds
+
+
+
 
     int vueltaInicial = 0;
 
@@ -192,5 +214,100 @@ public class MataCucarachas extends Pantalla
     public void dispose() {
 
 
+    }
+
+
+
+
+
+    private class EscenaPausa extends Stage {
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            // Crear triángulo transparente
+            Pixmap pixmap = new Pixmap((int) (ANCHO * 0.7f), (int) (ALTO * 0.8f), Pixmap.Format.RGBA8888);
+            pixmap.setColor(0.2f, 0, 0.3f, 0.65f);
+            pixmap.fillTriangle(0, pixmap.getHeight(), pixmap.getWidth(), pixmap.getHeight(), pixmap.getWidth() / 2, 0);
+            Texture texturaTriangulo = new Texture(pixmap);
+            pixmap.dispose();
+            Image imgTriangulo = new Image(texturaTriangulo);
+            imgTriangulo.setPosition(0.15f * ANCHO, 0.1f * ALTO);
+            this.addActor(imgTriangulo);
+
+            // Salir
+            Texture texturaBtnSalir = manager.get("whackamole/btnSalir.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnSalir));
+            ImageButton btnSalir = new ImageButton(trdSalir);
+            btnSalir.setPosition(ANCHO / 2 - btnSalir.getWidth() / 2, ALTO * 0.2f);
+            btnSalir.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    juego.setScreen(new PantallaCargando(juego, Pantallas.MENU));
+                }
+            });
+            this.addActor(btnSalir);
+
+            // Continuar
+            Texture texturabtnReintentar = manager.get("whackamole/btnContinuar.png");
+            TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnReintentar));
+            ImageButton btnReintentar = new ImageButton(trdReintentar);
+            btnReintentar.setPosition(ANCHO / 2 - btnReintentar.getWidth() / 2, ALTO * 0.5f);
+            btnReintentar.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Continuar el juego
+                    estado = EstadoJuego.JUGANDO;
+                    // Regresa el control a la pantalla
+                    Gdx.input.setInputProcessor(procesadorEntrada);
+                }
+            });
+            this.addActor(btnReintentar);
+
+        }
+    }
+
+    private class Procesador implements InputProcessor {
+
+        @Override
+        public boolean keyDown(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
     }
 }
