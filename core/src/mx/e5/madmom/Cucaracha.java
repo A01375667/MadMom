@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -31,10 +32,6 @@ public class Cucaracha extends Objeto{
     private final float VELOCIDAD_X = 2;
     private final float VELOCIDAD_Y = 2;
 
-    private float YActual; // El tamaño real actual (cambiando)
-    private float YOriginal;   // Altura inicial (no cambia)
-
-
 
     //Animacion
     private Animation<TextureRegion> spriteAnimado;         // Animación caminando
@@ -46,10 +43,22 @@ public class Cucaracha extends Objeto{
     //Estados de Movimiento Cucaracha Horizontal
     private EstadoMovimientoVertical estadoMovimientoVertical=EstadoMovimientoVertical.NORMAL;
 
+    //
+    private float originalX;
+    private float originalY;
+
+    private float angulo=0;
+    private float nuevoAngulo;
+    private float arcoTangente;
+
 
 
     // Recibe una imagen con varios frames (ver cucarachaSprite.png)
     public Cucaracha(Texture textura, float x, float y) {
+
+
+
+
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en 4 frames de 235x125 (ver cucarachaSprite.png)
@@ -64,6 +73,18 @@ public class Cucaracha extends Objeto{
         // Crea el sprite con el personaje quieto (idle)
         sprite = new Sprite(texturaPersonaje[0][0]);
         sprite.setPosition(x, y);    // Posición inicial
+
+       if (MathUtils.randomBoolean()) setEstadoMovimiento(EstadoMovimiento.MOV_IZQUIERDA);
+       else setEstadoMovimiento(EstadoMovimiento.MOV_DERECHA);
+
+       if (MathUtils.randomBoolean()) setEstadoMovimientoVertical(EstadoMovimientoVertical.SUBIENDO);
+       else setEstadoMovimientoVertical(EstadoMovimientoVertical.BAJANDO);
+
+
+
+
+
+
     }
 
 
@@ -89,75 +110,143 @@ public class Cucaracha extends Objeto{
                 break;
 
             case MOV_IZQUIERDA:
+                timerAnimacion += Gdx.graphics.getDeltaTime();
+                // Frame que se dibujará
+                region = spriteAnimado.getKeyFrame(timerAnimacion);
+
+                if (estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
+
+                    if (!region.isFlipX()) {
+                        region.flip(true,false);
+
+                    }
+                } else {
+                    if (region.isFlipX()) {
+                        region.flip(true,false);
+                    }
+                }
+                batch.draw(region,sprite.getX(),sprite.getY());
+                break;
 
             case QUIETO:
             case INICIANDO:
                 sprite.draw(batch); // Dibuja el sprite estático
                 break;
         }
+
+
+
     }
 
     public void actualizar(float delta){
         switch (estadoMovimiento){
+
             case MOV_DERECHA:
                 moverHorizontal();
                 break;
             case MOV_IZQUIERDA:
-            //case MUERTO:
-        }
-
-        switch (estadoMovimientoVertical){
-            case SUBIENDO:
-            case BAJANDO:
-                moverVertical();
+                moverHorizontal();
                 break;
+
         }
 
-    }
+            switch (estadoMovimientoVertical){
+                case SUBIENDO:
+                    moverVertical();
+
+                        /*if((int) nuevoAngulo!=(int)angulo){
+                            sprite.rotate(nuevoAngulo);
+                            angulo=nuevoAngulo;
+                        }*/
+                     break;
+
+
+                case BAJANDO:
+                    moverVertical();
+
+                       /* if((int) nuevoAngulo!=(int)angulo){
+                            sprite.rotate(nuevoAngulo);
+                            angulo=nuevoAngulo;
+                        }*/
+                    break;
+
+                    }
+
+            }
+
 
 
     // Mueve el personaje a la derecha/izquierda, prueba los bordes de la pantalla
     private void moverHorizontal() {
         // Ejecutar movimiento horizontal
         float nuevaX = sprite.getX();
-        float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_Y*100;
+        float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_X*100;
 
         // ¿Quiere ir a la Derecha?
         if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
             sprite.setX(sprite.getX()+delta);
-            if(sprite.getX()>=ANCHO){
+            if(nuevaX>=ANCHO-sprite.getWidth()){
                 estadoMovimiento=EstadoMovimiento.MOV_IZQUIERDA;
             }
         }
         // ¿Quiere ir a la izquierda?
         if ( estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
-            sprite.setX(sprite.getX()+delta);
-            if(sprite.getX()<=0){
+            sprite.setX(sprite.getX()-delta);
+            if(nuevaX<=0){
                 estadoMovimiento= EstadoMovimiento.MOV_DERECHA;
+
             }
 
         }
+
 
 
     }
 
     public void moverVertical(){
         float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_Y*100;
+        originalX=sprite.getX();
+        originalY=sprite.getY();
         switch (estadoMovimientoVertical){
             case SUBIENDO:
-                sprite.rotate(22);
-                sprite.setY(sprite.getY()+delta);
-                if(sprite.getY()>=ALTO){
-                    estadoMovimientoVertical=EstadoMovimientoVertical.BAJANDO;
+                sprite.setY(sprite.getY()+delta);//Aceleracion para subir a lo largo de la pantalla
+                if(sprite.getY()>=ALTO-sprite.getHeight()){//Evitar que se salga de la pantalla
+                    estadoMovimientoVertical=EstadoMovimientoVertical.BAJANDO;//cambia la direccion hacia abajo para que no se salga de la pantalla
+
                 }
+
+
+                //Obtenere el angulo de rotacion
+                if (sprite.getY()>originalY && sprite.getX()==originalX)//Prueba que el sprite solo se mueva en vertical hacia arriba
+                    if (angulo==90)
+                        nuevoAngulo=270;
+                    else
+                        nuevoAngulo=-90;//Se asigna el angulo de rotacion del sprite verticalmente contra las manecillas del reloj
+
+                else {
+                    arcoTangente= MathUtils.atan2(sprite.getY(),sprite.getX());
+                    nuevoAngulo= -1*(float)Math.toDegrees(arcoTangente);}// direccion del angulo
+
+
                 break;
 
             case BAJANDO:
-                sprite.rotate(203);
                 sprite.setY(sprite.getY()-delta);
-                if(sprite.getY()<=0){estadoMovimientoVertical=EstadoMovimientoVertical.SUBIENDO;
-            }
-            break;
+                if(sprite.getY()<=0){//Evitar que se salga de la pantall
+                    estadoMovimientoVertical=EstadoMovimientoVertical.SUBIENDO;//cambia la direccion hacia abajo para que no se salga de la pantalla
+                }
+
+                if (sprite.getY()<originalY && sprite.getX()==originalX)//Prueba que el sprite solo se mueva en vertical hacia abajo
+                    if (angulo==-90)
+                        nuevoAngulo=-270;
+
+                    else nuevoAngulo=90;//Se asigna el angulo de rotacion del sprite verticalmente contra las manecillas del reloj
+
+                else {
+                    arcoTangente= MathUtils.atan2(sprite.getY(),sprite.getX());
+                    nuevoAngulo= -1*(float)Math.toDegrees(arcoTangente);}// direccion del angulo
+
+                break;
 
         }
 
@@ -168,13 +257,17 @@ public class Cucaracha extends Objeto{
         this.estadoMovimiento = estadoMovimiento;
     }
 
+    // Modificador de estadoMovimiento
+    public void setEstadoMovimientoVertical (EstadoMovimientoVertical estadoMovimientoVertical) {
+        this.estadoMovimientoVertical=estadoMovimientoVertical;
+    }
+
 
     @Override
     public boolean contiene(Vector3 v) {
-        if (estado==EstadoMovimiento.MOV_IZQUIERDA || estado==EstadoMovimiento.MOV_DERECHA) {
-            return super.contiene(v);
-        }
-        return false;
+
+        return super.contiene(v);
+
     }
 
 
@@ -182,7 +275,7 @@ public class Cucaracha extends Objeto{
 
 
     enum EstadoMovimiento {
-        MUERTO,
+
         MOV_DERECHA,
         MOV_IZQUIERDA,
         QUIETO,
