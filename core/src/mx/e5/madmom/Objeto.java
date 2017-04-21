@@ -25,7 +25,7 @@ public class Objeto {
         float x = v.x;
         float y = v.y;
 
-        return x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
+        return  x>=sprite.getX() && x<=sprite.getX()+sprite.getWidth()
                 && y>=sprite.getY() && y<=sprite.getY()+sprite.getHeight();
     }
 
