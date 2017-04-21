@@ -88,7 +88,7 @@ public class PantallaNivel extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                madMom.setScreen(new PantallaProgreso(madMom));
+                madMom.setScreen(new MataCucarachas(madMom));
             }
         });
 
