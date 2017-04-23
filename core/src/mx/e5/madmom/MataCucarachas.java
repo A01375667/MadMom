@@ -98,8 +98,8 @@ public class MataCucarachas extends Pantalla
         arrCucarachas = new Array <Objeto> ();
 
         for (int i=0; i<Num_Cucarachas; i++){
-            float posx= MathUtils.random(0, ANCHO-236);
-            float posy=MathUtils.random(0, ALTO-125);
+            float posx= MathUtils.random(0, ANCHO/2);
+            float posy=MathUtils.random(0, ALTO/2);
             cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
 
             arrCucarachas.add(cucaracha);

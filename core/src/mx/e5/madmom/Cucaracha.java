@@ -47,7 +47,7 @@ public class Cucaracha extends Objeto{
     private float originalX;
     private float originalY;
 
-    private float angulo=0;
+    private float angulo=45;
     private float nuevoAngulo;
     private float arcoTangente;
 
@@ -74,10 +74,13 @@ public class Cucaracha extends Objeto{
         sprite = new Sprite(texturaPersonaje[0][0]);
         sprite.setPosition(x, y);    // Posición inicial
 
-       if (MathUtils.randomBoolean()) setEstadoMovimiento(EstadoMovimiento.MOV_IZQUIERDA);
+
+
+       if (MathUtils.randomBoolean())
+        setEstadoMovimiento(EstadoMovimiento.MOV_IZQUIERDA);
        else setEstadoMovimiento(EstadoMovimiento.MOV_DERECHA);
 
-       if (MathUtils.randomBoolean()) setEstadoMovimientoVertical(EstadoMovimientoVertical.SUBIENDO);
+      if (MathUtils.randomBoolean()) setEstadoMovimientoVertical(EstadoMovimientoVertical.SUBIENDO);
        else setEstadoMovimientoVertical(EstadoMovimientoVertical.BAJANDO);
 
 
@@ -99,14 +102,15 @@ public class Cucaracha extends Objeto{
                 TextureRegion region = spriteAnimado.getKeyFrame(timerAnimacion);
                 if (estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
                     if (!region.isFlipX()) {
-                        region.flip(true,false);
+                        region.flip(true,true);
                     }
                 } else {
                     if (region.isFlipX()) {
-                        region.flip(true,false);
+                        region.flip(true,true);
                     }
                 }
-                batch.draw(region,sprite.getX(),sprite.getY());
+                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, angulo);
+                //batch.draw(region,sprite.getX(),sprite.getY());
                 break;
 
             case MOV_IZQUIERDA:
@@ -125,11 +129,14 @@ public class Cucaracha extends Objeto{
                         region.flip(true,false);
                     }
                 }
-                batch.draw(region,sprite.getX(),sprite.getY());
+
+                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, angulo);
+                //batch.draw(region,sprite.getX(),sprite.getY());
                 break;
 
             case QUIETO:
             case INICIANDO:
+
                 sprite.draw(batch); // Dibuja el sprite estático
                 break;
         }
@@ -153,21 +160,11 @@ public class Cucaracha extends Objeto{
             switch (estadoMovimientoVertical){
                 case SUBIENDO:
                     moverVertical();
-
-                        /*if((int) nuevoAngulo!=(int)angulo){
-                            sprite.rotate(nuevoAngulo);
-                            angulo=nuevoAngulo;
-                        }*/
                      break;
 
 
                 case BAJANDO:
                     moverVertical();
-
-                       /* if((int) nuevoAngulo!=(int)angulo){
-                            sprite.rotate(nuevoAngulo);
-                            angulo=nuevoAngulo;
-                        }*/
                     break;
 
                     }
@@ -179,8 +176,10 @@ public class Cucaracha extends Objeto{
     // Mueve el personaje a la derecha/izquierda, prueba los bordes de la pantalla
     private void moverHorizontal() {
         // Ejecutar movimiento horizontal
+
         float nuevaX = sprite.getX();
         float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_X*100;
+
 
         // ¿Quiere ir a la Derecha?
         if ( estadoMovimiento==EstadoMovimiento.MOV_DERECHA) {
@@ -191,11 +190,14 @@ public class Cucaracha extends Objeto{
         }
         // ¿Quiere ir a la izquierda?
         if ( estadoMovimiento==EstadoMovimiento.MOV_IZQUIERDA) {
+
             sprite.setX(sprite.getX()-delta);
             if(nuevaX<=0){
                 estadoMovimiento= EstadoMovimiento.MOV_DERECHA;
 
             }
+
+
 
         }
 
@@ -207,6 +209,7 @@ public class Cucaracha extends Objeto{
         float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_Y*100;
         originalX=sprite.getX();
         originalY=sprite.getY();
+
         switch (estadoMovimientoVertical){
             case SUBIENDO:
                 sprite.setY(sprite.getY()+delta);//Aceleracion para subir a lo largo de la pantalla
@@ -214,20 +217,6 @@ public class Cucaracha extends Objeto{
                     estadoMovimientoVertical=EstadoMovimientoVertical.BAJANDO;//cambia la direccion hacia abajo para que no se salga de la pantalla
 
                 }
-
-
-                //Obtenere el angulo de rotacion
-                if (sprite.getY()>originalY && sprite.getX()==originalX)//Prueba que el sprite solo se mueva en vertical hacia arriba
-                    if (angulo==90)
-                        nuevoAngulo=270;
-                    else
-                        nuevoAngulo=-90;//Se asigna el angulo de rotacion del sprite verticalmente contra las manecillas del reloj
-
-                else {
-                    arcoTangente= MathUtils.atan2(sprite.getY(),sprite.getX());
-                    nuevoAngulo= -1*(float)Math.toDegrees(arcoTangente);}// direccion del angulo
-
-
                 break;
 
             case BAJANDO:
@@ -235,17 +224,6 @@ public class Cucaracha extends Objeto{
                 if(sprite.getY()<=0){//Evitar que se salga de la pantall
                     estadoMovimientoVertical=EstadoMovimientoVertical.SUBIENDO;//cambia la direccion hacia abajo para que no se salga de la pantalla
                 }
-
-                if (sprite.getY()<originalY && sprite.getX()==originalX)//Prueba que el sprite solo se mueva en vertical hacia abajo
-                    if (angulo==-90)
-                        nuevoAngulo=-270;
-
-                    else nuevoAngulo=90;//Se asigna el angulo de rotacion del sprite verticalmente contra las manecillas del reloj
-
-                else {
-                    arcoTangente= MathUtils.atan2(sprite.getY(),sprite.getX());
-                    nuevoAngulo= -1*(float)Math.toDegrees(arcoTangente);}// direccion del angulo
-
                 break;
 
         }
