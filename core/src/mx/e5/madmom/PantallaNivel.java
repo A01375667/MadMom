@@ -60,7 +60,7 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");*/
-        texturaFondoNivel= new Texture("fondoNivel.jpg");
+        texturaFondoNivel= new Texture("fondoAjustes.jpg");
         texturaBtnNivel1= new Texture("btnNIVELparque.png");
         texturaBtnNivel2= new Texture("btnNIVELdisco.png");
         texturaBtnBack= new Texture("btnBack.png");

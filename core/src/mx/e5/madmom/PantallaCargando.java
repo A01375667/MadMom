@@ -81,6 +81,13 @@ public class PantallaCargando extends Pantalla
         manager.load("btnBacke.png", Texture.class);
     }
 
+    private void cargarRecursosInvaders() {
+        manager.load("fondoInvaders.jpg", Texture.class);
+        manager.load("bacteria.png", Texture.class);
+        manager.load("burbuja.png", Texture.class);
+        manager.load("btnBacke.png", Texture.class);
+    }
+
     @Override
     public void render(float delta) {
         borrarPantalla(1,1,1,1);
