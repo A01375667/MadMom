@@ -109,7 +109,7 @@ public class Cucaracha extends Objeto{
                         region.flip(true,true);
                     }
                 }
-                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, angulo);
+                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
                 //batch.draw(region,sprite.getX(),sprite.getY());
                 break;
 
