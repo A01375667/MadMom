@@ -51,7 +51,7 @@ public class MataCucarachas extends Pantalla
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas=20;
+    private int Num_Cucarachas = 6;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -104,10 +104,10 @@ public class MataCucarachas extends Pantalla
         for (int i=0; i<Num_Cucarachas; i++){
             // OPTIMIZACIÓN: Se pusieron las posiciones de las
             // nuevas cucarachas como variables de instancia.
-            // El tiempo mejora aproximadamente 15%
-            /* float */ posx= MathUtils.random(0, ANCHO);
-            /* float */ posy=MathUtils.random(0, ALTO);
-            cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
+            // El tiempo mejora aproximadamente 10%.
+            /* float */ posx= MathUtils.random(0, ANCHO - texturaCucaracha.getWidth());
+            /* float */ posy=MathUtils.random(0, ALTO - texturaCucaracha.getHeight());
+            cucaracha=new Cucaracha(texturaCucaracha, posx, posy);
             arrCucarachas.add(cucaracha);
             }
 
