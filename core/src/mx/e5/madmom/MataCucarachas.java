@@ -32,7 +32,6 @@ public class MataCucarachas extends Pantalla
     //Personaje
     private Texture texturaCucaracha;
     private Cucaracha cucaracha;
-    private Cucaracha cucaracha2;
 
     // Audio
     private Sound efectoGolpe;  // Cuando el usuario golpea a la cucaracha
@@ -43,15 +42,14 @@ public class MataCucarachas extends Pantalla
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
 
-    float posx;
-    float posy;
+
 
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     //private EscenaPausa escenaPausa;
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas = 20;
+    private int Num_Cucarachas=11;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -96,19 +94,19 @@ public class MataCucarachas extends Pantalla
         escenaMataCucarachas.addActor(imgFondo);
 
         // Crea las cucarachas y las guarda en el arreglo
+
         arrCucarachas = new Array <Objeto> ();
 
-        long inicio = System.nanoTime();
-
         for (int i=0; i<Num_Cucarachas; i++){
-            /* float */ posx = MathUtils.random(0, ANCHO);
-            /* float */ posy = MathUtils.random(0, ALTO);
-            cucaracha = new Cucaracha(texturaCucaracha, posx, posy);
+            float posx= MathUtils.random(0, ANCHO);
+            float posy=MathUtils.random(0, ALTO);
+            cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
+
             arrCucarachas.add(cucaracha);
             }
 
-        long fin = System.nanoTime();
-        Gdx.app.log("creandoCucas", "Tiempo CON opt: " + (fin - inicio)/1000);
+
+
     }
 
     @Override
@@ -136,6 +134,8 @@ public class MataCucarachas extends Pantalla
         // Dibujar los objetos
         for (Objeto objeto : arreglo) {
             objeto.dibujar(batch);
+
+
         }
     }
 
