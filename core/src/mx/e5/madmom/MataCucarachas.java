@@ -42,14 +42,16 @@ public class MataCucarachas extends Pantalla
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
 
-
+    // Posiciones cucarachas
+    float posx;
+    float posy;
 
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     //private EscenaPausa escenaPausa;
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas=11;
+    private int Num_Cucarachas=20;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -97,16 +99,17 @@ public class MataCucarachas extends Pantalla
 
         arrCucarachas = new Array <Objeto> ();
 
-        for (int i=0; i<Num_Cucarachas; i++){
-            float posx= MathUtils.random(0, ANCHO);
-            float posy=MathUtils.random(0, ALTO);
-            cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
+        long inicio = System.nanoTime();
 
+        for (int i=0; i<Num_Cucarachas; i++){
+            /* float */ posx= MathUtils.random(0, ANCHO);
+            /* float */ posy=MathUtils.random(0, ALTO);
+            cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
             arrCucarachas.add(cucaracha);
             }
 
-
-
+        long fin = System.nanoTime();
+        Gdx.app.log("creandoCucas", "Tiempo: " + (fin - inicio)/1000);
     }
 
     @Override
