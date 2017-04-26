@@ -7,11 +7,17 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /**
@@ -26,8 +32,10 @@ public class MataCucarachas extends Pantalla
     private final AssetManager manager;
 
     //Texturas
+    private Texture texturaFondoMenu;
     private Texture texturaFondoBanio;
     private Texture texturaBtnPausa;
+    private Objeto btnPausa;
 
     //Personaje
     private Texture texturaCucaracha;
@@ -45,7 +53,7 @@ public class MataCucarachas extends Pantalla
 
 
     private EstadoJuego estado = EstadoJuego.JUGANDO;
-    //private EscenaPausa escenaPausa;
+    private EscenaPausa escenaPausa;
 
 
     // Las 10 cucarachas en el juego
@@ -92,8 +100,8 @@ public class MataCucarachas extends Pantalla
         escenaMataCucarachas = new Stage(vista, batch);
         Image imgFondo = new Image(texturaFondoBanio);
         escenaMataCucarachas.addActor(imgFondo);
-
         // Crea las cucarachas y las guarda en el arreglo
+
 
         arrCucarachas = new Array <Objeto> ();
 
@@ -104,6 +112,10 @@ public class MataCucarachas extends Pantalla
 
             arrCucarachas.add(cucaracha);
             }
+
+
+        // Botón pausa
+        btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6*texturaBtnPausa.getWidth()/4, 18*texturaBtnPausa.getHeight()/4);
 
 
 
@@ -120,6 +132,10 @@ public class MataCucarachas extends Pantalla
         dibujarObjetos(arrCucarachas);
         batch.end();
 
+        if (estado==EstadoJuego.PAUSADO) {
+            escenaPausa.draw();
+        }
+
     }
 
     private void actualizarObjeto(float delta) {
@@ -128,6 +144,8 @@ public class MataCucarachas extends Pantalla
             Cucaracha c = (Cucaracha)cucaracha;
             c.actualizar(delta);
         }
+
+
     }
 
     private void dibujarObjetos(Array<Objeto> arreglo) {
@@ -137,6 +155,9 @@ public class MataCucarachas extends Pantalla
 
 
         }
+
+        btnPausa.dibujar(batch);
+
     }
 
     @Override
@@ -184,6 +205,18 @@ public class MataCucarachas extends Pantalla
                 cucaracha.setEstadoMovimientoVertical(Cucaracha.EstadoMovimientoVertical.NORMAL);
             }
             }
+
+            if (btnPausa.contiene(v)) {
+                // Se pausa el juego
+                estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
+                if (estado==EstadoJuego.PAUSADO) {
+                    // Activar escenaPausa y pasarle el control
+                    if (escenaPausa==null) {
+                        escenaPausa = new EscenaPausa(vista, batch);
+                    }
+                    Gdx.input.setInputProcessor(escenaPausa);
+                }
+            }
             return true;
         }
 
@@ -206,5 +239,52 @@ public class MataCucarachas extends Pantalla
         public boolean scrolled(int amount) {
             return false;
         }
+    }
+
+
+
+    // La escena que se muestra cuando el juego se pausa
+   private class EscenaPausa extends Stage
+    {
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            // Crear fondo
+            Texture texturaFondoPausa =new Texture("fondoPausa.jpg");
+            Image imgFondo = new Image(texturaFondoPausa);
+            this.addActor(imgFondo);
+
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
+            btnMenu.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                }
+            });
+            this.addActor(btnMenu);
+
+            // Continuar
+            Texture texturabtnContinuar = new Texture("btnVolumen.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnContinuar));
+            ImageButton btnContinuar = new ImageButton(trdContinuar);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO*0.5f);
+            btnContinuar.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Continuar el juego
+                    estado = EstadoJuego.JUGANDO;
+                    // Regresa el control a la pantalla
+                    Gdx.input.setInputProcessor(procesadorEntrada);
+                }
+            });
+            this.addActor(btnContinuar);
+        }
+
     }
 }

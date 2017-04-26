@@ -51,4 +51,9 @@ public abstract class Pantalla implements Screen
     public void hide() {
         dispose();
     }
+
+
+
+
+
 }
