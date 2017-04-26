@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
@@ -65,7 +66,30 @@ public class BacteriaInvaders extends Pantalla
 
     @Override
     public void render(float delta) {
+        actualizarBurbujas(delta);
+    }
 
+    private void actualizarBurbujas(float delta) {
+        // ¿POR QUÉ CREES QUE SE RECORRE AL REVÉS EL ARREGLO?
+        for(int i=arrBurbujas.size-1; i>=0; i--) {
+            Burbuja burbuja = arrBurbujas.get(i);
+            burbuja.mover(delta);
+            if (burbuja.sprite.getX()>ANCHO) {
+                // Se salió de la pantalla
+                arrBurbujas.removeIndex(i);
+                break;
+            }
+            // Prueba choque contra todos los enemigos
+            for (int j=arrBacterias.size-1; j>=0; j--) {
+                Bacteria bacteria = arrBacterias.get(j);
+                if (burbuja.chocaCon(bacteria)) {
+                    // Borrar hongo, bala, aumentar puntos, etc.
+                    arrBacterias.removeIndex(j);
+                    arrBurbujas.removeIndex(i);
+                    break;  // Siguiente burbuja, ésta ya no existe
+                }
+            }
+        }
     }
 
     @Override
