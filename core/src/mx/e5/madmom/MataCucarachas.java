@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -42,7 +43,8 @@ public class MataCucarachas extends Pantalla
     private Cucaracha cucaracha;
 
     // Audio
-    private Sound efectoGolpe;  // Cuando el usuario golpea a la cucaracha
+    private Sound efectoAplastar;  // Cuando el usuario golpea a la cucaracha
+
 
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
@@ -70,7 +72,7 @@ public class MataCucarachas extends Pantalla
     private final Procesador procesadorEntrada = new Procesador();
 
 
-    // Constructor
+
     public MataCucarachas(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
@@ -87,9 +89,13 @@ public class MataCucarachas extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoBanio= new Texture("fondoBaño.jpg");
-        texturaBtnPausa=new Texture("btnPausa.png");
-        texturaCucaracha= new Texture("cucarachaSprite.png");
+        texturaFondoBanio= manager.get("fondoBaño.jpg");
+        texturaBtnPausa=manager.get("btnPausa.png");
+        texturaCucaracha= manager.get("cucarachaSprite.png");
+
+
+
+
     }
 
     private void crearObjetos() {
@@ -198,6 +204,7 @@ public class MataCucarachas extends Pantalla
             for (Objeto obj : arrCucarachas){
                 Cucaracha cucaracha = (Cucaracha) obj;
             if (cucaracha.contiene(v)) {
+                efectoAplastar.play();
                 cucaracha.setEstadoMovimiento(Cucaracha.EstadoMovimiento.QUIETO);
                 cucaracha.setEstadoMovimientoVertical(Cucaracha.EstadoMovimientoVertical.NORMAL);
             }
@@ -281,6 +288,52 @@ public class MataCucarachas extends Pantalla
                 }
             });
             this.addActor(btnContinuar);
+
+
+
+
+            /*
+            //Botón sonido ON
+            Texture textureBtnSonidoON= new Texture("CuadroPaloma.png");
+            TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
+            ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
+            btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+
+
+            //Botón sonido OFF
+            Texture texturaBtnSonidoOFF= new Texture("CuadroVacio.png");
+            TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
+            ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
+            btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+
+            /*switch (madMom.estadoMusica){
+                case PLAY:
+                    escenaPausa.addActor(btnSonidoOn);
+                    btnSonidoOn.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            madMom.estadoMusica = EstadoMusica.STOP;
+                            musicaFondo = manager.get("musicaMenu.mp3");
+                            musicaFondo.stop();
+                            madMom.setScreen(new PantallaAjustes(madMom));
+                        }
+                    });
+                    break;
+                case STOP:
+                    escenaPausa.addActor(btnSonidoOff);
+                    btnSonidoOff.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            madMom.estadoMusica = EstadoMusica.PLAY;
+                            musicaFondo = manager.get("musicaMenu.mp3");
+                            musicaFondo.setLooping(true);
+                            musicaFondo.play();
+                            madMom.setScreen(new PantallaAjustes(madMom));
+                        }
+                    });
+                    break;
+            }*/
+
         }
 
     }

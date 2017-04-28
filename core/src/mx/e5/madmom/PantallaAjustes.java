@@ -71,6 +71,7 @@ public class PantallaAjustes extends Pantalla
         escenaAjustes.addActor(imgFondo);
 
         mama = new Objeto(texturaMama, ANCHO/5, ALTO/2 - texturaMama.getHeight()/2);
+
         objetoTextoSonido = new Objeto(texturaTextoSonido, ANCHO/2 + texturaTextoSonido.getWidth()/8, ALTO/2 - texturaTextoSonido.getHeight()/2);
 
         //Botón back
