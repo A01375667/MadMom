@@ -8,6 +8,7 @@ public enum Pantallas
 {
     MENU,
     NIVEL,
-    MATACUCARACHAS
+    MATACUCARACHAS,
+    INVADERS
 
 }

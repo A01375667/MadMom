@@ -57,7 +57,9 @@ public class PantallaCargando extends Pantalla
             case NIVEL:
                 cargarRecursosNivel();
                 break;
-
+            case INVADERS:
+                cargarRecursosInvaders();
+                break;
         }
     }
 
@@ -78,14 +80,15 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoMenu.jpg", Texture.class);
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
-        manager.load("btnBacke.png", Texture.class);
+        manager.load("btnBack.png", Texture.class);
     }
 
     private void cargarRecursosInvaders() {
         manager.load("fondoInvaders.jpg", Texture.class);
         manager.load("bacteria.png", Texture.class);
         manager.load("burbuja.png", Texture.class);
-        manager.load("btnBacke.png", Texture.class);
+        manager.load("botella.png", Texture.class);
+        manager.load("btnBack.png", Texture.class);
     }
 
     @Override
@@ -115,6 +118,8 @@ public class PantallaCargando extends Pantalla
                 case MATACUCARACHAS:
                     madMom.setScreen(new MataCucarachas(madMom));   // 100% de carga
                     break;
+                case INVADERS:
+                    madMom.setScreen(new BacteriaInvaders(madMom)); // 100% de carga
             }
         }
         avance = (int)(manager.getProgress()*100);

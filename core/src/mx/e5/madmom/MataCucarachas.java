@@ -70,7 +70,7 @@ public class MataCucarachas extends Pantalla
     private final Procesador procesadorEntrada = new Procesador();
 
 
-
+    // Constructor
     public MataCucarachas(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
@@ -90,9 +90,6 @@ public class MataCucarachas extends Pantalla
         texturaFondoBanio= new Texture("fondoBaño.jpg");
         texturaBtnPausa=new Texture("btnPausa.png");
         texturaCucaracha= new Texture("cucarachaSprite.png");
-
-
-
     }
 
     private void crearObjetos() {
