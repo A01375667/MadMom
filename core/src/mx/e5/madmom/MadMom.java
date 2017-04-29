@@ -34,7 +34,5 @@ public class MadMom extends Game
 
 	@Override
 	public void dispose(){
-		batch.dispose();
-		img.dispose();
 	}
 }

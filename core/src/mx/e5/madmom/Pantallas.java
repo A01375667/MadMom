@@ -11,6 +11,7 @@ public enum Pantallas
     CREDITOS,
     AJUSTES,
     NIVEL,
-    MATACUCARACHAS
+    MATACUCARACHAS,
+    INVADERS
 
 }
