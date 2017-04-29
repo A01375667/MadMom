@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -31,9 +32,13 @@ public class PantallaConfiguracion extends Pantalla
     // Escenas
     private Stage escenaConfig;
 
+    //Asset Manager
+    private AssetManager manager;
+
     // Constructor
     public PantallaConfiguracion(MadMom madMom){
         this.madMom = madMom;
+        this.manager=madMom.getAssetManager();
     }
 
     @Override
@@ -43,10 +48,10 @@ public class PantallaConfiguracion extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoConfig = new Texture("fondoAjustes.jpg");
-        texturaBtnBackConfig = new Texture("btnBack.png");
-        texturaBtnCreditos = new Texture("btnCreditos.png");
-        texturaBtnSonido = new Texture("btnAjustesLetra.png");
+        texturaFondoConfig = manager.get("fondoAjustes.jpg");
+        texturaBtnBackConfig = manager.get("btnBack.png");
+        texturaBtnCreditos = manager.get("btnCreditos.png");
+        texturaBtnSonido = manager.get("btnAjustesLetra.png");
     }
 
     private void crearObjetos() {
@@ -64,7 +69,7 @@ public class PantallaConfiguracion extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaMenu(madMom));
+                //madMom.setScreen(new PantallaMenu(madMom));
             }
         });
 
@@ -77,12 +82,12 @@ public class PantallaConfiguracion extends Pantalla
         btnCreditos.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCreditos(madMom));
+                //madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES));
             }
         });
 
         //Botón sonido
-        TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnSonido));
+        /*TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnSonido));
         ImageButton btnSonido = new ImageButton(trdBtnSonido);
         btnSonido.setPosition(ANCHO/2 - btnSonido.getWidth()/2, ALTO - 14*btnSonido.getHeight()/4);
         escenaConfig.addActor(btnSonido);
@@ -90,9 +95,9 @@ public class PantallaConfiguracion extends Pantalla
         btnSonido.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaAjustes(madMom));
+                //madMom.setScreen(new PantallaAjustes(madMom));
             }
-        });
+        });*/
 
 
         Gdx.input.setInputProcessor(escenaConfig);
@@ -117,6 +122,10 @@ public class PantallaConfiguracion extends Pantalla
 
     @Override
     public void dispose() {
+        manager.unload("fondoAjustes.jpg");
+        manager.unload("btnBack.png");
+        manager.unload("btnCreditos.png");
+        manager.unload("btnAjustesLetra.png");
 
     }
 }

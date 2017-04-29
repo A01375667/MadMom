@@ -60,11 +60,6 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
-        /*
-        texturaFondoNivel= new Texture("fondoAjustes.jpg");
-        texturaBtnNivel1= new Texture("btnNIVELparque.png");
-        texturaBtnNivel2= new Texture("btnNIVELdisco.png");
-        texturaBtnBack= new Texture("btnBack.png");*/
 
     }
 
@@ -89,7 +84,7 @@ public class PantallaNivel extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                madMom.setScreen(new MataCucarachas(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
             }
         });
 
@@ -152,6 +147,12 @@ public class PantallaNivel extends Pantalla {
 
     @Override
     public void dispose() {
+
+        manager.unload("fondoMenu.jpg");
+        manager.unload("fondoMenu.jpg");
+        manager.unload("btnNIVELparque.png");
+        manager.unload("btnNIVELdisco.png");
+        manager.unload("btnBack.png");
 
     }
 }

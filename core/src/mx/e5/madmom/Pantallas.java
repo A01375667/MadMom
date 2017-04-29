@@ -7,6 +7,9 @@ package mx.e5.madmom;
 public enum Pantallas
 {
     MENU,
+    CONFIGURACION,
+    CREDITOS,
+    AJUSTES,
     NIVEL,
     MATACUCARACHAS
 

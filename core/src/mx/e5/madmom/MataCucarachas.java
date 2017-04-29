@@ -92,6 +92,7 @@ public class MataCucarachas extends Pantalla
         texturaFondoBanio= manager.get("fondoBaño.jpg");
         texturaBtnPausa=manager.get("btnPausa.png");
         texturaCucaracha= manager.get("cucarachaSprite.png");
+        efectoAplastar=manager.get("Disparar.mp3");
 
 
 

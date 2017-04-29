@@ -56,12 +56,12 @@ public class PantallaAjustes extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoAjustes = new Texture("fondoAjustes.jpg");
-        texturaTextoSonido = new Texture("btnVolumen.png");
-        texturaBtnSonidoOFF = new Texture("cuadroVacio.png");
-        textureBtnSonidoON = new Texture("cuadroPaloma.png");
-        texturaBtnBack = new Texture("btnBack.png");
-        texturaMama = new Texture("mamaDerecha.png");
+        texturaFondoAjustes = manager.get("fondoAjustes.jpg");
+        texturaTextoSonido = manager.get("btnVolumen.png");
+        texturaBtnSonidoOFF = manager.get("cuadroVacio.png");
+        textureBtnSonidoON = manager.get("cuadroPaloma.png");
+        texturaBtnBack = manager.get("btnBack.png");
+        texturaMama = manager.get("mamaDerecha.png");
     }
 
     private void crearObjetos() {

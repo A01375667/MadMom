@@ -101,7 +101,7 @@ public class PantallaMenu extends Pantalla
         btnConfig.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaConfiguracion(madMom));
+                madMom.setScreen(new PantallaCargando( madMom,Pantallas.CONFIGURACION));
             }
         });
 

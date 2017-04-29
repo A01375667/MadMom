@@ -51,16 +51,39 @@ public class PantallaCargando extends Pantalla
             case MENU:
                 cargarRecursosMenu();
                 break;
+            case CONFIGURACION:
+                cargarRecursosConfiguracion();
+                break;
+            case AJUSTES:
+                cargarRecursosAjustes();
+                break;
             case MATACUCARACHAS:
                 cargarRecursosMataCucarachas();
 
                 break;
             case NIVEL:
                 cargarRecursosNivel();
-                //madMom.setScreen(new PantallaNivel(madMom));
                 break;
 
+
+
         }
+    }
+
+    private void cargarRecursosConfiguracion() {
+        manager.load("fondoAjustes.jpg", Texture.class);
+        manager.load("btnBack.png", Texture.class);
+        manager.load("btnCreditos.png", Texture.class);
+        manager.load("btnAjustesLetra.png", Texture.class);
+    }
+
+    private void cargarRecursosAjustes() {
+        manager.load("fondoAjustes.jpg", Texture.class);
+        manager.load("btnVolumen.png",Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
+        manager.load("btnBack.png", Texture.class);
+        manager.load("mamaDerecha.png", Texture.class);
     }
 
     private void cargarRecursosMenu() {
@@ -74,12 +97,10 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoBaño.jpg", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("cucarachaSprite.png",Texture.class);
-
         manager.load("Disparar.mp3", Sound.class);
         manager.load("fondoPausa.jpg", Texture.class);
         manager.load("btnVolumen.png", Texture.class);
         manager.load("btnMENUU.png", Texture.class);
-
 
     }
 
@@ -94,7 +115,7 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoInvaders.jpg", Texture.class);
         manager.load("bacteria.png", Texture.class);
         manager.load("burbuja.png", Texture.class);
-        manager.load("btnBacke.png", Texture.class);
+        manager.load("btnBack.png", Texture.class);
     }
 
     @Override
@@ -121,11 +142,21 @@ public class PantallaCargando extends Pantalla
                 case MENU:
                     madMom.setScreen(new PantallaMenu(madMom));   // 100% de carga
                     break;
+                case CONFIGURACION:
+                    madMom.setScreen(new PantallaConfiguracion(madMom));
+                    break;
+                case CREDITOS:
+                    madMom.setScreen(new PantallaCreditos(madMom));
+                    break;
+                case AJUSTES:
+                    madMom.setScreen(new PantallaAjustes(madMom));
+                    break;
                 case MATACUCARACHAS:
                     madMom.setScreen(new MataCucarachas(madMom));   // 100% de carga
                     break;
                 case NIVEL:
                     madMom.setScreen(new PantallaNivel(madMom));
+                    break;
             }
         }
         avance = (int)(manager.getProgress()*100);
