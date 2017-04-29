@@ -129,6 +129,10 @@ public class PantallaMenu extends Pantalla
 
     @Override
     public void dispose() {
+        manager.unload("fondoMenu.jpg");
+        manager.unload("btnPlay1.png");
+        manager.unload("btnAjustes.png");
+        manager.unload("musicaMenu.mp3");
 
     }
 }

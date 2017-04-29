@@ -24,7 +24,7 @@ public class PantallaConfiguracion extends Pantalla
     private Texture texturaFondoConfig;
     private Texture texturaBtnBackConfig;
     private Texture texturaBtnCreditos;
-    private Texture texturaBtnSonido;
+    private Texture texturaBtnAjustes;
 
     // Dibujar
     private SpriteBatch batch;
@@ -51,7 +51,7 @@ public class PantallaConfiguracion extends Pantalla
         texturaFondoConfig = manager.get("fondoAjustes.jpg");
         texturaBtnBackConfig = manager.get("btnBack.png");
         texturaBtnCreditos = manager.get("btnCreditos.png");
-        texturaBtnSonido = manager.get("btnAjustesLetra.png");
+        texturaBtnAjustes = manager.get("btnAjustesLetra.png");
     }
 
     private void crearObjetos() {
@@ -69,7 +69,7 @@ public class PantallaConfiguracion extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //madMom.setScreen(new PantallaMenu(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
             }
         });
 
@@ -82,12 +82,12 @@ public class PantallaConfiguracion extends Pantalla
         btnCreditos.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CREDITOS));
             }
         });
 
-        //Botón sonido
-        /*TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnSonido));
+        //Botón Ajustes
+        TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnAjustes));
         ImageButton btnSonido = new ImageButton(trdBtnSonido);
         btnSonido.setPosition(ANCHO/2 - btnSonido.getWidth()/2, ALTO - 14*btnSonido.getHeight()/4);
         escenaConfig.addActor(btnSonido);
@@ -95,9 +95,9 @@ public class PantallaConfiguracion extends Pantalla
         btnSonido.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //madMom.setScreen(new PantallaAjustes(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES));
             }
-        });*/
+        });
 
 
         Gdx.input.setInputProcessor(escenaConfig);

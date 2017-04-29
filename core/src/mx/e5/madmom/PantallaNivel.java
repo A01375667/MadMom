@@ -111,7 +111,7 @@ public class PantallaNivel extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaMenu(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
 
             }
         });
@@ -148,7 +148,6 @@ public class PantallaNivel extends Pantalla {
     @Override
     public void dispose() {
 
-        manager.unload("fondoMenu.jpg");
         manager.unload("fondoMenu.jpg");
         manager.unload("btnNIVELparque.png");
         manager.unload("btnNIVELdisco.png");

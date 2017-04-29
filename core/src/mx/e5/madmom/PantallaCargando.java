@@ -54,12 +54,14 @@ public class PantallaCargando extends Pantalla
             case CONFIGURACION:
                 cargarRecursosConfiguracion();
                 break;
+            case CREDITOS:
+                cargarRecursosCreditos();
+                break;
             case AJUSTES:
                 cargarRecursosAjustes();
                 break;
             case MATACUCARACHAS:
                 cargarRecursosMataCucarachas();
-
                 break;
             case NIVEL:
                 cargarRecursosNivel();
@@ -68,6 +70,11 @@ public class PantallaCargando extends Pantalla
 
 
         }
+    }
+
+    private void cargarRecursosCreditos() {
+        manager.load("fondoCreditos.jpg",Texture.class);
+        manager.load("btnBack.png", Texture.class);
     }
 
     private void cargarRecursosConfiguracion() {

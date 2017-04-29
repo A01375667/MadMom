@@ -2,6 +2,7 @@ package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,11 +27,15 @@ public class PantallaCreditos extends Pantalla
     // Dibujar
     private SpriteBatch batch;
 
+    //Asset Manager
+    private AssetManager manager;
+
     // Escenas
     private Stage escenaCreditos;
 
     public PantallaCreditos(MadMom madMom) {
         this.madMom = madMom;
+        this.manager=madMom.getAssetManager();
     }
 
     @Override
@@ -40,8 +45,8 @@ public class PantallaCreditos extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoCreditos = new Texture("fondoCreditos.jpg");
-        texturaBtnBackCreditos = new Texture("btnBack.png");
+        texturaFondoCreditos =manager.get("fondoCreditos.jpg");
+        texturaBtnBackCreditos = manager.get("btnBack.png");
     }
 
     private void crearObjetos() {
@@ -59,7 +64,7 @@ public class PantallaCreditos extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaConfiguracion(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION));
             }
         });
 
@@ -85,6 +90,8 @@ public class PantallaCreditos extends Pantalla
 
     @Override
     public void dispose() {
+        manager.unload("fondoCreditos.jpg");
+        manager.unload("btnBack.png");
 
     }
 }

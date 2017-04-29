@@ -83,7 +83,7 @@ public class PantallaAjustes extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaConfiguracion(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION));
             }
         });
 
@@ -154,6 +154,12 @@ public class PantallaAjustes extends Pantalla
 
     @Override
     public void dispose() {
+        manager.unload("fondoAjustes.jpg");
+        manager.unload("btnVolumen.png");
+        manager.unload("cuadroVacio.png");
+        manager.unload("cuadroPaloma.png");
+        manager.unload("btnBack.png");
+        manager.unload("mamaDerecha.png");
 
     }
 }
