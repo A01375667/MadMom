@@ -66,9 +66,9 @@ public class PantallaCargando extends Pantalla
             case NIVEL:
                 cargarRecursosNivel();
                 break;
-
-
-
+            case INVADERS:
+                cargarRecursosInvaders();
+                break;
         }
     }
 
@@ -112,7 +112,7 @@ public class PantallaCargando extends Pantalla
     }
 
     private void cargarRecursosNivel() {
-        manager.load("fondoMenu.jpg", Texture.class);
+        manager.load("fondoNivel.jpg", Texture.class);
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
@@ -120,9 +120,10 @@ public class PantallaCargando extends Pantalla
 
     private void cargarRecursosInvaders() {
         manager.load("fondoInvaders.jpg", Texture.class);
+        manager.load("botella.png", Texture.class);
         manager.load("bacteria.png", Texture.class);
         manager.load("burbuja.png", Texture.class);
-        manager.load("btnBack.png", Texture.class);
+        manager.load("btnPausa.png", Texture.class);
     }
 
     @Override
@@ -163,6 +164,9 @@ public class PantallaCargando extends Pantalla
                     break;
                 case NIVEL:
                     madMom.setScreen(new PantallaNivel(madMom));
+                    break;
+                case INVADERS:
+                    madMom.setScreen(new BacteriaInvaders(madMom));
                     break;
             }
         }

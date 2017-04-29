@@ -56,7 +56,7 @@ public class PantallaNivel extends Pantalla {
 
 
     private void cargarTexturas() {
-        texturaFondoNivel= manager.get("fondoMenu.jpg");
+        texturaFondoNivel= manager.get("fondoNivel.jpg");
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
@@ -84,7 +84,7 @@ public class PantallaNivel extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
             }
         });
 
@@ -147,8 +147,7 @@ public class PantallaNivel extends Pantalla {
 
     @Override
     public void dispose() {
-
-        manager.unload("fondoMenu.jpg");
+        manager.unload("fondoNivel.jpg");
         manager.unload("btnNIVELparque.png");
         manager.unload("btnNIVELdisco.png");
         manager.unload("btnBack.png");
