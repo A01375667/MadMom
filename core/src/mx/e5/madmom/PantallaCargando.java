@@ -121,9 +121,10 @@ public class PantallaCargando extends Pantalla
     private void cargarRecursosInvaders() {
         manager.load("fondoInvaders.jpg", Texture.class);
         manager.load("botella.png", Texture.class);
-        manager.load("bacteria.png", Texture.class);
+        manager.load("spriteBacterias.png", Texture.class);
         manager.load("burbuja.png", Texture.class);
         manager.load("btnPausa.png", Texture.class);
+        manager.load("bacteriaEncerrada.png", Texture.class);
     }
 
     @Override

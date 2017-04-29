@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
@@ -30,6 +31,8 @@ public class BacteriaInvaders extends Pantalla
     // Burbujas para lanzar
     private Texture texturaBurbuja;
     private Array<Burbuja> arrBurbujas;
+    private Sprite spriteEncerrada;
+    private Texture texturaEncerrada;
 
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
@@ -53,9 +56,11 @@ public class BacteriaInvaders extends Pantalla
         arrBacterias = new Array<>();
         arrBurbujas = new Array<>();
         texturaFondo = manager.get("fondoInvaders.jpg");
-        texturaBacteria = manager.get("bacteria.png");
+        texturaBacteria = manager.get("spriteBacterias.png");
         texturaBurbuja = manager.get("burbuja.png");
         texturaBotella = manager.get("botella.png");
+        texturaEncerrada = manager.get("bacteriaEncerrada.png");
+        spriteEncerrada = new Sprite(texturaEncerrada);
         fondo = new Fondo(texturaFondo);
 
 
@@ -66,9 +71,10 @@ public class BacteriaInvaders extends Pantalla
     }
 
     private void crearBacterias() {
+        float area = ANCHO/NUM_BACTERIAS;
         // Crea las bacterias y las guarda en el arreglo
         for (int i = 0; i < NUM_BACTERIAS ; i++) {
-            float posx = MathUtils.random(0, ANCHO - texturaBacteria.getWidth());
+            float posx = MathUtils.random(ANCHO - (area*(NUM_BACTERIAS-i)), area*i);
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             Bacteria bacteria = new Bacteria(texturaBacteria, posx, posy);
             arrBacterias.add(bacteria);
@@ -123,13 +129,17 @@ public class BacteriaInvaders extends Pantalla
                 arrBurbujas.removeIndex(i);
                 break;
             }
-            // Prueba choque contra todos los enemigos
+            // Prueba choque contra todas las bacterias
             for (int j=arrBacterias.size-1; j>=0; j--) {
                 Bacteria bacteria = arrBacterias.get(j);
                 if (burbuja.chocaCon(bacteria)) {
-                    // Borrar hongo, bala, aumentar puntos, etc.
+                    // Encerrar bacteria en burbuja
+                    float posx = arrBacterias.get(j).sprite.getX();
+                    float posy = arrBacterias.get(j).sprite.getY();
                     arrBacterias.removeIndex(j);
-                    arrBurbujas.removeIndex(i);
+                    arrBurbujas.get(i).sprite.set(spriteEncerrada);
+                    arrBurbujas.get(i).sprite.setPosition(posx, posy);
+                    //arrBurbujas.removeIndex(i);
                     break;  // Siguiente burbuja, ésta ya no existe
                 }
             }

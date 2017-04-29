@@ -56,9 +56,6 @@ public class Cucaracha extends Objeto{
     // Recibe una imagen con varios frames (ver cucarachaSprite.png)
     public Cucaracha(Texture textura, float x, float y) {
 
-
-
-
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en 4 frames de 235x125 (ver cucarachaSprite.png)
