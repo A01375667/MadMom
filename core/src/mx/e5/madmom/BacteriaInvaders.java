@@ -26,7 +26,7 @@ public class BacteriaInvaders extends Pantalla
     // Enemigos
     private Texture texturaBacteria;
     private Array<Bacteria> arrBacterias;
-    private int numBacterias = 4;
+    private int numBacterias = 3;
     private int bacteriasAtrapadas = 0;
 
     // Burbujas para lanzar

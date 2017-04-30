@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 
 class Botella extends Objeto
 {
-    public float velocidad_x = 500;      // Velocidad vertical (arriba)
+    public float velocidad_x = 400;      // Velocidad vertical (arriba)
 
     // Recibe la imagen
     public Botella(Texture textura, float x, float y) {
