@@ -106,7 +106,8 @@ public class BacteriaInvaders extends Pantalla
         float area = ANCHO/numBacterias;
         // Crea las bacterias y las guarda en el arreglo
         for (int i = 0; i < numBacterias ; i++) {
-            float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)), area*i);
+            float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)) + texturaBacteria.getWidth()/2,
+                    area*(i+1) - texturaBacteria.getWidth());
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             Bacteria bacteria = new Bacteria(texturaBacteria, posx, posy);
             arrBacterias.add(bacteria);

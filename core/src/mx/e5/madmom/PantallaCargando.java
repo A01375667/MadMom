@@ -115,7 +115,7 @@ public class PantallaCargando extends Pantalla
     }
 
     private void cargarRecursosNivel() {
-        manager.load("fondoNivel.jpg", Texture.class);
+        manager.load("fondoAjustes.jpg", Texture.class);
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);

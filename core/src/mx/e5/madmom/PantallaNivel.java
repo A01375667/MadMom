@@ -56,7 +56,7 @@ public class PantallaNivel extends Pantalla {
 
 
     private void cargarTexturas() {
-        texturaFondoNivel= manager.get("fondoNivel.jpg");
+        texturaFondoNivel= manager.get("fondoAjustes.jpg");
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
@@ -147,7 +147,7 @@ public class PantallaNivel extends Pantalla {
 
     @Override
     public void dispose() {
-        manager.unload("fondoNivel.jpg");
+        manager.unload("fondoAjustes.jpg");
         manager.unload("btnNIVELparque.png");
         manager.unload("btnNIVELdisco.png");
         manager.unload("btnBack.png");
