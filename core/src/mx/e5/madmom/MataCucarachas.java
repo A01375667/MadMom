@@ -93,10 +93,6 @@ public class MataCucarachas extends Pantalla
         texturaBtnPausa=manager.get("btnPausa.png");
         texturaCucaracha= manager.get("cucarachaSprite.png");
         efectoAplastar=manager.get("Disparar.mp3");
-
-
-
-
     }
 
     private void crearObjetos() {
@@ -120,9 +116,6 @@ public class MataCucarachas extends Pantalla
 
         // Botón pausa
         btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6*texturaBtnPausa.getWidth()/4, 18*texturaBtnPausa.getHeight()/4);
-
-
-
     }
 
     @Override

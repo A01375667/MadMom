@@ -6,9 +6,17 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Created by Jorge Jiménez on 10/04/17.
@@ -50,6 +58,16 @@ public class BacteriaInvaders extends Pantalla
     private Texto textoInstruccion;
     private Texto textoTiempo;
 
+    // PAUSAR
+    private Texture texturaBtnPausa;
+    private Objeto btnPausa;
+    private EstadoJuego estado = EstadoJuego.JUGANDO;
+    private BacteriaInvaders.EscenaPausa escenaPausa;
+
+    // Procesador
+    private final ProcesadorEntrada procesadorEntrada = new ProcesadorEntrada();
+
+
 
 
     // Constructor
@@ -58,6 +76,8 @@ public class BacteriaInvaders extends Pantalla
         this.madMom = madMom;
         manager = madMom.getAssetManager();
     }
+
+
 
     @Override
     public void show() {
@@ -68,9 +88,10 @@ public class BacteriaInvaders extends Pantalla
         texturaBurbuja = manager.get("burbuja.png");
         texturaBotella = manager.get("botella.png");
         texturaEncerrada = manager.get("bacteriaEncerrada.png");
+        texturaBtnPausa = manager.get("btnPausa.png");
         spriteEncerrada = new Sprite(texturaEncerrada);
         fondo = new Fondo(texturaFondo);
-
+        btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6*texturaBtnPausa.getWidth()/4, 18*texturaBtnPausa.getHeight()/4);
 
         crearBacterias();
         botella = new Botella(texturaBotella, ANCHO/2 - texturaBotella.getWidth(), 0);
@@ -78,7 +99,7 @@ public class BacteriaInvaders extends Pantalla
         textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
         textoTiempo = new Texto("fuenteTiempo.fnt");
 
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        Gdx.input.setInputProcessor(procesadorEntrada);
     }
 
     private void crearBacterias() {
@@ -137,7 +158,13 @@ public class BacteriaInvaders extends Pantalla
             madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
         }
 
+        btnPausa.dibujar(batch);
+
         batch.end();
+
+        if (estado==EstadoJuego.PAUSADO) {
+            escenaPausa.draw();
+        }
     }
 
     private void actualizarBotella(float delta) {
@@ -215,6 +242,18 @@ public class BacteriaInvaders extends Pantalla
                 tiempoCarga += 1f;
             }
 
+            if (btnPausa.contiene(v)) {
+                // Se pausa el juego
+                estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
+                if (estado==EstadoJuego.PAUSADO) {
+                    // Activar escenaPausa y pasarle el control
+                    if (escenaPausa==null) {
+                        escenaPausa = new BacteriaInvaders.EscenaPausa(vista, batch);
+                    }
+                    Gdx.input.setInputProcessor(escenaPausa);
+                }
+            }
+
             return true;
         }
 
@@ -248,5 +287,95 @@ public class BacteriaInvaders extends Pantalla
         public boolean keyTyped(char character) {
             return false;
         }
+    }
+
+    private class EscenaPausa extends Stage
+    {
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            // Crear fondo
+            Texture texturaFondoPausa =new Texture("fondoPausa.jpg");
+            Image imgFondo = new Image(texturaFondoPausa);
+            this.addActor(imgFondo);
+
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
+            btnMenu.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                }
+            });
+            this.addActor(btnMenu);
+
+            // Continuar
+            Texture texturabtnContinuar = new Texture("btnVolumen.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnContinuar));
+            ImageButton btnContinuar = new ImageButton(trdContinuar);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO*0.5f);
+            btnContinuar.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Continuar el juego
+                    estado = EstadoJuego.JUGANDO;
+                    // Regresa el control a la pantalla
+                    Gdx.input.setInputProcessor(procesadorEntrada);
+                }
+            });
+            this.addActor(btnContinuar);
+
+
+
+
+            /*
+            //Botón sonido ON
+            Texture textureBtnSonidoON= new Texture("CuadroPaloma.png");
+            TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
+            ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
+            btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+
+
+            //Botón sonido OFF
+            Texture texturaBtnSonidoOFF= new Texture("CuadroVacio.png");
+            TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
+            ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
+            btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+
+            /*switch (madMom.estadoMusica){
+                case PLAY:
+                    escenaPausa.addActor(btnSonidoOn);
+                    btnSonidoOn.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            madMom.estadoMusica = EstadoMusica.STOP;
+                            musicaFondo = manager.get("musicaMenu.mp3");
+                            musicaFondo.stop();
+                            madMom.setScreen(new PantallaAjustes(madMom));
+                        }
+                    });
+                    break;
+                case STOP:
+                    escenaPausa.addActor(btnSonidoOff);
+                    btnSonidoOff.addListener(new ClickListener(){
+                        @Override
+                        public void clicked(InputEvent event, float x, float y) {
+                            madMom.estadoMusica = EstadoMusica.PLAY;
+                            musicaFondo = manager.get("musicaMenu.mp3");
+                            musicaFondo.setLooping(true);
+                            musicaFondo.play();
+                            madMom.setScreen(new PantallaAjustes(madMom));
+                        }
+                    });
+                    break;
+            }*/
+
+        }
+
     }
 }
