@@ -112,6 +112,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnVolumen.png", Texture.class);
         manager.load("btnMENUU.png", Texture.class);
 
+
     }
 
     private void cargarRecursosNivel() {
@@ -119,6 +120,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
+        manager.load("musicaMenu.mp3", Music.class);
     }
 
     private void cargarRecursosInvaders() {
@@ -128,6 +130,7 @@ public class PantallaCargando extends Pantalla
         manager.load("burbuja.png", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("bacteriaEncerrada.png", Texture.class);
+
     }
 
     private void cargarRecursosProgreso(){
@@ -138,18 +141,23 @@ public class PantallaCargando extends Pantalla
 
     @Override
     public void render(float delta) {
-        borrarPantalla(1,1,1,1);
+       //borrarPantalla(1,1,1,1);
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        spriteCargando.draw(batch);
-        texto.mostrarMensaje(batch,avance+" %",ANCHO/2,ALTO/2);
+        if (siguientePantalla.equals(Pantallas.MENU)||siguientePantalla.equals(Pantallas.AJUSTES)||siguientePantalla.equals(Pantallas.CONFIGURACION)||siguientePantalla.equals(Pantallas.CREDITOS)||siguientePantalla.equals(Pantallas.NIVEL)){
+            borrarPantalla(1,1,1,1);
+            spriteCargando.draw(batch);
+            texto.mostrarMensaje(batch,avance+" %",ANCHO/2,ALTO/2);}
         batch.end();
         // Actualizar
         timerAnimacion -= delta;
         if (timerAnimacion<=0) {
             timerAnimacion = TIEMPO_ENTRE_FRAMES;
             spriteCargando.rotate(20);
+
+
         }
+
         // Actualizar carga
         actualizarCargaRecursos();
     }

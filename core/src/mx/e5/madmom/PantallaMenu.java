@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -41,13 +42,14 @@ public class PantallaMenu extends Pantalla
 
     // Música
     public Music musicaFondo;
+    private Preferences preferences;
 
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
         madMom.puntosJugador = 0;
-        madMom.vidasJugador = 3;
+        madMom.vidasJugador =3;
     }
 
     @Override

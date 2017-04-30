@@ -1,7 +1,7 @@
 package mx.e5.madmom;
 
 
-import com.badlogic.gdx.Audio;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -33,7 +33,6 @@ public class MataCucarachas extends Pantalla
     private final AssetManager manager;
 
     //Texturas
-    private Texture texturaFondoMenu;
     private Texture texturaFondoBanio;
     private Texture texturaBtnPausa;
     private Objeto btnPausa;

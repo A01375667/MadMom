@@ -223,6 +223,12 @@ public class BacteriaInvaders extends Pantalla
 
     @Override
     public void dispose() {
+        manager.unload("fondoInvaders.jpg");
+        manager.unload("botella.png");
+        manager.unload("spriteBacterias.png");
+        manager.unload("burbuja.png");
+        manager.unload("btnPausa.png");
+        manager.unload("bacteriaEncerrada.png");
 
     }
 
