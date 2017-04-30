@@ -26,7 +26,8 @@ public class BacteriaInvaders extends Pantalla
     // Enemigos
     private Texture texturaBacteria;
     private Array<Bacteria> arrBacterias;
-    private final int NUM_BACTERIAS = 4;
+    private int numBacterias = 4;
+    private int bacteriasAtrapadas = 0;
 
     // Burbujas para lanzar
     private Texture texturaBurbuja;
@@ -38,6 +39,8 @@ public class BacteriaInvaders extends Pantalla
     private float tiempoVisibleInstrucciones = 2.0f;
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
+    // Tiempo de recarga para disparar
+    private float tiempoCarga = 1;
 
     // Botella
     Botella botella;
@@ -71,10 +74,10 @@ public class BacteriaInvaders extends Pantalla
     }
 
     private void crearBacterias() {
-        float area = ANCHO/NUM_BACTERIAS;
+        float area = ANCHO/numBacterias;
         // Crea las bacterias y las guarda en el arreglo
-        for (int i = 0; i < NUM_BACTERIAS ; i++) {
-            float posx = MathUtils.random(ANCHO - (area*(NUM_BACTERIAS-i)), area*i);
+        for (int i = 0; i < numBacterias ; i++) {
+            float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)), area*i);
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             Bacteria bacteria = new Bacteria(texturaBacteria, posx, posy);
             arrBacterias.add(bacteria);
@@ -84,6 +87,10 @@ public class BacteriaInvaders extends Pantalla
 
     @Override
     public void render(float delta) {
+
+        if(bacteriasAtrapadas >= numBacterias){
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+        }
 
         actualizarBotella(delta);
         actualizarBurbujas(delta);
@@ -139,6 +146,8 @@ public class BacteriaInvaders extends Pantalla
                     arrBacterias.removeIndex(j);
                     arrBurbujas.get(i).sprite.set(spriteEncerrada);
                     arrBurbujas.get(i).sprite.setPosition(posx, posy);
+                    bacteriasAtrapadas++;
+                    madMom.puntosJugador += 100;
                     //arrBurbujas.removeIndex(i);
                     break;  // Siguiente burbuja, ésta ya no existe
                 }

@@ -12,6 +12,7 @@ public enum Pantallas
     AJUSTES,
     NIVEL,
     MATACUCARACHAS,
-    INVADERS
+    INVADERS,
+    PROGRESO
 
 }

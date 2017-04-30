@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 public class PantallaProgreso extends Pantalla
 {
     private final MadMom madMom;
+    private final AssetManager manager;
 
     // Imágenes que se utilizarán
     private Texture texturaFondoProgreso;
@@ -39,6 +41,7 @@ public class PantallaProgreso extends Pantalla
 
     public PantallaProgreso(MadMom madMom) {
         this.madMom = madMom;
+        manager = madMom.getAssetManager();
     }
 
     @Override
@@ -48,9 +51,9 @@ public class PantallaProgreso extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoProgreso = new Texture("fondoAjustes.jpg");
-        texturaBtnPausaProgreso = new Texture("btnPausa.png");
-        texturaVida = new Texture("caraVida.png");
+        texturaFondoProgreso = manager.get("fondoAjustes.jpg", Texture.class);
+        texturaBtnPausaProgreso = manager.get("btnPausa.png", Texture.class);
+        texturaVida = manager.get("caraVida.png", Texture.class);
     }
 
     private void crearObjetos() {
@@ -70,7 +73,7 @@ public class PantallaProgreso extends Pantalla
         btnPausa.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaMenu(madMom));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
             }
         });
 

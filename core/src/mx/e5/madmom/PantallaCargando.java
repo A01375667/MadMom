@@ -69,6 +69,9 @@ public class PantallaCargando extends Pantalla
             case INVADERS:
                 cargarRecursosInvaders();
                 break;
+            case PROGRESO:
+                cargarRecursosProgreso();
+                break;
         }
     }
 
@@ -127,6 +130,12 @@ public class PantallaCargando extends Pantalla
         manager.load("bacteriaEncerrada.png", Texture.class);
     }
 
+    private void cargarRecursosProgreso(){
+        manager.load("fondoAjustes.jpg", Texture.class);
+        manager.load("btnPausa.png", Texture.class);
+        manager.load("caraVida.png", Texture.class);
+    }
+
     @Override
     public void render(float delta) {
         borrarPantalla(1,1,1,1);
@@ -169,6 +178,8 @@ public class PantallaCargando extends Pantalla
                 case INVADERS:
                     madMom.setScreen(new BacteriaInvaders(madMom));
                     break;
+                case PROGRESO:
+                    madMom.setScreen(new PantallaProgreso(madMom));
             }
         }
         avance = (int)(manager.getProgress()*100);
