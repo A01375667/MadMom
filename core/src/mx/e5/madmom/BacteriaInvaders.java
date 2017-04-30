@@ -40,11 +40,16 @@ public class BacteriaInvaders extends Pantalla
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
     // Tiempo de recarga para disparar
-    private float tiempoCarga = 1;
+    private float tiempoCarga = 0;
 
     // Botella
     Botella botella;
     private Texture texturaBotella;
+
+    // Textos
+    private Texto textoInstruccion;
+    private Texto textoTiempo;
+
 
 
     // Constructor
@@ -70,6 +75,9 @@ public class BacteriaInvaders extends Pantalla
         crearBacterias();
         botella = new Botella(texturaBotella, ANCHO/2 - texturaBotella.getWidth(), 0);
 
+        textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
+        textoTiempo = new Texto("fuenteTiempo.fnt");
+
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
@@ -91,6 +99,7 @@ public class BacteriaInvaders extends Pantalla
         if(bacteriasAtrapadas >= numBacterias){
             madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
         }
+        tiempoCarga -= delta;
 
         actualizarBotella(delta);
         actualizarBurbujas(delta);
@@ -113,6 +122,19 @@ public class BacteriaInvaders extends Pantalla
         // Dibujar burbujas
         for (Burbuja burbuja : arrBurbujas) {
             burbuja.dibujar(batch);
+        }
+
+        tiempoMiniJuego -= delta;
+        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 8*ANCHO/10, 5*ALTO/32);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10*ANCHO/11, 5*ALTO/32);
+
+        tiempoVisibleInstrucciones -= delta;
+        if(tiempoVisibleInstrucciones > 0){
+            textoInstruccion.mostrarMensaje(batch, "LIMPIA! \n  (TAP)", ANCHO/2, 3*ALTO/4);
+        }
+        if(tiempoMiniJuego <= 0){
+            madMom.vidasJugador--;
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
         }
 
         batch.end();
@@ -188,8 +210,9 @@ public class BacteriaInvaders extends Pantalla
             v.set(screenX, screenY, 0);
             camara.unproject(v);
 
-            if (v.y<ALTO/2) {
+            if (tiempoCarga <= 0) {
                 disparar();
+                tiempoCarga += 1f;
             }
 
             return true;

@@ -46,6 +46,8 @@ public class PantallaMenu extends Pantalla
     public PantallaMenu(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
+        madMom.puntosJugador = 0;
+        madMom.vidasJugador = 3;
     }
 
     @Override
