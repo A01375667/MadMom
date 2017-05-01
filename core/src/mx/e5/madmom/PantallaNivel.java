@@ -61,6 +61,7 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
 
+
     }
 
     private void crearObjetos() {

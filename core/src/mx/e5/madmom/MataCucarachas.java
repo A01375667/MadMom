@@ -5,6 +5,7 @@ package mx.e5.madmom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -246,12 +247,12 @@ public class MataCucarachas extends Pantalla
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa =new Texture("fondoPausa.jpg");
+            Texture texturaFondoPausa =manager.get("fondoPausa.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
             // Menu
-            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            Texture texturaBtnMenu = manager.get("btnMENUU.png");
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
@@ -285,47 +286,56 @@ public class MataCucarachas extends Pantalla
 
 
 
-            /*
+
             //Botón sonido ON
-            Texture textureBtnSonidoON= new Texture("CuadroPaloma.png");
+            Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
             TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
-            ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
+            final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
             btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
 
 
+
             //Botón sonido OFF
-            Texture texturaBtnSonidoOFF= new Texture("CuadroVacio.png");
+            Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
             TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
-            ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
+            final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
             btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
 
-            /*switch (madMom.estadoMusica){
+
+
+
+            switch (madMom.estadoMusica){
                 case PLAY:
-                    escenaPausa.addActor(btnSonidoOn);
+                    this.addActor(btnSonidoOn);
                     btnSonidoOn.addListener(new ClickListener(){
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
                             madMom.estadoMusica = EstadoMusica.STOP;
-                            musicaFondo = manager.get("musicaMenu.mp3");
+                            Music musicaFondo = manager.get("musicaMenu.mp3");
                             musicaFondo.stop();
-                            madMom.setScreen(new PantallaAjustes(madMom));
+
+                            getActors().removeValue(btnSonidoOn, true);
+
+                            //escenaPausa.addActor(btnSonidoOff);
+
                         }
                     });
                     break;
                 case STOP:
                     escenaPausa.addActor(btnSonidoOff);
-                    btnSonidoOff.addListener(new ClickListener(){
+                    this.addListener(new ClickListener(){
                         @Override
                         public void clicked(InputEvent event, float x, float y) {
                             madMom.estadoMusica = EstadoMusica.PLAY;
-                            musicaFondo = manager.get("musicaMenu.mp3");
+                            Music musicaFondo = manager.get("musicaMenu.mp3");
                             musicaFondo.setLooping(true);
                             musicaFondo.play();
-                            madMom.setScreen(new PantallaAjustes(madMom));
+                            getActors().removeValue(btnSonidoOff, true);
+                            escenaPausa.addActor(btnSonidoOn);
                         }
                     });
                     break;
-            }*/
+            }
 
         }
 
