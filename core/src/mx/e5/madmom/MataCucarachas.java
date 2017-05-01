@@ -53,14 +53,17 @@ public class MataCucarachas extends Pantalla
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
 
+    // Textos
+    private Texto textoInstruccion;
+    private Texto textoTiempo;
 
-
+    //Pausa
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas=1;
+    private int Num_Cucarachas=11;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -94,6 +97,8 @@ public class MataCucarachas extends Pantalla
         texturaBtnPausa=manager.get("btnPausa.png");
         texturaCucaracha= manager.get("cucarachaSprite.png");
         efectoAplastar=manager.get("Disparar.mp3");
+        textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
+        textoTiempo = new Texto("fuenteTiempo.fnt");
 
 
 
@@ -131,6 +136,21 @@ public class MataCucarachas extends Pantalla
 
         batch.begin();
         dibujarObjetos(arrCucarachas);
+
+        tiempoMiniJuego -= delta;
+        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 8*ANCHO/10, 5*ALTO/32);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10*ANCHO/11, 5*ALTO/32);
+
+        tiempoVisibleInstrucciones -= delta;
+        if(tiempoVisibleInstrucciones > 0){
+            textoInstruccion.mostrarMensaje(batch, "LIMPIA! \n  (TAP)", ANCHO/2, 3*ALTO/4);
+        }
+        if(tiempoMiniJuego <= 0){
+            madMom.vidasJugador--;
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+        }
+
+
         batch.end();
 
         if (estado==EstadoJuego.PAUSADO) {

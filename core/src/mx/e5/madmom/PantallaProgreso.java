@@ -20,8 +20,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by Jorge Jiménez on 21/03/17.
  */
 
-public class PantallaProgreso extends Pantalla
-{
+public class PantallaProgreso extends Pantalla {
     private final MadMom madMom;
     private final AssetManager manager;
 
@@ -39,12 +38,14 @@ public class PantallaProgreso extends Pantalla
 
     // Texto
     private Texto textoPuntos;
+    private float tiempoPantalla = 2;
 
     // Escenas
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private Stage escenaProgreso;
     private EscenaPausa escenaPausa;
     private EscenaPierde escenaPierde;
+    private EscenaGana escenaGana;
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
@@ -77,12 +78,12 @@ public class PantallaProgreso extends Pantalla
         textoPuntos = new Texto("fuenteTextoInstruccion.fnt");
 
         //Botón pausa
-        btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6*texturaBtnPausa.getWidth()/4, 18*texturaBtnPausa.getHeight()/4);
+        btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6 * texturaBtnPausa.getWidth() / 4, 18 * texturaBtnPausa.getHeight() / 4);
 
 
-        vida1 = new Objeto(texturaVida, ANCHO/5 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
-        vida2 = new Objeto(texturaVida, ANCHO/2 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
-        vida3 = new Objeto(texturaVida, 4*ANCHO/5 - texturaVida.getWidth()/2, 1*ALTO/5 - texturaVida.getHeight()/4);
+        vida1 = new Objeto(texturaVida, ANCHO / 5 - texturaVida.getWidth() / 2, 1 * ALTO / 5 - texturaVida.getHeight() / 4);
+        vida2 = new Objeto(texturaVida, ANCHO / 2 - texturaVida.getWidth() / 2, 1 * ALTO / 5 - texturaVida.getHeight() / 4);
+        vida3 = new Objeto(texturaVida, 4 * ANCHO / 5 - texturaVida.getWidth() / 2, 1 * ALTO / 5 - texturaVida.getHeight() / 4);
     }
 
     @Override
@@ -95,39 +96,48 @@ public class PantallaProgreso extends Pantalla
 
         batch.begin();
 
-        textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO/2, 6*ALTO/7);
-        textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO/2, 5*ALTO/7);
+        textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO / 2, 6 * ALTO / 7);
+        textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO / 2, 5 * ALTO / 7);
         dibujarVidas();
+        tiempoPantalla -= delta;
 
         batch.end();
 
-        if (estado==EstadoJuego.PAUSADO) {
+        if (estado == EstadoJuego.PAUSADO) {
             escenaPausa.draw();
-        }
-        else if (estado==EstadoJuego.PIERDE) escenaPierde.draw();
+        } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
 
-        else madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+        else if (estado == EstadoJuego.GANADO) escenaGana.draw();
+        else if (tiempoPantalla <= 0)
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
 
     }
 
     private void dibujarVidas() {
-        if(madMom.vidasJugador == 3){
+        if (madMom.vidasJugador == 3) {
             vida1.dibujar(batch);
             vida2.dibujar(batch);
             vida3.dibujar(batch);
-        } else if(madMom.vidasJugador == 2){
+        } else if (madMom.vidasJugador == 2) {
             vida1.dibujar(batch);
             vida2.dibujar(batch);
-        } else if(madMom.vidasJugador == 1){
+        } else if (madMom.vidasJugador == 1) {
             vida1.dibujar(batch);
-        } else if(madMom.vidasJugador <= 0){
-            estado=EstadoJuego.PIERDE;
-            if (escenaPierde==null) {
+        } else if (madMom.vidasJugador <= 0) {
+            estado = EstadoJuego.PIERDE;
+            if (escenaPierde == null) {
                 escenaPierde = new EscenaPierde(vista, batch);
             }
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
+        if (madMom.puntosJugador >= 300) {
+            estado = EstadoJuego.GANADO;
+            if (escenaGana == null) {
+                escenaGana = new EscenaGana(vista, batch);
+            }
+            Gdx.input.setInputProcessor(escenaGana);
+        }
 
 
         btnPausa.dibujar(batch);
@@ -154,7 +164,7 @@ public class PantallaProgreso extends Pantalla
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa =new Texture("fondoPausa.jpg");
+            Texture texturaFondoPausa = new Texture("fondoPausa.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -163,12 +173,12 @@ public class PantallaProgreso extends Pantalla
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
-            btnMenu.addListener(new ClickListener(){
+            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -178,8 +188,8 @@ public class PantallaProgreso extends Pantalla
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO*0.5f);
-            btnContinuar.addListener(new ClickListener(){
+            btnContinuar.setPosition(ANCHO / 2 - btnContinuar.getWidth() / 2, ALTO * 0.5f);
+            btnContinuar.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Continuar el juego
@@ -189,57 +199,59 @@ public class PantallaProgreso extends Pantalla
                 }
             });
             this.addActor(btnContinuar);
-    }
+        }
 
     }
 
-    private class EscenaPierde extends Stage{
-        public EscenaPierde (Viewport vista, SpriteBatch batch) {
-        super(vista, batch);
-        // Crear fondo
-            Texture texturaFondoPausa =new Texture("fondoPantallaPerdiste.jpg");
+    private class EscenaPierde extends Stage {
+        public EscenaPierde(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            // Crear fondo
+            Texture texturaFondoPausa = new Texture("fondoPantallaPerdiste.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
-        // Menu
-        Texture texturaBtnMenu = new Texture("btnMENUU.png");
-        TextureRegionDrawable trdMenu = new TextureRegionDrawable(
-                new TextureRegion(texturaBtnMenu));
-        ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
-            btnMenu.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // Regresa al menú
-                madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
-            }
-        });
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                }
+            });
             this.addActor(btnMenu);
 
-        // Continuar
-        Texture texturabtnReintentar = new Texture("btnVolumen.png");
-        TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
-                new TextureRegion(texturabtnReintentar));
-        ImageButton btnReintentar = new ImageButton(trdReintentar);
-            btnReintentar.setPosition(ANCHO/2-btnReintentar.getWidth()/2, ALTO*0.5f);
-            btnReintentar.addListener(new ClickListener(){
+            // Continuar
+            Texture texturabtnReintentar = new Texture("btnVolumen.png");
+            TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnReintentar));
+            ImageButton btnReintentar = new ImageButton(trdReintentar);
+            btnReintentar.setPosition(ANCHO / 2 - btnReintentar.getWidth() / 2, ALTO * 0.5f);
+            btnReintentar.addListener(new ClickListener() {
 
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // Reintentar el juego
-                estado = EstadoJuego.JUGANDO;
-                madMom.vidasJugador=3;
-                madMom.puntosJugador=0;
-                // Regresa el control a la pantalla
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Reintentar el juego
+                    estado = EstadoJuego.JUGANDO;
+                    madMom.vidasJugador = 3;
+                    madMom.puntosJugador = 0;
+                    // Regresa el control a la pantalla
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
 
-            }
-        });
+                }
+            });
             this.addActor(btnReintentar);
         }
 
 
     }
+
+
 
     private class Procesador implements InputProcessor{
         private Vector3 v = new Vector3();
@@ -298,4 +310,52 @@ public class PantallaProgreso extends Pantalla
         }
     }
 
+    private class EscenaGana extends Stage {
+        public EscenaGana(Viewport vista, SpriteBatch batch) {
+            super(vista, batch);
+            // Crear fondo
+            Texture texturaFondoPausa = new Texture("fondoPantallaGanaste.jpg");
+            Image imgFondo = new Image(texturaFondoPausa);
+            this.addActor(imgFondo);
+
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.addListener(new ClickListener() {
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                }
+            });
+            this.addActor(btnMenu);
+
+            // Continuar
+            Texture texturabtnReintentar = new Texture("btnVolumen.png");
+            TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnReintentar));
+            ImageButton btnReintentar = new ImageButton(trdReintentar);
+            btnReintentar.setPosition(ANCHO / 2 - btnReintentar.getWidth() / 2, ALTO * 0.5f);
+            btnReintentar.addListener(new ClickListener() {
+
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Reintentar el juego
+                    estado = EstadoJuego.JUGANDO;
+                    madMom.vidasJugador = 3;
+                    madMom.puntosJugador = 0;
+                    // Regresa el control a la pantalla
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.NIVEL));
+
+                }
+            });
+            this.addActor(btnReintentar);
+
+        }
+
+
+    }
 }

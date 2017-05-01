@@ -106,8 +106,11 @@ public class Cucaracha extends Objeto{
                         region.flip(true,true);
                     }
                 }
-                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
-                //batch.draw(region,sprite.getX(),sprite.getY());
+                if (estadoMovimientoVertical==EstadoMovimientoVertical.SUBIENDO)
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
+                else
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, -45);
+
                 break;
 
             case MOV_IZQUIERDA:
@@ -127,8 +130,12 @@ public class Cucaracha extends Objeto{
                     }
                 }
 
-                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, angulo);
-                //batch.draw(region,sprite.getX(),sprite.getY());
+                if (estadoMovimientoVertical==EstadoMovimientoVertical.SUBIENDO)
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, -45);
+                else
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
+
+
                 break;
 
             case QUIETO:

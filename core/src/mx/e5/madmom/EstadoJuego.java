@@ -9,4 +9,5 @@ public enum EstadoJuego
     JUGANDO,
     PAUSADO,
     PIERDE,
+    GANADO
 }
