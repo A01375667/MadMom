@@ -30,7 +30,6 @@ public class PantallaCargando extends Pantalla
 
     private Texture texturaCargando;
 
-    private static Preferences settings;
 
     public PantallaCargando(MadMom madMom, Pantallas siguientePantalla) {
         this.madMom = madMom;
@@ -117,7 +116,6 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoPausa.jpg", Texture.class);
         manager.load("btnVolumen.png", Texture.class);
         manager.load("btnMENUU.png", Texture.class);
-        manager.load("musicaMenu.mp3",  Music.class);
         manager.load("cuadroVacio.png", Texture.class);
         manager.load("cuadroPaloma.png", Texture.class);
 
@@ -129,7 +127,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
-        manager.load("musicaMenu.mp3", Music.class);
+
     }
 
     private void cargarRecursosInvaders() {
@@ -139,6 +137,11 @@ public class PantallaCargando extends Pantalla
         manager.load("burbuja.png", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("bacteriaEncerrada.png", Texture.class);
+        manager.load("fondoPausa.jpg", Texture.class);
+        manager.load("btnVolumen.png", Texture.class);
+        manager.load("btnMENUU.png", Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
 
     }
 

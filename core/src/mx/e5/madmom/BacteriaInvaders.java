@@ -3,6 +3,7 @@ package mx.e5.madmom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -337,50 +338,72 @@ public class BacteriaInvaders extends Pantalla
             });
             this.addActor(btnContinuar);
 
-
-
-
-            /*
             //Botón sonido ON
-            Texture textureBtnSonidoON= new Texture("CuadroPaloma.png");
+            final Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
             TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
-            ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
+            final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
             btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+            //agregar el actor a la pantalla
+            this.addActor(btnSonidoOn);
+            //no dejar visible en la pantalla
+            btnSonidoOn.setVisible(false);
 
 
             //Botón sonido OFF
-            Texture texturaBtnSonidoOFF= new Texture("CuadroVacio.png");
-            TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
-            ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
+            Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
+            final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
+            final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
             btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+            this.addActor(btnSonidoOff);
+            btnSonidoOff.setVisible(false);
 
-            /*switch (madMom.estadoMusica){
-                case PLAY:
-                    escenaPausa.addActor(btnSonidoOn);
-                    btnSonidoOn.addListener(new ClickListener(){
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            madMom.estadoMusica = EstadoMusica.STOP;
-                            musicaFondo = manager.get("musicaMenu.mp3");
-                            musicaFondo.stop();
-                            madMom.setScreen(new PantallaAjustes(madMom));
-                        }
-                    });
-                    break;
-                case STOP:
-                    escenaPausa.addActor(btnSonidoOff);
-                    btnSonidoOff.addListener(new ClickListener(){
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            madMom.estadoMusica = EstadoMusica.PLAY;
-                            musicaFondo = manager.get("musicaMenu.mp3");
-                            musicaFondo.setLooping(true);
-                            musicaFondo.play();
-                            madMom.setScreen(new PantallaAjustes(madMom));
-                        }
-                    });
-                    break;
-            }*/
+            if (madMom.estadoMusica==EstadoMusica.PLAY){ //Mostar el boton de sonido ON
+                btnSonidoOn.setVisible(true);
+                //Deshabilitar el litsener del boton sonido Off
+                btnSonidoOff.setDisabled(true);
+            }
+
+            else {
+                btnSonidoOn.setDisabled(true);
+                btnSonidoOff.setVisible(true);
+            }
+
+
+            //Accion boton sonido ON
+            this.addActor(btnSonidoOn);
+            btnSonidoOn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.STOP;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.stop();
+                    btnSonidoOn.setVisible(false);
+                    btnSonidoOff.setVisible(true);
+                    btnSonidoOff.setDisabled(false);
+
+                }
+            });
+
+
+
+            //Accion boton sonido OFF
+            btnSonidoOff.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.PLAY;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.play();
+                    btnSonidoOff.setVisible(false);
+                    btnSonidoOn.setVisible(true);
+                    btnSonidoOn.setDisabled(false);
+
+
+
+                }});
+
+
 
         }
 
