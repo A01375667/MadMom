@@ -49,6 +49,11 @@ public class PantallaProgreso extends Pantalla
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
 
+    // Tiempo visible
+    private float tiempoVisible = 2.5f;
+
+
+
     public PantallaProgreso(MadMom madMom) {
         this.madMom = madMom;
         manager = madMom.getAssetManager();
@@ -101,12 +106,16 @@ public class PantallaProgreso extends Pantalla
 
         batch.end();
 
+        tiempoVisible -= delta;
+
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
         }
         else if (estado==EstadoJuego.PIERDE) escenaPierde.draw();
 
-        else madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+        else if(tiempoVisible <= 0){
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+        }
 
     }
 
