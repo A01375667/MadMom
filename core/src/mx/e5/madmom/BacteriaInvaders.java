@@ -109,6 +109,9 @@ public class BacteriaInvaders extends Pantalla
         for (int i = 0; i < numBacterias ; i++) {
             float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)) + texturaBacteria.getWidth()/2,
                     area*(i+1) - texturaBacteria.getWidth());
+            if(posx < 5){
+                posx += 10;
+            }
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             Bacteria bacteria = new Bacteria(texturaBacteria, posx, posy);
             arrBacterias.add(bacteria);
