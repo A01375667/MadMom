@@ -4,6 +4,7 @@ package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -44,7 +45,7 @@ public class MataCucarachas extends Pantalla
 
     // Audio
     private Sound efectoAplastar;  // Cuando el usuario golpea a la cucaracha
-
+    private Preferences preferences;
 
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
@@ -52,14 +53,17 @@ public class MataCucarachas extends Pantalla
     // Tiempo del minijuego
     private float tiempoMiniJuego = 10;
 
+    // Textos
+    private Texto textoInstruccion;
+    private Texto textoTiempo;
 
-
+    //Pausa
     private EstadoJuego estado = EstadoJuego.JUGANDO;
     private EscenaPausa escenaPausa;
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas=1;
+    private int Num_Cucarachas=8;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -93,6 +97,11 @@ public class MataCucarachas extends Pantalla
         texturaBtnPausa=manager.get("btnPausa.png");
         texturaCucaracha= manager.get("cucarachaSprite.png");
         efectoAplastar=manager.get("Disparar.mp3");
+        textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
+        textoTiempo = new Texto("fuenteTiempo.fnt");
+
+
+
     }
 
     private void crearObjetos() {
@@ -106,6 +115,7 @@ public class MataCucarachas extends Pantalla
         arrCucarachas = new Array <Objeto> ();
 
         for (int i=0; i<Num_Cucarachas; i++){
+
             float posx= MathUtils.random(0, ANCHO/2);
             float posy=MathUtils.random(0, ALTO/2);
             cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
@@ -122,11 +132,31 @@ public class MataCucarachas extends Pantalla
     public void render(float delta) {
         borrarPantalla();
         escenaMataCucarachas.draw();
+        if (arrCucarachas.size==0){
+            madMom.puntosJugador+=150;
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+        }
+
         actualizarObjeto(delta);
         
 
         batch.begin();
         dibujarObjetos(arrCucarachas);
+
+        tiempoMiniJuego -= delta;
+        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 8*ANCHO/10, 5*ALTO/32);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10*ANCHO/11, 5*ALTO/32);
+
+        tiempoVisibleInstrucciones -= delta;
+        if(tiempoVisibleInstrucciones > 0){
+            textoInstruccion.mostrarMensaje(batch, "PARA LA INVASIÓN", ANCHO/2, 3*ALTO/4);
+        }
+        if(tiempoMiniJuego <= 0){
+            madMom.vidasJugador--;
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+        }
+
+
         batch.end();
 
         if (estado==EstadoJuego.PAUSADO) {
@@ -199,8 +229,7 @@ public class MataCucarachas extends Pantalla
                 Cucaracha cucaracha = (Cucaracha) obj;
             if (cucaracha.contiene(v)) {
                 efectoAplastar.play();
-                cucaracha.setEstadoMovimiento(Cucaracha.EstadoMovimiento.QUIETO);
-                cucaracha.setEstadoMovimientoVertical(Cucaracha.EstadoMovimientoVertical.NORMAL);
+                arrCucarachas.removeValue(cucaracha, true);
             }
             }
 
@@ -288,54 +317,71 @@ public class MataCucarachas extends Pantalla
 
 
             //Botón sonido ON
-            Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
+            final Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
             TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
             final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
             btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
-
+            //agregar el actor a la pantalla
+            this.addActor(btnSonidoOn);
+            //no dejar visible en la pantalla
+            btnSonidoOn.setVisible(false);
 
 
             //Botón sonido OFF
             Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
-            TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
+            final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
             final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
             btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+            this.addActor(btnSonidoOff);
+            btnSonidoOff.setVisible(false);
 
-
-
-
-            switch (madMom.estadoMusica){
-                case PLAY:
-                    this.addActor(btnSonidoOn);
-                    btnSonidoOn.addListener(new ClickListener(){
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            madMom.estadoMusica = EstadoMusica.STOP;
-                            Music musicaFondo = manager.get("musicaMenu.mp3");
-                            musicaFondo.stop();
-
-                            getActors().removeValue(btnSonidoOn, true);
-
-                            //escenaPausa.addActor(btnSonidoOff);
-
-                        }
-                    });
-                    break;
-                case STOP:
-                    escenaPausa.addActor(btnSonidoOff);
-                    this.addListener(new ClickListener(){
-                        @Override
-                        public void clicked(InputEvent event, float x, float y) {
-                            madMom.estadoMusica = EstadoMusica.PLAY;
-                            Music musicaFondo = manager.get("musicaMenu.mp3");
-                            musicaFondo.setLooping(true);
-                            musicaFondo.play();
-                            getActors().removeValue(btnSonidoOff, true);
-                            escenaPausa.addActor(btnSonidoOn);
-                        }
-                    });
-                    break;
+            if (madMom.estadoMusica==EstadoMusica.PLAY){ //Mostar el boton de sonido ON
+                btnSonidoOn.setVisible(true);
+                //Deshabilitar el litsener del boton sonido Off
+                btnSonidoOff.setDisabled(true);
             }
+
+            else {
+                btnSonidoOn.setDisabled(true);
+                btnSonidoOff.setVisible(true);
+            }
+
+
+            //Accion boton sonido ON
+            this.addActor(btnSonidoOn);
+            btnSonidoOn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.STOP;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.stop();
+                    btnSonidoOn.setVisible(false);
+                    btnSonidoOff.setVisible(true);
+                    btnSonidoOff.setDisabled(false);
+
+                }
+                });
+
+
+
+            //Accion boton sonido OFF
+            btnSonidoOff.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.PLAY;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.play();
+                    btnSonidoOff.setVisible(false);
+                    btnSonidoOn.setVisible(true);
+                    btnSonidoOn.setDisabled(false);
+
+
+
+                }});
+
+
 
         }
 

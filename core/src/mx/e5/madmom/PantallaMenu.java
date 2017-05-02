@@ -136,7 +136,7 @@ public class PantallaMenu extends Pantalla
         manager.unload("fondoMenu.jpg");
         manager.unload("btnPlay1.png");
         manager.unload("btnAjustes.png");
-        manager.unload("musicaMenu.mp3");
+
 
     }
 }

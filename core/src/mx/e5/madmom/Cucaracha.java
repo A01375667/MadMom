@@ -43,14 +43,6 @@ public class Cucaracha extends Objeto{
     //Estados de Movimiento Cucaracha Horizontal
     private EstadoMovimientoVertical estadoMovimientoVertical=EstadoMovimientoVertical.NORMAL;
 
-    //
-    private float originalX;
-    private float originalY;
-
-    private float angulo=45;
-    private float nuevoAngulo;
-    private float arcoTangente;
-
 
 
     // Recibe una imagen con varios frames (ver cucarachaSprite.png)
@@ -106,8 +98,11 @@ public class Cucaracha extends Objeto{
                         region.flip(true,true);
                     }
                 }
-                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
-                //batch.draw(region,sprite.getX(),sprite.getY());
+                if (estadoMovimientoVertical==EstadoMovimientoVertical.SUBIENDO)
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
+                else
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, -45);
+
                 break;
 
             case MOV_IZQUIERDA:
@@ -127,11 +122,19 @@ public class Cucaracha extends Objeto{
                     }
                 }
 
-                batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, angulo);
-                //batch.draw(region,sprite.getX(),sprite.getY());
+                if (estadoMovimientoVertical==EstadoMovimientoVertical.SUBIENDO)
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, -45);
+                else
+                    batch.draw(region, sprite.getX(), sprite.getY(), sprite.getOriginX(), sprite.getOriginY(),sprite.getWidth(), sprite.getHeight(), 1, 1, 45);
+
+
                 break;
 
             case QUIETO:
+                sprite.setColor(0,0,0,0);
+                sprite.draw(batch); // Dibuja el sprite estático
+                break;
+
             case INICIANDO:
 
                 sprite.draw(batch); // Dibuja el sprite estático
@@ -204,8 +207,6 @@ public class Cucaracha extends Objeto{
 
     public void moverVertical(){
         float delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_Y*100;
-        originalX=sprite.getX();
-        originalY=sprite.getY();
 
         switch (estadoMovimientoVertical){
             case SUBIENDO:
