@@ -131,7 +131,7 @@ public class PantallaProgreso extends Pantalla {
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
-        if (madMom.puntosJugador >= 300) {
+        if (madMom.puntosJugador >= 1100) {
             estado = EstadoJuego.GANADO;
             if (escenaGana == null) {
                 escenaGana = new EscenaGana(vista, batch);

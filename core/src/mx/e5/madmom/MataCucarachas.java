@@ -63,7 +63,7 @@ public class MataCucarachas extends Pantalla
 
 
     // Las 10 cucarachas en el juego
-    private int Num_Cucarachas=11;
+    private int Num_Cucarachas=8;
     private Array<Objeto> arrCucarachas;
 
     // Dibujar
@@ -115,6 +115,7 @@ public class MataCucarachas extends Pantalla
         arrCucarachas = new Array <Objeto> ();
 
         for (int i=0; i<Num_Cucarachas; i++){
+
             float posx= MathUtils.random(0, ANCHO/2);
             float posy=MathUtils.random(0, ALTO/2);
             cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
@@ -131,6 +132,11 @@ public class MataCucarachas extends Pantalla
     public void render(float delta) {
         borrarPantalla();
         escenaMataCucarachas.draw();
+        if (arrCucarachas.size==0){
+            madMom.puntosJugador+=150;
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+        }
+
         actualizarObjeto(delta);
         
 
@@ -143,7 +149,7 @@ public class MataCucarachas extends Pantalla
 
         tiempoVisibleInstrucciones -= delta;
         if(tiempoVisibleInstrucciones > 0){
-            textoInstruccion.mostrarMensaje(batch, "LIMPIA! \n  (TAP)", ANCHO/2, 3*ALTO/4);
+            textoInstruccion.mostrarMensaje(batch, "PARA LA INVASIÓN", ANCHO/2, 3*ALTO/4);
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
@@ -223,8 +229,7 @@ public class MataCucarachas extends Pantalla
                 Cucaracha cucaracha = (Cucaracha) obj;
             if (cucaracha.contiene(v)) {
                 efectoAplastar.play();
-                cucaracha.setEstadoMovimiento(Cucaracha.EstadoMovimiento.QUIETO);
-                cucaracha.setEstadoMovimientoVertical(Cucaracha.EstadoMovimientoVertical.NORMAL);
+                arrCucarachas.removeValue(cucaracha, true);
             }
             }
 
