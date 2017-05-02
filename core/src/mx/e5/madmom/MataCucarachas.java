@@ -138,8 +138,8 @@ public class MataCucarachas extends Pantalla
         }
 
         actualizarObjeto(delta);
-        
 
+        if (estado==EstadoJuego.JUGANDO){
         batch.begin();
         dibujarObjetos(arrCucarachas);
 
@@ -157,7 +157,7 @@ public class MataCucarachas extends Pantalla
         }
 
 
-        batch.end();
+        batch.end();}
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
