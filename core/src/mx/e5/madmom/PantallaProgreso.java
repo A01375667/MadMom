@@ -94,6 +94,8 @@ public class PantallaProgreso extends Pantalla {
 
         batch.setProjectionMatrix(camara.combined);
 
+
+
         batch.begin();
 
         textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO / 2, 6 * ALTO / 7);

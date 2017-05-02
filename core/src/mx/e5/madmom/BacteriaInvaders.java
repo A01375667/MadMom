@@ -130,7 +130,7 @@ public class BacteriaInvaders extends Pantalla
         // Dibujar
         borrarPantalla();
         batch.setProjectionMatrix(camara.combined);
-
+        if (estado==EstadoJuego.JUGANDO){
         batch.begin();
 
         fondo.dibujar(batch, 0);
@@ -163,6 +163,7 @@ public class BacteriaInvaders extends Pantalla
         btnPausa.dibujar(batch);
 
         batch.end();
+        }
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
