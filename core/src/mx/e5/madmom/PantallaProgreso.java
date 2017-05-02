@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -49,6 +50,7 @@ public class PantallaProgreso extends Pantalla {
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
+    int num= (int) MathUtils.random(0, 2);
 
     public PantallaProgreso(MadMom madMom) {
         this.madMom = madMom;
@@ -111,7 +113,9 @@ public class PantallaProgreso extends Pantalla {
 
         else if (estado == EstadoJuego.GANADO) escenaGana.draw();
         else if (tiempoPantalla <= 0)
+            if (num==1)
             madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+            else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
 
     }
 
