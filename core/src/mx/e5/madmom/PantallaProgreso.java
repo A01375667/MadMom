@@ -112,10 +112,10 @@ public class PantallaProgreso extends Pantalla {
         } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
 
         else if (estado == EstadoJuego.GANADO) escenaGana.draw();
-        else if (tiempoPantalla <= 0)
-            if (num==1)
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
-            else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+        else if (tiempoPantalla <= 0) madMom.setScreen(new AtrapaPlatos(madMom));
+            //if (num==1)
+            //madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
+            //else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
 
     }
 

@@ -131,7 +131,7 @@ public class Cucaracha extends Objeto{
                 break;
 
             case QUIETO:
-                sprite.setColor(0,0,0,0);
+
                 sprite.draw(batch); // Dibuja el sprite estático
                 break;
 
