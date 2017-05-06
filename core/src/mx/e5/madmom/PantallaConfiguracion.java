@@ -78,7 +78,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón créditos
         TextureRegionDrawable trdBtnCreditos = new TextureRegionDrawable(new TextureRegion(texturaBtnCreditos));
         ImageButton btnCreditos = new ImageButton(trdBtnCreditos);
-        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO - btnCreditos.getHeight());
+        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO - btnCreditos.getHeight()-40);
         escenaConfig.addActor(btnCreditos);
         // Acción botón créditos
         btnCreditos.addListener(new ClickListener(){
@@ -104,7 +104,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón Acerca de...
         TextureRegionDrawable trdBtnAcercaDe = new TextureRegionDrawable(new TextureRegion(texturaBtnAcercaDe));
         ImageButton btnAcercaDe = new ImageButton(trdBtnAcercaDe);
-        btnAcercaDe.setPosition(ANCHO/2 - btnAcercaDe.getWidth()/2, ALTO/2);
+        btnAcercaDe.setPosition(ANCHO/2 - btnAcercaDe.getWidth()/2, ALTO/2-100);
         escenaConfig.addActor(btnAcercaDe);
         // Acción botón créditos
         btnAcercaDe.addListener(new ClickListener(){

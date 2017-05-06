@@ -45,7 +45,7 @@ public class PantallaCreditos extends Pantalla
     }
 
     private void cargarTexturas() {
-        texturaFondoCreditos =manager.get("fondoCreditos.jpg");
+        texturaFondoCreditos =manager.get("fondoCreditos.png");
         texturaBtnBackCreditos = manager.get("btnBack.png");
     }
 
@@ -90,7 +90,7 @@ public class PantallaCreditos extends Pantalla
 
     @Override
     public void dispose() {
-        manager.unload("fondoCreditos.jpg");
+        manager.unload("fondoCreditos.png");
         manager.unload("btnBack.png");
 
     }

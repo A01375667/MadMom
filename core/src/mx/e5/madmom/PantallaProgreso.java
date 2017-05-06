@@ -113,7 +113,7 @@ public class PantallaProgreso extends Pantalla {
         } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
 
         else if (estado == EstadoJuego.GANADO) escenaGana.draw();
-        else if (tiempoPantalla <= 0) madMom.setScreen(new AtrapaPlatos(madMom));
+        else if (tiempoPantalla <= 0) madMom.setScreen(new PantallaCargando(madMom, Pantallas.ATRAPAPLATOS));
             //if (num==1)
             //madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
             //else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
@@ -281,7 +281,7 @@ public class PantallaProgreso extends Pantalla {
         public EscenaPierde(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPantallaPerdiste.jpg");
+            Texture texturaFondoPausa = new Texture("fondoPerdiste.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 

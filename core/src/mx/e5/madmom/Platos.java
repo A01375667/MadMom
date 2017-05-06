@@ -14,10 +14,10 @@ import static mx.e5.madmom.Pantalla.ANCHO;
 
 public class Platos extends Objeto {
     TextureRegion[][] texturaPlatos;
-    float x, y;
+    int max_platos=5;
 
     //Max platos 4
-    private int countPlatos=0;
+    private int countPlatos=9;
     //Estados del Plato SOLO Horizontal
     private EstadoMovimiento estadoMovimiento = EstadoMovimiento.QUIETO;
 
@@ -28,9 +28,9 @@ public class Platos extends Objeto {
         // Lee la textura como región
         TextureRegion texturaCompleta = new TextureRegion(textura);
         // La divide en 4 frames de 194x198
-        texturaPlatos = texturaCompleta.split(155,179);
+        texturaPlatos = texturaCompleta.split(150,179);
 
-        sprite = new Sprite(texturaPlatos[0][0]);
+        sprite = new Sprite(texturaPlatos[0][countPlatos]);
         sprite.setPosition(x, y);    // Posición inicial
 
 
@@ -95,11 +95,11 @@ public class Platos extends Objeto {
 
     public void setCountPlatos (boolean plato1){
         if (plato1){
-            if (countPlatos<texturaPlatos.length-1) countPlatos++;
+            if (countPlatos<max_platos) countPlatos++;
         }
 
         else {
-            if (countPlatos>0) countPlatos--;
+            if (countPlatos>-1) countPlatos--;
         }
 
     }

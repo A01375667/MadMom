@@ -23,15 +23,15 @@ public class objetoAtrapa extends Objeto {
     private EstadoMovimiento estado= EstadoMovimiento.SUBIENDO;
     private HORIZONTAL direccion=HORIZONTAL.DERECHA;
 
-    //private Tipo tipo;
+    private Tipo tipo;
 
 
-    public objetoAtrapa(Texture textura, float x, float y/*, Tipo tipo*/){
+    public objetoAtrapa(Texture textura, float x, float y, Tipo tipo){
         super(textura, x, y);
         if(MathUtils.randomBoolean())
             direccion=HORIZONTAL.DERECHA;
         else direccion=HORIZONTAL.IZQUIERDA;
-        //this.tipo=tipo;
+        this.tipo=tipo;
 
     }
 
@@ -43,7 +43,7 @@ public class objetoAtrapa extends Objeto {
                 sprite.draw(batch);
                 break;
             case BAJANDO:
-                if (sprite.getY()<= 4*ALTO/11) {
+                if (sprite.getY()<= 3*ALTO/11) {
                     sprite.scale(0.01f);
 
                 }
@@ -111,7 +111,11 @@ public class objetoAtrapa extends Objeto {
         }
 
 
+    public boolean colisiona(Platos platos) {
 
+        return sprite.getBoundingRectangle().overlaps(platos.sprite.getBoundingRectangle());
+
+    }
 
     enum EstadoMovimiento {
         BAJANDO,

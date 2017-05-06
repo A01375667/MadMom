@@ -80,7 +80,7 @@ public class AtrapaPlatos extends Pantalla {
         Image imgFondo = new Image(texturaFondoCocina);
         escenaAtrapaPlatos.addActor(imgFondo);
 
-        platos1= new Platos(texturaPlatos, ANCHO/2, 0);
+        platos1= new Platos(texturaPlatos, ANCHO/2, 100);
         arrBasura = new Array <Objeto> ();
         arrPlatos= new Array <Objeto> ();
 
@@ -89,8 +89,8 @@ public class AtrapaPlatos extends Pantalla {
 
             float posx= MathUtils.random(ANCHO/2-100, ANCHO/2+100);
             float posy=ALTO-100;
-            if (MathUtils.randomBoolean()) basura=new objetoAtrapa(texturaBasura, posx, posy);
-            else  basura=new objetoAtrapa(texturaBasura2, posx, posy);
+            if (MathUtils.randomBoolean()) basura=new objetoAtrapa(texturaBasura, posx, posy, objetoAtrapa.Tipo.BASURA);
+            else  basura=new objetoAtrapa(texturaBasura2, posx, posy, objetoAtrapa.Tipo.BASURA);
 
             arrBasura.add(basura);
         }
@@ -100,7 +100,7 @@ public class AtrapaPlatos extends Pantalla {
 
             float posx= MathUtils.random(ANCHO/2-100, ANCHO/2+100);
             float posy=ALTO-100;
-            plato=new objetoAtrapa(texturaPlato,posx, posy);
+            plato=new objetoAtrapa(texturaPlato,posx, posy, objetoAtrapa.Tipo.PLATO);
 
             arrPlatos.add(plato);
         }
@@ -112,12 +112,12 @@ public class AtrapaPlatos extends Pantalla {
     }
 
     private void cargarTexturas() {
-        texturaFondoCocina= new Texture("fondoCocina.jpg");
-        texturaPlatos=new Texture("PLATOS_sprite.png");
-        texturaBtnPausa= new Texture("btnPausa.png");
-        texturaBasura= new Texture("manzana.png");
-        texturaBasura2=new Texture("pescado.png");
-        texturaPlato= new Texture("Plato.png");
+        texturaFondoCocina= manager.get("fondoCocina.jpg");
+        texturaPlatos=manager.get("PLATOS_sprite.png");
+        texturaBtnPausa= manager.get("btnPausa.png");
+        texturaBasura= manager.get("manzana.png");
+        texturaBasura2=manager.get("pescado.png");
+        texturaPlato= manager.get("Plato.png");
 
     }
 
@@ -128,6 +128,7 @@ public class AtrapaPlatos extends Pantalla {
 
         //if(estado==EstadoJuego.JUGANDO){
             batch.begin();
+            dibujarObjeto(platos1);
             dibujarObjetos(arrBasura);
             dibujarObjetos(arrPlatos);
 
@@ -141,15 +142,28 @@ public class AtrapaPlatos extends Pantalla {
 
     }
 
+    private void dibujarObjeto(Objeto objeto) {
+        objeto.dibujar(batch);
+    }
+
     private void actualizarObjeto(float delta) {
         for (Objeto basura : arrBasura) {
             objetoAtrapa b = (objetoAtrapa) basura;
             b.actualizar();
+
+            if (((objetoAtrapa) basura).colisiona(platos1)){
+                platos1.setCountPlatos(false);
+                arrBasura.removeValue(basura, true);
+            }
         }
 
         for (Objeto plato : arrPlatos) {
             objetoAtrapa p = (objetoAtrapa) plato;
             p.actualizar();
+            if (((objetoAtrapa) plato).colisiona(platos1)){
+                platos1.setCountPlatos(true);
+                arrPlatos.removeValue(plato, true);
+            }
         }
 
         platos1.actualizar(delta);
@@ -157,7 +171,7 @@ public class AtrapaPlatos extends Pantalla {
     }
 
     private void dibujarObjetos(Array<Objeto> arreglo) {
-        platos1.dibujar(batch);
+
         btnPausa.dibujar(batch);
 
         for (Objeto objeto : arreglo) {
@@ -182,6 +196,17 @@ public class AtrapaPlatos extends Pantalla {
 
     @Override
     public void dispose() {
+        manager.unload("fondoCocina.jpg");
+        manager.unload("PLATOS_sprite.png");
+        manager.unload("btnPausa.png");
+        manager.unload("manzana.png");
+        manager.unload("pescado.png");
+        manager.unload("Plato.png");
+        manager.unload("fondoPausa.png");
+        manager.unload("btnMusica.png");
+        manager.unload("btnMENUU.png");
+        manager.unload("cuadroVacio.png");
+        manager.unload("cuadroPaloma.png");
 
     }
 

@@ -30,10 +30,15 @@ public class PantallaCargando extends Pantalla
 
     private Texture texturaCargando;
 
+    private boolean juegos;
+    private boolean progreso;
+
 
     public PantallaCargando(MadMom madMom, Pantallas siguientePantalla) {
         this.madMom = madMom;
         this.siguientePantalla = siguientePantalla;
+        juegos=siguientePantalla.equals(Pantallas.INVADERS)||siguientePantalla.equals(Pantallas.MATACUCARACHAS)||siguientePantalla.equals(Pantallas.ATRAPAPLATOS);
+        progreso=siguientePantalla.equals(Pantallas.PROGRESO);
     }
 
     @Override
@@ -76,10 +81,26 @@ public class PantallaCargando extends Pantalla
             case INVADERS:
                 cargarRecursosInvaders();
                 break;
+            case ATRAPAPLATOS:
+                cargarRecursosAtrapaPlatos();
             case PROGRESO:
                 cargarRecursosProgreso();
                 break;
         }
+    }
+
+    private void cargarRecursosAtrapaPlatos() {
+        manager.load("fondoCocina.jpg", Texture.class);
+        manager.load("PLATOS_sprite.png", Texture.class);
+        manager.load("btnPausa.png", Texture.class);
+        manager.load("manzana.png", Texture.class);
+        manager.load("pescado.png", Texture.class);
+        manager.load("Plato.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
+        manager.load("btnMENUU.png", Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
     }
 
     private void cargarRecursosAcercaDe() {
@@ -88,7 +109,7 @@ public class PantallaCargando extends Pantalla
     }
 
     private void cargarRecursosCreditos() {
-        manager.load("fondoCreditos.jpg",Texture.class);
+        manager.load("fondoCreditos.png",Texture.class);
         manager.load("btnBack.png", Texture.class);
     }
 
@@ -165,7 +186,7 @@ public class PantallaCargando extends Pantalla
        //borrarPantalla(1,1,1,1);
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        if (siguientePantalla.equals(Pantallas.MENU)||siguientePantalla.equals(Pantallas.AJUSTES)||siguientePantalla.equals(Pantallas.CONFIGURACION)||siguientePantalla.equals(Pantallas.CREDITOS)||siguientePantalla.equals(Pantallas.NIVEL)){
+        if (!juegos||!progreso){
             borrarPantalla(1,1,1,1);
             spriteCargando.draw(batch);
             texto.mostrarMensaje(batch,avance+" %",ANCHO/2,ALTO/2);}
@@ -198,6 +219,9 @@ public class PantallaCargando extends Pantalla
                 case AJUSTES:
                     madMom.setScreen(new PantallaAjustes(madMom));
                     break;
+                case ACERCADE:
+                    madMom.setScreen(new PantallaAcercaDe(madMom));
+                    break;
                 case MATACUCARACHAS:
                     madMom.setScreen(new MataCucarachas(madMom));   // 100% de carga
                     break;
@@ -209,6 +233,10 @@ public class PantallaCargando extends Pantalla
                     break;
                 case PROGRESO:
                     madMom.setScreen(new PantallaProgreso(madMom));
+                    break;
+                case ATRAPAPLATOS:
+                    madMom.setScreen(new AtrapaPlatos(madMom));
+                    break;
             }
         }
         avance = (int)(manager.getProgress()*100);

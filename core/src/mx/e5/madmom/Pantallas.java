@@ -14,6 +14,7 @@ public enum Pantallas
     NIVEL,
     MATACUCARACHAS,
     INVADERS,
+    ATRAPAPLATOS,
     PROGRESO
 
 }
