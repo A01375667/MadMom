@@ -119,7 +119,7 @@ public class PantallaNivel extends Pantalla {
 
 
         Gdx.input.setInputProcessor(escenaNivel);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchBackKey(true);
     }
 
 

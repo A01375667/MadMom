@@ -91,7 +91,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón Ajustes
         TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnAjustes));
         ImageButton btnAjustes = new ImageButton(trdBtnSonido);
-        btnAjustes.setPosition(ANCHO/2 - btnAjustes.getWidth()/2, 80);
+        btnAjustes.setPosition(ANCHO/2 - btnAjustes.getWidth()/2, 80 );
         escenaConfig.addActor(btnAjustes);
         // Acción botón créditos
         btnAjustes.addListener(new ClickListener(){

@@ -84,7 +84,7 @@ public class PantallaMenu extends Pantalla
         //Botón play
         TextureRegionDrawable trdBtnPlay = new TextureRegionDrawable(new TextureRegion(texturaBtnPlayMenu));
         ImageButton btnPlay = new ImageButton(trdBtnPlay);
-        btnPlay.setPosition(ANCHO/2 - 3*btnPlay.getWidth()/8, 2*btnPlay.getHeight()/4);
+        btnPlay.setPosition(ANCHO/2 - 3*btnPlay.getWidth()/8, 8*btnPlay.getHeight()/8);
         escenaMenu.addActor(btnPlay);
         // Acción botón play
         btnPlay.addListener(new ClickListener(){
@@ -99,7 +99,7 @@ public class PantallaMenu extends Pantalla
         //Botón de configuración
         TextureRegionDrawable trdBtnConfig = new TextureRegionDrawable(new TextureRegion(texturaBtnConfiguracionMenu));
         ImageButton btnConfig = new ImageButton(trdBtnConfig);
-        btnConfig.setPosition(ANCHO - 8*btnConfig.getWidth()/4, 3*btnConfig.getHeight()/4);
+        btnConfig.setPosition(ANCHO - 8*btnConfig.getWidth()/4, 2*btnConfig.getHeight()/4);
         escenaMenu.addActor(btnConfig);
         // Acción botón configuración
         btnConfig.addListener(new ClickListener(){
@@ -136,7 +136,5 @@ public class PantallaMenu extends Pantalla
         manager.unload("fondoMenu.jpg");
         manager.unload("btnPlay1.png");
         manager.unload("btnAjustes.png");
-
-
     }
 }
