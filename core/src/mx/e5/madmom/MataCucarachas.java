@@ -118,7 +118,7 @@ public class MataCucarachas extends Pantalla
 
             float posx= MathUtils.random(0, ANCHO/2);
             float posy=MathUtils.random(0, ALTO/2);
-            cucaracha=new Cucaracha(texturaCucaracha, posy, posx);
+            cucaracha=new Cucaracha(texturaCucaracha, posx, posy);
 
             arrCucarachas.add(cucaracha);
             }
@@ -184,6 +184,7 @@ public class MataCucarachas extends Pantalla
         }
 
         btnPausa.dibujar(batch);
+
 
     }
 
@@ -276,7 +277,7 @@ public class MataCucarachas extends Pantalla
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa =manager.get("fondoPausa.jpg");
+            Texture texturaFondoPausa =manager.get("fondoPausa.png");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -285,7 +286,7 @@ public class MataCucarachas extends Pantalla
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
+            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, 75);
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {

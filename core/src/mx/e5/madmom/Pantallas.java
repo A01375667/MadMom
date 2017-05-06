@@ -10,6 +10,7 @@ public enum Pantallas
     CONFIGURACION,
     CREDITOS,
     AJUSTES,
+    ACERCADE,
     NIVEL,
     MATACUCARACHAS,
     INVADERS,

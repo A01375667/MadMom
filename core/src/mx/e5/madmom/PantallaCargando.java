@@ -64,6 +64,9 @@ public class PantallaCargando extends Pantalla
             case AJUSTES:
                 cargarRecursosAjustes();
                 break;
+            case ACERCADE:
+                cargarRecursosAcercaDe();
+                break;
             case MATACUCARACHAS:
                 cargarRecursosMataCucarachas();
                 break;
@@ -79,6 +82,11 @@ public class PantallaCargando extends Pantalla
         }
     }
 
+    private void cargarRecursosAcercaDe() {
+        manager.load("fondoAcercaDe.jpg",Texture.class);
+        manager.load("btnBack.png", Texture.class);
+    }
+
     private void cargarRecursosCreditos() {
         manager.load("fondoCreditos.jpg",Texture.class);
         manager.load("btnBack.png", Texture.class);
@@ -89,11 +97,12 @@ public class PantallaCargando extends Pantalla
         manager.load("btnBack.png", Texture.class);
         manager.load("btnCreditos.png", Texture.class);
         manager.load("btnAjustesLetra.png", Texture.class);
+        manager.load("btnAcercaDe.png", Texture.class);
     }
 
     private void cargarRecursosAjustes() {
         manager.load("fondoAjustes.jpg", Texture.class);
-        manager.load("btnVolumen.png",Texture.class);
+        manager.load("btnMusica.png",Texture.class);
         manager.load("cuadroVacio.png", Texture.class);
         manager.load("cuadroPaloma.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
@@ -113,8 +122,8 @@ public class PantallaCargando extends Pantalla
         manager.load("btnPausa.png", Texture.class);
         manager.load("cucarachaSprite.png",Texture.class);
         manager.load("Disparar.mp3", Sound.class);
-        manager.load("fondoPausa.jpg", Texture.class);
-        manager.load("btnVolumen.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
         manager.load("btnMENUU.png", Texture.class);
         manager.load("cuadroVacio.png", Texture.class);
         manager.load("cuadroPaloma.png", Texture.class);
@@ -137,8 +146,8 @@ public class PantallaCargando extends Pantalla
         manager.load("burbuja.png", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("bacteriaEncerrada.png", Texture.class);
-        manager.load("fondoPausa.jpg", Texture.class);
-        manager.load("btnVolumen.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
         manager.load("btnMENUU.png", Texture.class);
         manager.load("cuadroVacio.png", Texture.class);
         manager.load("cuadroPaloma.png", Texture.class);

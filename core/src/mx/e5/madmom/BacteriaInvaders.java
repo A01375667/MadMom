@@ -306,7 +306,7 @@ public class BacteriaInvaders extends Pantalla
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa =new Texture("fondoPausa.jpg");
+            Texture texturaFondoPausa =new Texture("fondoPausa.png");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -315,7 +315,7 @@ public class BacteriaInvaders extends Pantalla
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2, ALTO*0.2f);
+            btnMenu.setPosition(ANCHO/2-btnMenu.getWidth()/2,75);
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -326,11 +326,11 @@ public class BacteriaInvaders extends Pantalla
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnVolumen.png");
+            Texture texturabtnContinuar = new Texture("btnMusica.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO*0.5f);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2,  ALTO/2-110);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {

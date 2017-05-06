@@ -57,7 +57,7 @@ public class PantallaAjustes extends Pantalla
 
     private void cargarTexturas() {
         texturaFondoAjustes = manager.get("fondoAjustes.jpg");
-        texturaTextoSonido = manager.get("btnVolumen.png");
+        texturaTextoSonido = manager.get("btnMusica.png");
         texturaBtnSonidoOFF = manager.get("cuadroVacio.png");
         textureBtnSonidoON = manager.get("cuadroPaloma.png");
         texturaBtnBack = manager.get("btnBack.png");
@@ -183,7 +183,7 @@ public class PantallaAjustes extends Pantalla
     @Override
     public void dispose() {
         manager.unload("fondoAjustes.jpg");
-        manager.unload("btnVolumen.png");
+        manager.unload("btnMusica.png");
         manager.unload("cuadroVacio.png");
         manager.unload("cuadroPaloma.png");
         manager.unload("btnBack.png");

@@ -25,6 +25,7 @@ public class PantallaConfiguracion extends Pantalla
     private Texture texturaBtnBackConfig;
     private Texture texturaBtnCreditos;
     private Texture texturaBtnAjustes;
+    private Texture texturaBtnAcercaDe;
 
     // Dibujar
     private SpriteBatch batch;
@@ -52,6 +53,7 @@ public class PantallaConfiguracion extends Pantalla
         texturaBtnBackConfig = manager.get("btnBack.png");
         texturaBtnCreditos = manager.get("btnCreditos.png");
         texturaBtnAjustes = manager.get("btnAjustesLetra.png");
+        texturaBtnAcercaDe=manager.get("btnAcercaDe.png");
     }
 
     private void crearObjetos() {
@@ -76,7 +78,7 @@ public class PantallaConfiguracion extends Pantalla
         //Botón créditos
         TextureRegionDrawable trdBtnCreditos = new TextureRegionDrawable(new TextureRegion(texturaBtnCreditos));
         ImageButton btnCreditos = new ImageButton(trdBtnCreditos);
-        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO - 7*btnCreditos.getHeight()/4);
+        btnCreditos.setPosition(ANCHO/2 - btnCreditos.getWidth()/2, ALTO - btnCreditos.getHeight());
         escenaConfig.addActor(btnCreditos);
         // Acción botón créditos
         btnCreditos.addListener(new ClickListener(){
@@ -88,16 +90,30 @@ public class PantallaConfiguracion extends Pantalla
 
         //Botón Ajustes
         TextureRegionDrawable trdBtnSonido = new TextureRegionDrawable(new TextureRegion(texturaBtnAjustes));
-        ImageButton btnSonido = new ImageButton(trdBtnSonido);
-        btnSonido.setPosition(ANCHO/2 - btnSonido.getWidth()/2, ALTO - 14*btnSonido.getHeight()/4);
-        escenaConfig.addActor(btnSonido);
+        ImageButton btnAjustes = new ImageButton(trdBtnSonido);
+        btnAjustes.setPosition(ANCHO/2 - btnAjustes.getWidth()/2, 80);
+        escenaConfig.addActor(btnAjustes);
         // Acción botón créditos
-        btnSonido.addListener(new ClickListener(){
+        btnAjustes.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES));
             }
         });
+
+        //Botón Acerca de...
+        TextureRegionDrawable trdBtnAcercaDe = new TextureRegionDrawable(new TextureRegion(texturaBtnAcercaDe));
+        ImageButton btnAcercaDe = new ImageButton(trdBtnAcercaDe);
+        btnAcercaDe.setPosition(ANCHO/2 - btnAcercaDe.getWidth()/2, ALTO/2);
+        escenaConfig.addActor(btnAcercaDe);
+        // Acción botón créditos
+        btnAcercaDe.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.ACERCADE));
+            }
+        });
+
 
 
         Gdx.input.setInputProcessor(escenaConfig);
@@ -126,6 +142,7 @@ public class PantallaConfiguracion extends Pantalla
         manager.unload("btnBack.png");
         manager.unload("btnCreditos.png");
         manager.unload("btnAjustesLetra.png");
+        manager.unload("btnAcercaDe.png");
 
     }
 }

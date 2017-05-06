@@ -3,6 +3,7 @@ package mx.e5.madmom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -170,7 +171,7 @@ public class PantallaProgreso extends Pantalla {
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPausa.jpg");
+            Texture texturaFondoPausa = new Texture("fondoPausa.png");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -179,7 +180,7 @@ public class PantallaProgreso extends Pantalla {
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, 75);
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -190,7 +191,7 @@ public class PantallaProgreso extends Pantalla {
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnVolumen.png");
+            Texture texturabtnContinuar = new Texture("btnMusica.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
@@ -205,6 +206,73 @@ public class PantallaProgreso extends Pantalla {
                 }
             });
             this.addActor(btnContinuar);
+
+
+
+            //Botón sonido ON
+            final Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
+            TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
+            final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
+            btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+            //agregar el actor a la pantalla
+            this.addActor(btnSonidoOn);
+            //no dejar visible en la pantalla
+            btnSonidoOn.setVisible(false);
+
+
+            //Botón sonido OFF
+            Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
+            final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
+            final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
+            btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+            this.addActor(btnSonidoOff);
+            btnSonidoOff.setVisible(false);
+
+            if (madMom.estadoMusica==EstadoMusica.PLAY){ //Mostar el boton de sonido ON
+                btnSonidoOn.setVisible(true);
+                //Deshabilitar el litsener del boton sonido Off
+                btnSonidoOff.setDisabled(true);
+            }
+
+            else {
+                btnSonidoOn.setDisabled(true);
+                btnSonidoOff.setVisible(true);
+            }
+
+
+            //Accion boton sonido ON
+            this.addActor(btnSonidoOn);
+            btnSonidoOn.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.STOP;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.stop();
+                    btnSonidoOn.setVisible(false);
+                    btnSonidoOff.setVisible(true);
+                    btnSonidoOff.setDisabled(false);
+
+                }
+            });
+
+
+
+            //Accion boton sonido OFF
+            btnSonidoOff.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+
+                    madMom.estadoMusica = EstadoMusica.PLAY;
+                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    musicaFondo.play();
+                    btnSonidoOff.setVisible(false);
+                    btnSonidoOn.setVisible(true);
+                    btnSonidoOn.setDisabled(false);
+
+
+
+                }});
         }
 
     }
@@ -233,7 +301,7 @@ public class PantallaProgreso extends Pantalla {
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnReintentar = new Texture("btnVolumen.png");
+            Texture texturabtnReintentar = new Texture("btnMusica.png");
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
@@ -340,7 +408,7 @@ public class PantallaProgreso extends Pantalla {
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnReintentar = new Texture("btnVolumen.png");
+            Texture texturabtnReintentar = new Texture("btnMusica.png");
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
