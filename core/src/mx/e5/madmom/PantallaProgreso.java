@@ -51,7 +51,7 @@ public class PantallaProgreso extends Pantalla {
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
-    int num= (int) MathUtils.random(0, 2);
+    int num= (int) MathUtils.random(0, 3);
 
     public PantallaProgreso(MadMom madMom) {
         this.madMom = madMom;
@@ -113,10 +113,13 @@ public class PantallaProgreso extends Pantalla {
         } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
 
         else if (estado == EstadoJuego.GANADO) escenaGana.draw();
-        else if (tiempoPantalla <= 0) madMom.setScreen(new PantallaCargando(madMom, Pantallas.ATRAPAPLATOS));
-            //if (num==1)
-            //madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
-            //else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+        else if (tiempoPantalla <= 0){
+            if (num==1)
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+            else if (num==2)
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+            else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+        }
 
     }
 
@@ -185,7 +188,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -295,7 +298,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -314,8 +317,13 @@ public class PantallaProgreso extends Pantalla {
                     estado = EstadoJuego.JUGANDO;
                     madMom.vidasJugador = 3;
                     madMom.puntosJugador = 0;
+                    if (num==1)
+                        madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                    else if (num==2)
+                        madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                    else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
                     // Regresa el control a la pantalla
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+
 
                 }
             });
@@ -402,7 +410,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -422,7 +430,7 @@ public class PantallaProgreso extends Pantalla {
                     madMom.vidasJugador = 3;
                     madMom.puntosJugador = 0;
                     // Regresa el control a la pantalla
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.NIVEL));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.NIVEL, Pantallas.TipoPantalla.MENU));
 
                 }
             });

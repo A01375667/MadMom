@@ -56,7 +56,7 @@ public class PantallaInicial extends Pantalla {
             // Cambia a la pantalla del MENU
             //juego.setScreen(new PantallaMenu(juego));
             // AHORA cambia a la pantalla "Cargando..." y después al menú
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
         }
 
     }

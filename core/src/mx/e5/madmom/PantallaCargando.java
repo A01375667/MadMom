@@ -25,6 +25,7 @@ public class PantallaCargando extends Pantalla
 
     private MadMom madMom;
     private Pantallas siguientePantalla;
+    private Pantallas.TipoPantalla tipo;
     private int avance; // % de carga
     private Texto texto;
 
@@ -34,11 +35,10 @@ public class PantallaCargando extends Pantalla
     private boolean progreso;
 
 
-    public PantallaCargando(MadMom madMom, Pantallas siguientePantalla) {
+    public PantallaCargando(MadMom madMom, Pantallas siguientePantalla, Pantallas.TipoPantalla tipo) {
         this.madMom = madMom;
         this.siguientePantalla = siguientePantalla;
-        juegos=siguientePantalla.equals(Pantallas.INVADERS)||siguientePantalla.equals(Pantallas.MATACUCARACHAS)||siguientePantalla.equals(Pantallas.ATRAPAPLATOS);
-        progreso=siguientePantalla.equals(Pantallas.PROGRESO);
+        this.tipo=tipo;
     }
 
     @Override
@@ -83,6 +83,7 @@ public class PantallaCargando extends Pantalla
                 break;
             case ATRAPAPLATOS:
                 cargarRecursosAtrapaPlatos();
+                break;
             case PROGRESO:
                 cargarRecursosProgreso();
                 break;
@@ -184,12 +185,18 @@ public class PantallaCargando extends Pantalla
     @Override
     public void render(float delta) {
        //borrarPantalla(1,1,1,1);
+
+        juegos= siguientePantalla.equals(Pantallas.INVADERS)||siguientePantalla.equals(Pantallas.ATRAPAPLATOS)||siguientePantalla.equals(Pantallas.MATACUCARACHAS);
+        progreso=siguientePantalla.equals(Pantallas.PROGRESO);
+
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        if (!juegos||!progreso){
+
+        if (tipo.equals(Pantallas.TipoPantalla.MENU)){
             borrarPantalla(1,1,1,1);
             spriteCargando.draw(batch);
             texto.mostrarMensaje(batch,avance+" %",ANCHO/2,ALTO/2);}
+
         batch.end();
         // Actualizar
         timerAnimacion -= delta;

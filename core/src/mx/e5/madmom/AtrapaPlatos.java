@@ -48,17 +48,17 @@ public class AtrapaPlatos extends Pantalla {
     private Array<objetoAtrapa> arrBasura;
     private Array<objetoAtrapa> arrPlatos;
 
-    private objetoAtrapa basura;
-    private objetoAtrapa plato;
     private Platos platos1;
 
     private float posx;
+    private int tipObjeto;
     private float tiempoMax=3.0f;
-    private float tiempoMin=1.0f;
+    private float tiempoMin=2.0f;
 
     //tiempo de espera entre objetos
     private float tiempoEsperaB;
-    private float tiempoEsperaP;
+    private int maxBasura=5;
+    private int maxPlatos=5;
 
     //Escenas
     private Stage escenaAtrapaPlatos;
@@ -66,6 +66,19 @@ public class AtrapaPlatos extends Pantalla {
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
+
+
+    // Tiempo visible de instrucciones
+    private float tiempoVisibleInstrucciones = 2.0f;
+
+    // Tiempo del minijuego
+    private float tiempoMiniJuego = 10;
+
+    // Textos
+    private Texto textoInstruccion;
+    private Texto textoTiempo;
+
+
 
     public AtrapaPlatos(MadMom madMom) {
         this.madMom = madMom;
@@ -106,6 +119,8 @@ public class AtrapaPlatos extends Pantalla {
         texturaBasura= manager.get("manzana.png");
         texturaBasura2=manager.get("pescado.png");
         texturaPlato= manager.get("Plato.png");
+        textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
+        textoTiempo = new Texto("fuenteTiempo.fnt");
 
     }
 
@@ -116,21 +131,45 @@ public class AtrapaPlatos extends Pantalla {
         escenaAtrapaPlatos.draw();
 
 
-        batch.begin();
-        actualizarObjeto(delta);
 
 
+        if(estado==EstadoJuego.JUGANDO) {
 
-        //if(estado==EstadoJuego.JUGANDO){
+            batch.begin();
+            actualizarObjeto(delta);
 
             dibujarObjeto(platos1);
             dibujarObjetos(arrBasura);
-            //dibujarObjetos(arrPlatos);
+            dibujarObjetos(arrPlatos);
 
             actualizarObjeto(delta);
 
+
+            tiempoMiniJuego -= delta;
+            textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 8 * ANCHO / 10, 5 * ALTO / 32);
+            textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10 * ANCHO / 11, 5 * ALTO / 32);
+
+            tiempoVisibleInstrucciones -= delta;
+            if (tiempoVisibleInstrucciones > 0) {
+                textoInstruccion.mostrarMensaje(batch, "PARA LA INVASIÓN", ANCHO / 2, 3 * ALTO / 4);
+            }
+
+            if(tiempoMiniJuego <= 0){
+                madMom.vidasJugador--;
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
+            }
+
+            else if (platos1.getCountPlatos()>=maxPlatos-1){
+                madMom.puntosJugador+=175;
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
+
+            }
+
+
             batch.end();
-        //}
+        }
+
+
 
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
@@ -147,40 +186,80 @@ public class AtrapaPlatos extends Pantalla {
 
         //Generar nuevo objeto
         tiempoEsperaB-=delta;
-        posx= MathUtils.random(ANCHO/2-75, ANCHO/2+75);
+        tipObjeto=MathUtils.random(0,2);
+        posx= MathUtils.random(ANCHO/2-100, ANCHO/2+100);
 
-        if (MathUtils.randomBoolean()) {
+        if (tipObjeto==1) {
 
             if (tiempoEsperaB <= 0) {
-                tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
-                tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
-                objetoAtrapa basura = new objetoAtrapa(texturaBasura, posx, ALTO - 100, objetoAtrapa.Tipo.BASURA);
-                arrBasura.add(basura);
+                if (numBasura<=maxBasura){
+
+                    tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
+                    tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
+                    objetoAtrapa basura = new objetoAtrapa(texturaBasura, posx, ALTO - 200, objetoAtrapa.Tipo.BASURA);
+                    arrBasura.add(basura);
+                    numBasura++;
+                }
             }
         }
 
-
-        else {
+        else if (tipObjeto==0){
             if (tiempoEsperaB <= 0) {
-                tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
-                tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
-                objetoAtrapa basura = new objetoAtrapa(texturaBasura2, posx, ALTO - 100, objetoAtrapa.Tipo.BASURA);
-                arrBasura.add(basura);
+                if (numBasura<=maxBasura){
+                    tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
+                    tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
+                    objetoAtrapa basura = new objetoAtrapa(texturaBasura2, posx, ALTO - 200, objetoAtrapa.Tipo.BASURA);
+                    arrBasura.add(basura);
+                    numBasura++;
+                }
             }
 
         }
-        for (objetoAtrapa basura: arrBasura)
+
+        else{
+            if (tiempoEsperaB <= 0) {
+                if (numPlatos<=maxPlatos){
+                    tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
+                    tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
+                    objetoAtrapa plato = new objetoAtrapa(texturaPlato, posx, ALTO - 200, objetoAtrapa.Tipo.PLATO);
+                    arrPlatos.add(plato);
+                    numPlatos++;
+                }
+
+            }
+
+        }
+        for (objetoAtrapa basura: arrBasura){
             basura.actualizar();
+            //if (basura.colisiona(platos1)) platos1.setCountPlatos(false);
+        }
 
 
+        for (objetoAtrapa plato : arrPlatos) {
+            plato.actualizar();
+            //if (plato.colisiona(platos1)) platos1.setCountPlatos(true);
+        }
 
 
-        for (Objeto plato : arrPlatos) {
-            objetoAtrapa p = (objetoAtrapa) plato;
-            p.actualizar();
-            if (((objetoAtrapa) plato).colisiona(platos1)){
+       for (int i=arrBasura.size-1; i>=0; i--){
+            objetoAtrapa bas=arrBasura.get(i);
+            if (bas.colisiona(platos1)){
+                arrBasura.removeIndex(i);
+                if (platos1.getCountPlatos()==0){
+                    madMom.vidasJugador--;
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));}
+                else
+                platos1.setCountPlatos(false);
+
+
+            }
+        }
+
+        for (int i=arrPlatos.size-1; i>=0; i--){
+            objetoAtrapa pla=arrPlatos.get(i);
+            if (pla.colisiona(platos1)){
+                arrPlatos.removeIndex(i);
                 platos1.setCountPlatos(true);
-                //arrPlatos.removeValue(plato, true);
             }
         }
 
@@ -316,7 +395,7 @@ public class AtrapaPlatos extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);

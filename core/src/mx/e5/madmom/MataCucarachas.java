@@ -45,7 +45,6 @@ public class MataCucarachas extends Pantalla
 
     // Audio
     private Sound efectoAplastar;  // Cuando el usuario golpea a la cucaracha
-    private Preferences preferences;
 
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
@@ -134,12 +133,13 @@ public class MataCucarachas extends Pantalla
         escenaMataCucarachas.draw();
         if (arrCucarachas.size==0){
             madMom.puntosJugador+=150;
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
         }
 
         actualizarObjeto(delta);
 
         if (estado==EstadoJuego.JUGANDO){
+
         batch.begin();
         dibujarObjetos(arrCucarachas);
 
@@ -153,7 +153,7 @@ public class MataCucarachas extends Pantalla
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
         }
 
 
@@ -291,7 +291,7 @@ public class MataCucarachas extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);

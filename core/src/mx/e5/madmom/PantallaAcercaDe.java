@@ -64,7 +64,7 @@ public class PantallaAcercaDe extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION, Pantallas.TipoPantalla.MENU));
             }
         });
 

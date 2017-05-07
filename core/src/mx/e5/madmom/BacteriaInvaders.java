@@ -123,7 +123,7 @@ public class BacteriaInvaders extends Pantalla
     public void render(float delta) {
 
         if(bacteriasAtrapadas >= numBacterias){
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
         }
         tiempoCarga -= delta;
 
@@ -160,7 +160,7 @@ public class BacteriaInvaders extends Pantalla
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
         }
 
         btnPausa.dibujar(batch);
@@ -345,7 +345,7 @@ public class BacteriaInvaders extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);

@@ -71,7 +71,7 @@ public class PantallaConfiguracion extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
             }
         });
 
@@ -84,7 +84,7 @@ public class PantallaConfiguracion extends Pantalla
         btnCreditos.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CREDITOS));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.CREDITOS, Pantallas.TipoPantalla.MENU));
             }
         });
 
@@ -97,7 +97,7 @@ public class PantallaConfiguracion extends Pantalla
         btnAjustes.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.AJUSTES, Pantallas.TipoPantalla.MENU));
             }
         });
 
@@ -110,7 +110,7 @@ public class PantallaConfiguracion extends Pantalla
         btnAcercaDe.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.ACERCADE));
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.ACERCADE, Pantallas.TipoPantalla.MENU));
             }
         });
 
