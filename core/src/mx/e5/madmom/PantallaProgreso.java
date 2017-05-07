@@ -171,35 +171,21 @@ public class PantallaProgreso extends Pantalla {
     private class EscenaPausa extends Stage {
 
 
+
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPausa.png");
+            Texture texturaFondoPausa =new Texture("fondoPausa.png");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
-            // Menu
-            Texture texturaBtnMenu = new Texture("btnMENUU.png");
-            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
-                    new TextureRegion(texturaBtnMenu));
-            ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, 75);
-            btnMenu.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
-                }
-            });
-            this.addActor(btnMenu);
-
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnMusica.png");
+            Texture texturabtnContinuar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO / 2 - btnContinuar.getWidth() / 2, ALTO * 0.5f);
-            btnContinuar.addListener(new ClickListener() {
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/14);
+            btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Continuar el juego
@@ -210,13 +196,34 @@ public class PantallaProgreso extends Pantalla {
             });
             this.addActor(btnContinuar);
 
+            // Música
+            Texture texturabtnMusica = new Texture("btnMusica.png");
+            TextureRegionDrawable trdMusica = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnMusica));
+            ImageButton btnMusica = new ImageButton(trdMusica);
+            btnMusica.setPosition(ANCHO/2 - btnMusica.getWidth() - 50,  ALTO/2-110);
+            this.addActor(btnMusica);
 
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO/2 - btnMenu.getWidth(),115);
+            btnMenu.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
+                }
+            });
+            this.addActor(btnMenu);
 
             //Botón sonido ON
             final Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
             TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
             final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
-            btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+            btnSonidoOn.setPosition(ANCHO/2 - 50, ALTO/2 - btnSonidoOn.getHeight()/2 - 20);
             //agregar el actor a la pantalla
             this.addActor(btnSonidoOn);
             //no dejar visible en la pantalla
@@ -227,7 +234,7 @@ public class PantallaProgreso extends Pantalla {
             Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
             final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
             final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
-            btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+            btnSonidoOff.setPosition(ANCHO/2 - 50, ALTO/2 - btnSonidoOff.getHeight()/2 - 20);
             this.addActor(btnSonidoOff);
             btnSonidoOff.setVisible(false);
 
@@ -242,39 +249,30 @@ public class PantallaProgreso extends Pantalla {
                 btnSonidoOff.setVisible(true);
             }
 
-
             //Accion boton sonido ON
             this.addActor(btnSonidoOn);
             btnSonidoOn.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
                     madMom.estadoMusica = EstadoMusica.STOP;
                     Music musicaFondo = manager.get("musicaMenu.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
                     btnSonidoOff.setDisabled(false);
-
                 }
             });
-
-
 
             //Accion boton sonido OFF
             btnSonidoOff.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
                     madMom.estadoMusica = EstadoMusica.PLAY;
                     Music musicaFondo = manager.get("musicaMenu.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
                     btnSonidoOn.setDisabled(false);
-
-
-
                 }});
         }
 
@@ -396,7 +394,7 @@ public class PantallaProgreso extends Pantalla {
         public EscenaGana(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPantallaGanaste.jpg");
+            Texture texturaFondoPausa = new Texture("fondoGanaste.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -416,7 +414,7 @@ public class PantallaProgreso extends Pantalla {
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnReintentar = new Texture("btnMusica.png");
+            Texture texturabtnReintentar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
