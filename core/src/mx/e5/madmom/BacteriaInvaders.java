@@ -311,7 +311,7 @@ public class BacteriaInvaders extends Pantalla
             this.addActor(imgFondo);
 
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnMusica.png");
+            Texture texturabtnContinuar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
