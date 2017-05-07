@@ -45,12 +45,20 @@ public class AtrapaPlatos extends Pantalla {
     private int numPlatos=1;
     private int numBasura=1;
 
-    private Array<Objeto> arrBasura;
-    private Array<Objeto> arrPlatos;
+    private Array<objetoAtrapa> arrBasura;
+    private Array<objetoAtrapa> arrPlatos;
 
     private objetoAtrapa basura;
     private objetoAtrapa plato;
     private Platos platos1;
+
+    private float posx;
+    private float tiempoMax=3.0f;
+    private float tiempoMin=1.0f;
+
+    //tiempo de espera entre objetos
+    private float tiempoEsperaB;
+    private float tiempoEsperaP;
 
     //Escenas
     private Stage escenaAtrapaPlatos;
@@ -81,29 +89,9 @@ public class AtrapaPlatos extends Pantalla {
         escenaAtrapaPlatos.addActor(imgFondo);
 
         platos1= new Platos(texturaPlatos, ANCHO/2, 100);
-        arrBasura = new Array <Objeto> ();
-        arrPlatos= new Array <Objeto> ();
+        arrBasura = new Array <objetoAtrapa> ();
+        arrPlatos= new Array <objetoAtrapa> ();
 
-
-        for (int i=0; i<numBasura; i++){
-
-            float posx= MathUtils.random(ANCHO/2-100, ANCHO/2+100);
-            float posy=ALTO-100;
-            if (MathUtils.randomBoolean()) basura=new objetoAtrapa(texturaBasura, posx, posy, objetoAtrapa.Tipo.BASURA);
-            else  basura=new objetoAtrapa(texturaBasura2, posx, posy, objetoAtrapa.Tipo.BASURA);
-
-            arrBasura.add(basura);
-        }
-
-
-        for (int i=0; i<numPlatos; i++){
-
-            float posx= MathUtils.random(ANCHO/2-100, ANCHO/2+100);
-            float posy=ALTO-100;
-            plato=new objetoAtrapa(texturaPlato,posx, posy, objetoAtrapa.Tipo.PLATO);
-
-            arrPlatos.add(plato);
-        }
 
 
         // Botón pausa
@@ -123,16 +111,24 @@ public class AtrapaPlatos extends Pantalla {
 
     @Override
     public void render(float delta) {
+
         borrarPantalla();
         escenaAtrapaPlatos.draw();
 
+
+        batch.begin();
+        actualizarObjeto(delta);
+
+
+
         //if(estado==EstadoJuego.JUGANDO){
-            batch.begin();
+
             dibujarObjeto(platos1);
             dibujarObjetos(arrBasura);
-            dibujarObjetos(arrPlatos);
+            //dibujarObjetos(arrPlatos);
 
             actualizarObjeto(delta);
+
             batch.end();
         //}
 
@@ -147,34 +143,56 @@ public class AtrapaPlatos extends Pantalla {
     }
 
     private void actualizarObjeto(float delta) {
-        for (Objeto basura : arrBasura) {
-            objetoAtrapa b = (objetoAtrapa) basura;
-            b.actualizar();
+        platos1.actualizar(delta);
 
-            if (((objetoAtrapa) basura).colisiona(platos1)){
-                platos1.setCountPlatos(false);
-                arrBasura.removeValue(basura, true);
+        //Generar nuevo objeto
+        tiempoEsperaB-=delta;
+        posx= MathUtils.random(ANCHO/2-75, ANCHO/2+75);
+
+        if (MathUtils.randomBoolean()) {
+
+            if (tiempoEsperaB <= 0) {
+                tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
+                tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
+                objetoAtrapa basura = new objetoAtrapa(texturaBasura, posx, ALTO - 100, objetoAtrapa.Tipo.BASURA);
+                arrBasura.add(basura);
             }
         }
+
+
+        else {
+            if (tiempoEsperaB <= 0) {
+                tiempoEsperaB = MathUtils.random(tiempoMin, tiempoMax);
+                tiempoMax -= tiempoMax > tiempoMin ? 10 * delta : 0;
+                objetoAtrapa basura = new objetoAtrapa(texturaBasura2, posx, ALTO - 100, objetoAtrapa.Tipo.BASURA);
+                arrBasura.add(basura);
+            }
+
+        }
+        for (objetoAtrapa basura: arrBasura)
+            basura.actualizar();
+
+
+
 
         for (Objeto plato : arrPlatos) {
             objetoAtrapa p = (objetoAtrapa) plato;
             p.actualizar();
             if (((objetoAtrapa) plato).colisiona(platos1)){
                 platos1.setCountPlatos(true);
-                arrPlatos.removeValue(plato, true);
+                //arrPlatos.removeValue(plato, true);
             }
         }
 
-        platos1.actualizar(delta);
+
 
     }
 
-    private void dibujarObjetos(Array<Objeto> arreglo) {
+    private void dibujarObjetos(Array<objetoAtrapa> arreglo) {
 
         btnPausa.dibujar(batch);
 
-        for (Objeto objeto : arreglo) {
+        for (objetoAtrapa objeto : arreglo) {
             objeto.dibujar(batch);
         }
 

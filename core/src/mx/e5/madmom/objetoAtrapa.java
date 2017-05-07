@@ -15,8 +15,8 @@ import static mx.e5.madmom.Pantalla.ANCHO;
 
 public class objetoAtrapa extends Objeto {
     //Velocidad en Y
-    private float VELOCIDAD_Y = 4;
-    private float VELOCIDAD_X=1;
+    private float VELOCIDAD_Y = 2;
+    private float VELOCIDAD_X=MathUtils.random(1,2);
     float delta;
     private float tiempoAire;
 
@@ -43,7 +43,7 @@ public class objetoAtrapa extends Objeto {
                 sprite.draw(batch);
                 break;
             case BAJANDO:
-                if (sprite.getY()<= 3*ALTO/11) {
+                if (sprite.getY()<= 6*ALTO/11) {
                     sprite.scale(0.01f);
 
                 }
