@@ -110,7 +110,7 @@ public class BacteriaInvaders extends Pantalla
             float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)) + texturaBacteria.getWidth()/2,
                     area*(i+1) - texturaBacteria.getWidth());
             if(posx < 5){
-                posx += 10;
+                posx += 100;
             }
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             Bacteria bacteria = new Bacteria(texturaBacteria, posx, posy);
@@ -196,7 +196,7 @@ public class BacteriaInvaders extends Pantalla
                 Bacteria bacteria = arrBacterias.get(j);
                 if (burbuja.chocaCon(bacteria)) {
                     // Encerrar bacteria en burbuja
-                    float posx = arrBacterias.get(j).sprite.getX();
+                    float posx = arrBurbujas.get(i).sprite.getX();
                     float posy = arrBacterias.get(j).sprite.getY();
                     arrBacterias.removeIndex(j);
                     arrBurbujas.get(i).sprite.set(spriteEncerrada);
