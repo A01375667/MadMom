@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -154,7 +155,7 @@ public class PantallaAjustes extends Pantalla
 
 
         Gdx.input.setInputProcessor(escenaAjustes);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
@@ -168,6 +169,9 @@ public class PantallaAjustes extends Pantalla
         mama.dibujar(batch);
 
         batch.end();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION, Pantallas.TipoPantalla.MENU));
+        }
     }
 
     @Override

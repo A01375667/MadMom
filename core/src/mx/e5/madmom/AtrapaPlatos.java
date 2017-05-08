@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -107,6 +108,7 @@ public class AtrapaPlatos extends Pantalla {
         cargarTexturas();
         crearObjetos();
         // Definir quién atiende los eventos de touch
+        Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(procesadorEntrada);
 
     }

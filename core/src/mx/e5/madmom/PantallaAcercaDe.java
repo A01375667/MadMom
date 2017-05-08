@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -69,13 +70,16 @@ public class PantallaAcercaDe extends Pantalla {
         });
 
         Gdx.input.setInputProcessor(escenaCreditos);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
     public void render(float delta) {
         borrarPantalla();
         escenaCreditos.draw();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION, Pantallas.TipoPantalla.MENU));
+        }
     }
 
     @Override

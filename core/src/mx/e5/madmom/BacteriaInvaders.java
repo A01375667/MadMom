@@ -174,18 +174,6 @@ public class BacteriaInvaders extends Pantalla
             escenaPausa.draw();
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            // Se pausa el juego
-            estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
-            if (estado==EstadoJuego.PAUSADO) {
-                // Activar escenaPausa y pasarle el control
-                if (escenaPausa==null) {
-                    escenaPausa = new BacteriaInvaders.EscenaPausa(vista, batch);
-                }
-                Gdx.input.setInputProcessor(escenaPausa);
-            }
-            escenaPausa.draw();
-        }
     }
 
     private void actualizarBotella(float delta) {
