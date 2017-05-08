@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -42,7 +43,7 @@ public class PantallaAjustes extends Pantalla
     private Stage escenaAjustes;
 
     // Música
-    public Music musicaFondo;
+    private Sound efectoBoton;
 
     // Constructor
     public PantallaAjustes(MadMom madMom){
@@ -63,6 +64,7 @@ public class PantallaAjustes extends Pantalla
         textureBtnSonidoON = manager.get("cuadroPaloma.png");
         texturaBtnBack = manager.get("btnBack.png");
         texturaMama = manager.get("mamaDerecha.png");
+        efectoBoton=manager.get("boton.mp3");
     }
 
     private void crearObjetos() {
@@ -84,6 +86,8 @@ public class PantallaAjustes extends Pantalla
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION, Pantallas.TipoPantalla.MENU));
             }
         });
@@ -124,6 +128,8 @@ public class PantallaAjustes extends Pantalla
         btnSonidoOn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
 
                 madMom.estadoMusica = EstadoMusica.STOP;
                 Music musicaFondo = manager.get("musicaMenu.mp3");

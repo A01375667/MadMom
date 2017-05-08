@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -44,6 +45,9 @@ public class PantallaNivel extends Pantalla {
     //Escenas
     private Stage escenaNivel;
 
+    //Efecto
+    private Sound efectoBoton;
+
     public PantallaNivel(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
@@ -63,6 +67,7 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
+        efectoBoton=manager.get("boton.mp3");
 
 
     }
@@ -87,6 +92,8 @@ public class PantallaNivel extends Pantalla {
         btnNivel1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
 
                 madMom.nivel=Dificultades.FACIL;
                 Music musicaFondo = manager.get("musicaMenu.mp3");
@@ -114,6 +121,8 @@ public class PantallaNivel extends Pantalla {
         btnNivel2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
 
                 Music musicaFondo = manager.get("musicaMenu.mp3");
                 musicaFondo.stop();
@@ -144,6 +153,8 @@ public class PantallaNivel extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
 
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
 

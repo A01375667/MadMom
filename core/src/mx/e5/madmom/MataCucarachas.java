@@ -244,6 +244,7 @@ public class MataCucarachas extends Pantalla
             for (Objeto obj : arrCucarachas){
                 Cucaracha cucaracha = (Cucaracha) obj;
             if (cucaracha.contiene(v)) {
+                if(madMom.estadoMusica.equals(EstadoMusica.PLAY))
                 efectoAplastar.play();
                 arrCucarachas.removeValue(cucaracha, true);
             }

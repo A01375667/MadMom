@@ -3,6 +3,7 @@ package mx.e5.madmom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -34,6 +35,9 @@ public class PantallaAcercaDe extends Pantalla {
     // Escenas
     private Stage escenaCreditos;
 
+    //efecto
+    private Sound efectoBoton;
+
     public PantallaAcercaDe(MadMom madMom) {
         this.madMom = madMom;
         this.manager=madMom.getAssetManager();
@@ -48,6 +52,7 @@ public class PantallaAcercaDe extends Pantalla {
     private void cargarTexturas() {
         texturaFondoCreditos =manager.get("fondoAcercaDe.jpg");
         texturaBtnBackCreditos = manager.get("btnBack.png");
+        efectoBoton=manager.get("boton.mp3");
     }
 
     private void crearObjetos() {
@@ -65,6 +70,8 @@ public class PantallaAcercaDe extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.CONFIGURACION, Pantallas.TipoPantalla.MENU));
             }
         });

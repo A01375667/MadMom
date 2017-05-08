@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
@@ -43,7 +44,7 @@ public class PantallaMenu extends Pantalla
 
     // Música
     public Music musicaFondo;
-    public Sound efectoBoton;
+    private Sound efectoBoton;
 
     // CONSTRUCTOR
     public PantallaMenu(MadMom madMom) {
@@ -121,6 +122,7 @@ public class PantallaMenu extends Pantalla
     public void render(float delta) {
         borrarPantalla();
         escenaMenu.draw();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) Gdx.app.exit();
 
     }
 

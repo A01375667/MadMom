@@ -174,7 +174,7 @@ public class AtrapaPlatos extends Pantalla {
 
             tiempoVisibleInstrucciones -= delta;
             if (tiempoVisibleInstrucciones > 0) {
-                textoInstruccion.mostrarMensaje(batch, "¡No atrapes la basura!", ANCHO / 2, 3 * ALTO / 4);
+                textoInstruccion.mostrarMensaje(batch, "Atrapa los platos", ANCHO / 2, 3 * ALTO / 4);
             }
 
             if(tiempoMiniJuego <= 0){
@@ -183,7 +183,7 @@ public class AtrapaPlatos extends Pantalla {
             }
 
             else if (platos1.getCountPlatos()>=maxPlatos-2){
-                madMom.puntosJugador+=175;
+                madMom.puntosJugador+=10;
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.MENU));
 
             }
@@ -281,6 +281,7 @@ public class AtrapaPlatos extends Pantalla {
             objetoAtrapa pla=arrPlatos.get(i);
             if (pla.colisiona(platos1)){
                 arrPlatos.removeIndex(i);
+                madMom.puntosJugador+=50;
                 platos1.setCountPlatos(true);
             }
         }

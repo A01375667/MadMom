@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,6 +50,9 @@ public class PantallaProgreso extends Pantalla {
     private EscenaPierde escenaPierde;
     private EscenaGana escenaGana;
 
+    //Efectos
+    private Sound efectoBoton;
+
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
     int num= (int) MathUtils.random(0, 3);
@@ -71,6 +75,7 @@ public class PantallaProgreso extends Pantalla {
         texturaFondoProgreso = manager.get("fondoAjustes.jpg", Texture.class);
         texturaBtnPausa = manager.get("btnPausa.png", Texture.class);
         texturaVida = manager.get("caraVida.png", Texture.class);
+        efectoBoton=manager.get("boton.mp3");
     }
 
     private void crearObjetos() {
@@ -157,7 +162,7 @@ public class PantallaProgreso extends Pantalla {
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
-        if (madMom.nivel.equals(Dificultades.FACIL)&&madMom.puntosJugador >= 1100) {
+        if (madMom.nivel.equals(Dificultades.FACIL)&&madMom.puntosJugador >= 2800) {
             estado = EstadoJuego.GANADO;
             if (escenaGana == null) {
                 escenaGana = new EscenaGana(vista, batch);
@@ -204,6 +209,8 @@ public class PantallaProgreso extends Pantalla {
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Continuar el juego
                     estado = EstadoJuego.JUGANDO;
                     // Regresa el control a la pantalla
@@ -229,6 +236,9 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
+
                     Music musicaFondoJuego = manager.get("SpaceSong.mp3");
                     musicaFondoJuego.stop();
                     Music musicaFondo=manager.get("musicaMenu.mp3");
@@ -276,6 +286,7 @@ public class PantallaProgreso extends Pantalla {
             btnSonidoOn.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    efectoBoton.play();
                     madMom.estadoMusica = EstadoMusica.STOP;
                     Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
@@ -317,6 +328,8 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
                 }
@@ -333,6 +346,8 @@ public class PantallaProgreso extends Pantalla {
 
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
                     madMom.tiempoJuego=10;
@@ -380,6 +395,8 @@ public class PantallaProgreso extends Pantalla {
             v.set(screenX, screenY, 0);
             camara.unproject(v);
             if (btnPausa.contiene(v)) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
                 // Se pausa el juego
                 estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
                 if (estado==EstadoJuego.PAUSADO) {
@@ -431,6 +448,8 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
@@ -447,6 +466,8 @@ public class PantallaProgreso extends Pantalla {
 
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
                     madMom.vidasJugador = 3;
