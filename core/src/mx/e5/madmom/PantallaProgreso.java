@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -49,9 +50,14 @@ public class PantallaProgreso extends Pantalla {
     private EscenaPierde escenaPierde;
     private EscenaGana escenaGana;
 
+    //Efectos
+    private Sound efectoBoton;
+    Music musicaFondoJuego;
+    Music musicaFondo;
+
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
-    int num= (int) MathUtils.random(0, 2);
+    int num= (int) MathUtils.random(0, 3);
 
     public PantallaProgreso(MadMom madMom) {
         this.madMom = madMom;
@@ -71,6 +77,9 @@ public class PantallaProgreso extends Pantalla {
         texturaFondoProgreso = manager.get("fondoAjustes.jpg", Texture.class);
         texturaBtnPausa = manager.get("btnPausa.png", Texture.class);
         texturaVida = manager.get("caraVida.png", Texture.class);
+        efectoBoton=manager.get("boton.mp3");
+        musicaFondoJuego = manager.get("SpaceSong.mp3");
+        musicaFondo=manager.get("musicaMenu.mp3");
     }
 
     private void crearObjetos() {
@@ -104,19 +113,38 @@ public class PantallaProgreso extends Pantalla {
         textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO / 2, 6 * ALTO / 7);
         textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO / 2, 5 * ALTO / 7);
         dibujarVidas();
-        tiempoPantalla -= delta;
 
+        if (estado==EstadoJuego.JUGANDO)
+            tiempoPantalla -= delta;
         batch.end();
+
+        if (tiempoPantalla <= 0){
+            if (num==1)
+            {
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;
+            }
+            else if (num==2){
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;
+            }
+            else{
+                madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;}
+        }
 
         if (estado == EstadoJuego.PAUSADO) {
             escenaPausa.draw();
-        } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
+        }
 
-        else if (estado == EstadoJuego.GANADO) escenaGana.draw();
-        else if (tiempoPantalla <= 0) madMom.setScreen(new PantallaCargando(madMom, Pantallas.ATRAPAPLATOS));
-            //if (num==1)
-            //madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS));
-            //else madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+        if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
+
+        if (estado == EstadoJuego.GANADO) escenaGana.draw();
+
+
+
+
+
 
     }
 
@@ -138,7 +166,7 @@ public class PantallaProgreso extends Pantalla {
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
-        if (madMom.puntosJugador >= 1100) {
+        if (madMom.nivel.equals(Dificultades.FACIL)&&madMom.puntosJugador >= 2800) {
             estado = EstadoJuego.GANADO;
             if (escenaGana == null) {
                 escenaGana = new EscenaGana(vista, batch);
@@ -168,37 +196,25 @@ public class PantallaProgreso extends Pantalla {
     private class EscenaPausa extends Stage {
 
 
+
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPausa.png");
+            Texture texturaFondoPausa =new Texture("fondoPausa.png");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
-            // Menu
-            Texture texturaBtnMenu = new Texture("btnMENUU.png");
-            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
-                    new TextureRegion(texturaBtnMenu));
-            ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, 75);
-            btnMenu.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
-                }
-            });
-            this.addActor(btnMenu);
-
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnMusica.png");
+            Texture texturabtnContinuar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO / 2 - btnContinuar.getWidth() / 2, ALTO * 0.5f);
-            btnContinuar.addListener(new ClickListener() {
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/14);
+            btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Continuar el juego
                     estado = EstadoJuego.JUGANDO;
                     // Regresa el control a la pantalla
@@ -207,13 +223,40 @@ public class PantallaProgreso extends Pantalla {
             });
             this.addActor(btnContinuar);
 
+            // Música
+            Texture texturabtnMusica = new Texture("btnMusica.png");
+            TextureRegionDrawable trdMusica = new TextureRegionDrawable(
+                    new TextureRegion(texturabtnMusica));
+            ImageButton btnMusica = new ImageButton(trdMusica);
+            btnMusica.setPosition(ANCHO/2 - btnMusica.getWidth() - 50,  ALTO/2-110);
+            this.addActor(btnMusica);
 
+            // Menu
+            Texture texturaBtnMenu = new Texture("btnMENUU.png");
+            TextureRegionDrawable trdMenu = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnMenu));
+            ImageButton btnMenu = new ImageButton(trdMenu);
+            btnMenu.setPosition(ANCHO/2 - btnMenu.getWidth(),115);
+            btnMenu.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    musicaFondoJuego.stop();
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                        efectoBoton.play();
+                        musicaFondo.play();}
+
+                    // Regresa al menú
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
+                }
+            });
+            this.addActor(btnMenu);
 
             //Botón sonido ON
             final Texture textureBtnSonidoON=manager.get("cuadroPaloma.png");
             TextureRegionDrawable trdBtnSonidoOn = new TextureRegionDrawable(new TextureRegion(textureBtnSonidoON));
             final ImageButton btnSonidoOn = new ImageButton(trdBtnSonidoOn);
-            btnSonidoOn.setPosition(ANCHO/2 + btnSonidoOn.getWidth()*3 - btnSonidoOn.getWidth()/2, ALTO/2 - btnSonidoOn.getHeight()/2);
+            btnSonidoOn.setPosition(ANCHO/2 - 50, ALTO/2 - btnSonidoOn.getHeight()/2 - 20);
             //agregar el actor a la pantalla
             this.addActor(btnSonidoOn);
             //no dejar visible en la pantalla
@@ -224,7 +267,7 @@ public class PantallaProgreso extends Pantalla {
             Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
             final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
             final ImageButton btnSonidoOff = new ImageButton(trdBtnSonidoOff);
-            btnSonidoOff.setPosition(ANCHO/2 + btnSonidoOff.getWidth()*3, ALTO/2 - btnSonidoOff.getHeight()/2);
+            btnSonidoOff.setPosition(ANCHO/2 - 50, ALTO/2 - btnSonidoOff.getHeight()/2 - 20);
             this.addActor(btnSonidoOff);
             btnSonidoOff.setVisible(false);
 
@@ -239,39 +282,29 @@ public class PantallaProgreso extends Pantalla {
                 btnSonidoOff.setVisible(true);
             }
 
-
             //Accion boton sonido ON
             this.addActor(btnSonidoOn);
             btnSonidoOn.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
+                    efectoBoton.play();
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
                     btnSonidoOff.setDisabled(false);
-
                 }
             });
-
-
 
             //Accion boton sonido OFF
             btnSonidoOff.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
                     btnSonidoOn.setDisabled(false);
-
-
-
                 }});
         }
 
@@ -294,8 +327,13 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    musicaFondoJuego.stop();
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                        efectoBoton.play();
+                        musicaFondo.play();}
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -310,12 +348,28 @@ public class PantallaProgreso extends Pantalla {
 
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+
+                        efectoBoton.play();
+
+
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
+                    madMom.tiempoJuego=10;
+
                     madMom.vidasJugador = 3;
                     madMom.puntosJugador = 0;
+                    if (num==1)
+                        madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                    else if (num==2)
+                        madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                    else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
                     // Regresa el control a la pantalla
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+
 
                 }
             });
@@ -350,6 +404,8 @@ public class PantallaProgreso extends Pantalla {
             v.set(screenX, screenY, 0);
             camara.unproject(v);
             if (btnPausa.contiene(v)) {
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
                 // Se pausa el juego
                 estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
                 if (estado==EstadoJuego.PAUSADO) {
@@ -388,7 +444,7 @@ public class PantallaProgreso extends Pantalla {
         public EscenaGana(Viewport vista, SpriteBatch batch) {
             super(vista, batch);
             // Crear fondo
-            Texture texturaFondoPausa = new Texture("fondoPantallaGanaste.jpg");
+            Texture texturaFondoPausa = new Texture("fondoGanaste.jpg");
             Image imgFondo = new Image(texturaFondoPausa);
             this.addActor(imgFondo);
 
@@ -401,14 +457,19 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    musicaFondoJuego.stop();
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                        efectoBoton.play();
+                        musicaFondo.play();};
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnReintentar = new Texture("btnMusica.png");
+            Texture texturabtnReintentar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
@@ -417,12 +478,14 @@ public class PantallaProgreso extends Pantalla {
 
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                        efectoBoton.play();
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
                     madMom.vidasJugador = 3;
                     madMom.puntosJugador = 0;
                     // Regresa el control a la pantalla
-                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.NIVEL));
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.NIVEL, Pantallas.TipoPantalla.MENU));
 
                 }
             });

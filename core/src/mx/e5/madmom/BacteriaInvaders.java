@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -35,7 +36,7 @@ public class BacteriaInvaders extends Pantalla
     // Enemigos
     private Texture texturaBacteria;
     private Array<Bacteria> arrBacterias;
-    private int numBacterias = 3;
+    private int numBacterias;
     private int bacteriasAtrapadas = 0;
 
     // Burbujas para lanzar
@@ -47,7 +48,7 @@ public class BacteriaInvaders extends Pantalla
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
     // Tiempo del minijuego
-    private float tiempoMiniJuego = 10;
+    private float tiempoMiniJuego;
     // Tiempo de recarga para disparar
     private float tiempoCarga = 0;
 
@@ -76,6 +77,21 @@ public class BacteriaInvaders extends Pantalla
         //super();
         this.madMom = madMom;
         manager = madMom.getAssetManager();
+        this.tiempoMiniJuego=madMom.tiempoJuego;
+        switch (madMom.nivel){
+            case FACIL:
+                numBacterias=4;
+                break;
+            case DIFICIL:
+                numBacterias=6;
+                if (madMom.countJuegos==4) {
+                    madMom.tiempoJuego-= madMom.tiempoJuego>5?1:0;;
+                    madMom.countJuegos=0;
+
+                }
+
+                break;
+        }
     }
 
 
@@ -100,6 +116,7 @@ public class BacteriaInvaders extends Pantalla
         textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
         textoTiempo = new Texto("fuenteTiempo.fnt");
 
+        Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(procesadorEntrada);
     }
 
@@ -123,7 +140,7 @@ public class BacteriaInvaders extends Pantalla
     public void render(float delta) {
 
         if(bacteriasAtrapadas >= numBacterias){
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.MENU));
         }
         tiempoCarga -= delta;
 
@@ -160,7 +177,7 @@ public class BacteriaInvaders extends Pantalla
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
         }
 
         btnPausa.dibujar(batch);
@@ -171,6 +188,7 @@ public class BacteriaInvaders extends Pantalla
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw();
         }
+
     }
 
     private void actualizarBotella(float delta) {
@@ -234,6 +252,7 @@ public class BacteriaInvaders extends Pantalla
         manager.unload("burbuja.png");
         manager.unload("btnPausa.png");
         manager.unload("bacteriaEncerrada.png");
+
 
     }
 
@@ -311,11 +330,11 @@ public class BacteriaInvaders extends Pantalla
             this.addActor(imgFondo);
 
             // Continuar
-            Texture texturabtnContinuar = new Texture("btnMusica.png");
+            Texture texturabtnContinuar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/3);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/14);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -332,7 +351,7 @@ public class BacteriaInvaders extends Pantalla
             TextureRegionDrawable trdMusica = new TextureRegionDrawable(
                     new TextureRegion(texturabtnMusica));
             ImageButton btnMusica = new ImageButton(trdMusica);
-            btnMusica.setPosition(ANCHO/2 - btnContinuar.getWidth() - 50,  ALTO/2-110);
+            btnMusica.setPosition(ANCHO/2 - btnMusica.getWidth() - 50,  ALTO/2-110);
             this.addActor(btnMusica);
 
             // Menu
@@ -344,8 +363,13 @@ public class BacteriaInvaders extends Pantalla
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Regresa al menú
-                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU));
+                    madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
             });
             this.addActor(btnMenu);
@@ -386,7 +410,7 @@ public class BacteriaInvaders extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -399,7 +423,7 @@ public class BacteriaInvaders extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);

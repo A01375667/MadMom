@@ -1,10 +1,14 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -41,6 +45,11 @@ public class PantallaNivel extends Pantalla {
     //Escenas
     private Stage escenaNivel;
 
+    //Efecto
+    private Sound efectoBoton;
+    Music musicaFondoJuego;
+    Music musicaFondo;
+
     public PantallaNivel(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
@@ -60,6 +69,10 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel1= manager.get("btnNIVELparque.png");
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
+        efectoBoton=manager.get("boton.mp3");
+        musicaFondoJuego = manager.get("SpaceSong.mp3");
+        musicaFondo=manager.get("musicaMenu.mp3");
+        musicaFondoJuego.setLooping(true);
 
 
     }
@@ -84,8 +97,22 @@ public class PantallaNivel extends Pantalla {
         btnNivel1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                musicaFondo.stop();
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                    efectoBoton.play();
+                    musicaFondoJuego.play();
+                }
 
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS));
+                madMom.nivel=Dificultades.FACIL;
+
+
+                int num=MathUtils.random(0,3);
+                if (num==1)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                else if (num==2)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+
             }
         });
 
@@ -98,8 +125,21 @@ public class PantallaNivel extends Pantalla {
         btnNivel2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                musicaFondo.stop();
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                    efectoBoton.play();
+                    musicaFondoJuego.play();
+                }
 
-                //madMom.setScreen(new PantallaMenu(madMom));
+                madMom.nivel=Dificultades.DIFICIL;
+
+                int num=MathUtils.random(0,3);
+                if (num==1)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                else if (num==2)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+
             }
         });
 
@@ -112,7 +152,10 @@ public class PantallaNivel extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU));
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    efectoBoton.play();
+
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
 
             }
         });
@@ -129,11 +172,14 @@ public class PantallaNivel extends Pantalla {
         borrarPantalla();
         escenaNivel.draw();
         batch.begin();
-        textoNivel1.mostrarMensaje(batch, "Parque",4*ANCHO/16, 7*ALTO/32 );
-        textoNivel2.mostrarMensaje(batch, "Disco",12*ANCHO/16, 7*ALTO/32);
-        textoNivel.mostrarMensaje(batch,"DIFICULTAD",ANCHO/2,8*ALTO/9);
+        textoNivel1.mostrarMensaje(batch, "Modo Historia",4*ANCHO/16, 7*ALTO/32 );
+        textoNivel2.mostrarMensaje(batch, "Modo Arcade",12*ANCHO/16, 7*ALTO/32);
+        textoNivel.mostrarMensaje(batch,"Modalidad",ANCHO/2,8*ALTO/9);
         batch.end();
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
+        }
     }
 
     @Override

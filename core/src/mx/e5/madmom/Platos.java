@@ -14,10 +14,10 @@ import static mx.e5.madmom.Pantalla.ANCHO;
 
 public class Platos extends Objeto {
     TextureRegion[][] texturaPlatos;
-    int max_platos=5;
+    int max_platos=9;
 
     //Max platos 4
-    private int countPlatos=9;
+    private int countPlatos=1;
     //Estados del Plato SOLO Horizontal
     private EstadoMovimiento estadoMovimiento = EstadoMovimiento.QUIETO;
 
@@ -94,13 +94,19 @@ public class Platos extends Objeto {
     }
 
     public void setCountPlatos (boolean plato1){
+        //true si toma un plato
         if (plato1){
             if (countPlatos<max_platos) countPlatos++;
         }
-
+        //false si toma una basura
         else {
-            if (countPlatos>-1) countPlatos--;
+            if (countPlatos>0) countPlatos--;
         }
+
+    }
+
+    public int getCountPlatos (){
+        return this.countPlatos;
 
     }
 

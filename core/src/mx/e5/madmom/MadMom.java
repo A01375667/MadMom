@@ -12,11 +12,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public class MadMom extends Game
 {
 	SpriteBatch batch;
-	Texture img;
-	private final AssetManager assetManager;
+    private final AssetManager assetManager;
 	public int vidasJugador = 3;
 	public int puntosJugador = 0;
 	public EstadoMusica estadoMusica = EstadoMusica.PLAY;
+	public Dificultades nivel;
+    public float tiempoJuego=10;
+    public int countJuegos=0;
 
 	public MadMom() {
 		assetManager = new AssetManager();

@@ -25,20 +25,16 @@ public class PantallaCargando extends Pantalla
 
     private MadMom madMom;
     private Pantallas siguientePantalla;
+    private Pantallas.TipoPantalla tipo;
     private int avance; // % de carga
     private Texto texto;
 
     private Texture texturaCargando;
 
-    private boolean juegos;
-    private boolean progreso;
-
-
-    public PantallaCargando(MadMom madMom, Pantallas siguientePantalla) {
+    public PantallaCargando(MadMom madMom, Pantallas siguientePantalla, Pantallas.TipoPantalla tipo) {
         this.madMom = madMom;
         this.siguientePantalla = siguientePantalla;
-        juegos=siguientePantalla.equals(Pantallas.INVADERS)||siguientePantalla.equals(Pantallas.MATACUCARACHAS)||siguientePantalla.equals(Pantallas.ATRAPAPLATOS);
-        progreso=siguientePantalla.equals(Pantallas.PROGRESO);
+        this.tipo=tipo;
     }
 
     @Override
@@ -83,6 +79,7 @@ public class PantallaCargando extends Pantalla
                 break;
             case ATRAPAPLATOS:
                 cargarRecursosAtrapaPlatos();
+                break;
             case PROGRESO:
                 cargarRecursosProgreso();
                 break;
@@ -136,6 +133,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnPlay1.png", Texture.class);
         manager.load("btnAjustes.png", Texture.class);
         manager.load("musicaMenu.mp3", Music.class);
+        manager.load("boton.mp3", Sound.class);
     }
 
     private void cargarRecursosMataCucarachas() {
@@ -150,6 +148,7 @@ public class PantallaCargando extends Pantalla
         manager.load("cuadroPaloma.png", Texture.class);
 
 
+
     }
 
     private void cargarRecursosNivel() {
@@ -157,6 +156,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
+        manager.load("SpaceSong.mp3", Music.class);
 
     }
 
@@ -179,17 +179,26 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoAjustes.jpg", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("caraVida.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
+        manager.load("btnMENUU.png", Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
+
     }
 
     @Override
     public void render(float delta) {
        //borrarPantalla(1,1,1,1);
+
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        if (!juegos||!progreso){
+
+        if (tipo.equals(Pantallas.TipoPantalla.MENU)){
             borrarPantalla(1,1,1,1);
             spriteCargando.draw(batch);
             texto.mostrarMensaje(batch,avance+" %",ANCHO/2,ALTO/2);}
+
         batch.end();
         // Actualizar
         timerAnimacion -= delta;

@@ -33,6 +33,7 @@ public class objetoAtrapa extends Objeto {
         else direccion=HORIZONTAL.IZQUIERDA;
         this.tipo=tipo;
 
+
     }
 
 
@@ -70,9 +71,9 @@ public class objetoAtrapa extends Objeto {
             }
 
             else if(estado==EstadoMovimiento.BAJANDO){
-            if (VELOCIDAD_Y<4) VELOCIDAD_Y++;
+            if (VELOCIDAD_Y<4) VELOCIDAD_Y+=0.5;
 
-            sprite.setY(sprite.getY()-delta);
+                sprite.setY(sprite.getY()-delta);
 
         }
 
@@ -83,12 +84,12 @@ public class objetoAtrapa extends Objeto {
                 case IZQUIERDA:
                     delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_X*100;
                     sprite.setX(sprite.getX()-delta);
-                    if(sprite.getX()>=ANCHO-sprite.getWidth()) direccion=HORIZONTAL.NORMAL;
+                    if(sprite.getX()>ANCHO-sprite.getWidth()) direccion=HORIZONTAL.NORMAL;
                     break;
                 case DERECHA:
                     delta = Gdx.graphics.getDeltaTime()*VELOCIDAD_X*100;
                     sprite.setX(sprite.getX()+delta);
-                    if(sprite.getX()>=ANCHO-sprite.getWidth()) direccion=HORIZONTAL.NORMAL;
+                    if(sprite.getX()>ANCHO-sprite.getWidth()) direccion=HORIZONTAL.NORMAL;
 
             }
 

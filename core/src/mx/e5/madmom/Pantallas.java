@@ -4,8 +4,7 @@ package mx.e5.madmom;
  * Created by Jorge Jiménez on 27/03/17.
  */
 
-public enum Pantallas
-{
+public enum Pantallas {
     MENU,
     CONFIGURACION,
     CREDITOS,
@@ -15,6 +14,11 @@ public enum Pantallas
     MATACUCARACHAS,
     INVADERS,
     ATRAPAPLATOS,
-    PROGRESO
+    PROGRESO;
 
+
+    public enum TipoPantalla {
+        MENU,
+        JUEGO
+    }
 }
