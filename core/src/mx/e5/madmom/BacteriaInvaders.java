@@ -125,7 +125,7 @@ public class BacteriaInvaders extends Pantalla
     public void render(float delta) {
 
         if(bacteriasAtrapadas >= numBacterias){
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.JUEGO));
+            madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.MENU));
         }
         tiempoCarga -= delta;
 
@@ -330,7 +330,7 @@ public class BacteriaInvaders extends Pantalla
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/3);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth(),  ALTO/2 + btnContinuar.getHeight()/14);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -347,7 +347,7 @@ public class BacteriaInvaders extends Pantalla
             TextureRegionDrawable trdMusica = new TextureRegionDrawable(
                     new TextureRegion(texturabtnMusica));
             ImageButton btnMusica = new ImageButton(trdMusica);
-            btnMusica.setPosition(ANCHO/2 - btnContinuar.getWidth() - 50,  ALTO/2-110);
+            btnMusica.setPosition(ANCHO/2 - btnMusica.getWidth() - 50,  ALTO/2-110);
             this.addActor(btnMusica);
 
             // Menu
