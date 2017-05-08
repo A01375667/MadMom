@@ -174,6 +174,7 @@ public class AtrapaPlatos extends Pantalla {
             tiempoVisibleInstrucciones -= delta;
             if (tiempoVisibleInstrucciones > 0) {
                 textoInstruccion.mostrarMensaje(batch, "Atrapa los platos", ANCHO / 2, 3 * ALTO / 4);
+                textoTiempo.mostrarMensaje(batch, "(Toca izquierda/derecha de la pantalla) ", ANCHO/2, ALTO/2);
             }
 
             if(tiempoMiniJuego <= 0){
@@ -184,7 +185,6 @@ public class AtrapaPlatos extends Pantalla {
             else if (platos1.getCountPlatos()>=maxPlatos-2){
                 madMom.puntosJugador+=10;
                 madMom.setScreen(new PantallaCargando(madMom, mx.itesm.madmom.Pantallas.PROGRESO, mx.itesm.madmom.Pantallas.TipoPantalla.MENU));
-
             }
 
 

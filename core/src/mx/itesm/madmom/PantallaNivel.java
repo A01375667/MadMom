@@ -172,9 +172,9 @@ public class PantallaNivel extends Pantalla {
         borrarPantalla();
         escenaNivel.draw();
         batch.begin();
-        textoNivel1.mostrarMensaje(batch, "Modo Historia",4*ANCHO/16, 7*ALTO/32 );
-        textoNivel2.mostrarMensaje(batch, "Modo Arcade",12*ANCHO/16, 7*ALTO/32);
-        textoNivel.mostrarMensaje(batch,"Modalidad",ANCHO/2,8*ALTO/9);
+        textoNivel1.mostrarMensaje(batch, "MODO HISTORIA \n (Junta 1500)",4*ANCHO/16+40, 7*ALTO/32 );
+        textoNivel2.mostrarMensaje(batch, "MODO INFINITO",12*ANCHO/16, 7*ALTO/32);
+        textoNivel.mostrarMensaje(batch,"MODALIDAD",ANCHO/2,8*ALTO/9);
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {

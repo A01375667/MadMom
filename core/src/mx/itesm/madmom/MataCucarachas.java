@@ -162,7 +162,8 @@ public class MataCucarachas extends Pantalla
 
         tiempoVisibleInstrucciones -= delta;
         if(tiempoVisibleInstrucciones > 0){
-            textoInstruccion.mostrarMensaje(batch, "PARA LA INVASIÓN", ANCHO/2, 3*ALTO/4);
+            textoInstruccion.mostrarMensaje(batch, "PARA LA INVASION", ANCHO/2, 3*ALTO/4);
+            textoTiempo.mostrarMensaje(batch, "(Tap en las cucarachas)", ANCHO/2, ALTO/2);
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;

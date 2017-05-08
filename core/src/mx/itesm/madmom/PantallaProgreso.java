@@ -57,7 +57,7 @@ public class PantallaProgreso extends Pantalla {
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
-    int num= (int) MathUtils.random(0, 3);
+    float num =  MathUtils.random(0, 3);
 
     public PantallaProgreso(mx.itesm.madmom.MadMom madMom) {
         this.madMom = madMom;
@@ -119,12 +119,12 @@ public class PantallaProgreso extends Pantalla {
         batch.end();
 
         if (tiempoPantalla <= 0){
-            if (num==1)
+            if (num<=1)
             {
                 madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.MATACUCARACHAS, mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
                 madMom.countJuegos++;
             }
-            else if (num==2){
+            else if (num>1 && num <=2){
                 madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.INVADERS,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
                 madMom.countJuegos++;
             }
@@ -140,10 +140,6 @@ public class PantallaProgreso extends Pantalla {
         if (estado == mx.itesm.madmom.EstadoJuego.PIERDE) escenaPierde.draw();
 
         if (estado == mx.itesm.madmom.EstadoJuego.GANADO) escenaGana.draw();
-
-
-
-
 
 
     }
@@ -166,7 +162,7 @@ public class PantallaProgreso extends Pantalla {
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
-        if (madMom.nivel.equals(mx.itesm.madmom.Dificultades.FACIL)&&madMom.puntosJugador >= 2800) {
+        if (madMom.nivel.equals(mx.itesm.madmom.Dificultades.FACIL)&&madMom.puntosJugador >= 1500) {
             estado = mx.itesm.madmom.EstadoJuego.GANADO;
             if (escenaGana == null) {
                 escenaGana = new EscenaGana(vista, batch);
@@ -323,7 +319,7 @@ public class PantallaProgreso extends Pantalla {
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.setPosition(ANCHO/2 - btnMenu.getWidth() -20, btnMenu.getHeight()/5 - 40);
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -339,11 +335,11 @@ public class PantallaProgreso extends Pantalla {
             this.addActor(btnMenu);
 
             // Continuar
-            Texture texturabtnReintentar = new Texture("btnMusica.png");
+            Texture texturabtnReintentar = new Texture("btnReanudar.png");
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
-            btnReintentar.setPosition(ANCHO / 2 - btnReintentar.getWidth() / 2, ALTO * 0.5f);
+            btnReintentar.setPosition(btnReintentar.getWidth()/4, ALTO - btnReintentar.getHeight() + 40);
             btnReintentar.addListener(new ClickListener() {
 
                 @Override
@@ -446,7 +442,7 @@ public class PantallaProgreso extends Pantalla {
             TextureRegionDrawable trdMenu = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnMenu));
             ImageButton btnMenu = new ImageButton(trdMenu);
-            btnMenu.setPosition(ANCHO / 2 - btnMenu.getWidth() / 2, ALTO * 0.2f);
+            btnMenu.setPosition(ANCHO/2 + btnMenu.getWidth()/2, btnMenu.getHeight()/5);
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -466,7 +462,7 @@ public class PantallaProgreso extends Pantalla {
             TextureRegionDrawable trdReintentar = new TextureRegionDrawable(
                     new TextureRegion(texturabtnReintentar));
             ImageButton btnReintentar = new ImageButton(trdReintentar);
-            btnReintentar.setPosition(ANCHO / 2 - btnReintentar.getWidth() / 2, ALTO * 0.5f);
+            btnReintentar.setPosition(ANCHO/2 - btnReintentar.getWidth()/7, ALTO - btnReintentar.getHeight()+ 20);
             btnReintentar.addListener(new ClickListener() {
 
                 @Override

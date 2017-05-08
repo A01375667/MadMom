@@ -128,7 +128,7 @@ public class BacteriaInvaders extends Pantalla
             float posx = MathUtils.random(ANCHO - (area*(numBacterias-i)) + texturaBacteria.getWidth()/2,
                     area*(i+1) - texturaBacteria.getWidth());
             if(posx < 5){
-                posx += 100;
+                posx += 200;
             }
             float posy = MathUtils.random(ALTO/2, ALTO - texturaBacteria.getHeight());
             mx.itesm.madmom.Bacteria bacteria = new mx.itesm.madmom.Bacteria(texturaBacteria, posx, posy);
@@ -174,7 +174,8 @@ public class BacteriaInvaders extends Pantalla
 
         tiempoVisibleInstrucciones -= delta;
         if(tiempoVisibleInstrucciones > 0){
-            textoInstruccion.mostrarMensaje(batch, "LIMPIA! \n  (TAP)", ANCHO/2, 3*ALTO/4);
+            textoInstruccion.mostrarMensaje(batch, "LIMPIA!", ANCHO/2, 3*ALTO/4);
+            textoTiempo.mostrarMensaje(batch, "(Tap para disparar)", ANCHO/2, 1*ALTO/2);
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
