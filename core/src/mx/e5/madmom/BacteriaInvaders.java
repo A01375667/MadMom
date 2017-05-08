@@ -1,6 +1,7 @@
 package mx.e5.madmom;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -100,6 +101,7 @@ public class BacteriaInvaders extends Pantalla
         textoInstruccion = new Texto("fuenteTextoInstruccion.fnt");
         textoTiempo = new Texto("fuenteTiempo.fnt");
 
+        Gdx.input.setCatchBackKey(true);
         Gdx.input.setInputProcessor(procesadorEntrada);
     }
 
@@ -169,6 +171,19 @@ public class BacteriaInvaders extends Pantalla
         }
 
         if (estado==EstadoJuego.PAUSADO) {
+            escenaPausa.draw();
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
+            // Se pausa el juego
+            estado = estado==EstadoJuego.PAUSADO?EstadoJuego.JUGANDO:EstadoJuego.PAUSADO;
+            if (estado==EstadoJuego.PAUSADO) {
+                // Activar escenaPausa y pasarle el control
+                if (escenaPausa==null) {
+                    escenaPausa = new BacteriaInvaders.EscenaPausa(vista, batch);
+                }
+                Gdx.input.setInputProcessor(escenaPausa);
+            }
             escenaPausa.draw();
         }
     }
