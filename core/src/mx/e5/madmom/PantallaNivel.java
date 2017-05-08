@@ -47,6 +47,8 @@ public class PantallaNivel extends Pantalla {
 
     //Efecto
     private Sound efectoBoton;
+    Music musicaFondoJuego;
+    Music musicaFondo;
 
     public PantallaNivel(MadMom madMom) {
         this.madMom = madMom;
@@ -68,6 +70,9 @@ public class PantallaNivel extends Pantalla {
         texturaBtnNivel2= manager.get("btnNIVELdisco.png");
         texturaBtnBack= manager.get("btnBack.png");
         efectoBoton=manager.get("boton.mp3");
+        musicaFondoJuego = manager.get("SpaceSong.mp3");
+        musicaFondo=manager.get("musicaMenu.mp3");
+        musicaFondoJuego.setLooping(true);
 
 
     }
@@ -92,15 +97,14 @@ public class PantallaNivel extends Pantalla {
         btnNivel1.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                musicaFondo.stop();
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
                     efectoBoton.play();
+                    musicaFondoJuego.play();
+                }
 
                 madMom.nivel=Dificultades.FACIL;
-                Music musicaFondo = manager.get("musicaMenu.mp3");
-                musicaFondo.stop();
-                Music musicaFondoJuego=manager.get("SpaceSong.mp3");
-                musicaFondoJuego.setLooping(true);
-                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondoJuego.play();
+
 
                 int num=MathUtils.random(0,3);
                 if (num==1)
@@ -121,16 +125,11 @@ public class PantallaNivel extends Pantalla {
         btnNivel2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
-                    efectoBoton.play();
-
-                Music musicaFondo = manager.get("musicaMenu.mp3");
                 musicaFondo.stop();
-                Music musicaFondoJuego=manager.get("SpaceSong.mp3");
-                musicaFondoJuego.setLooping(true);
-                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondoJuego.play();
-
-
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                    efectoBoton.play();
+                    musicaFondoJuego.play();
+                }
 
                 madMom.nivel=Dificultades.DIFICIL;
 

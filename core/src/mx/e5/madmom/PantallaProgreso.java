@@ -52,6 +52,8 @@ public class PantallaProgreso extends Pantalla {
 
     //Efectos
     private Sound efectoBoton;
+    Music musicaFondoJuego;
+    Music musicaFondo;
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
@@ -76,6 +78,8 @@ public class PantallaProgreso extends Pantalla {
         texturaBtnPausa = manager.get("btnPausa.png", Texture.class);
         texturaVida = manager.get("caraVida.png", Texture.class);
         efectoBoton=manager.get("boton.mp3");
+        musicaFondoJuego = manager.get("SpaceSong.mp3");
+        musicaFondo=manager.get("musicaMenu.mp3");
     }
 
     private void crearObjetos() {
@@ -236,14 +240,11 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
-                        efectoBoton.play();
-
-                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
                     musicaFondoJuego.stop();
-                    Music musicaFondo=manager.get("musicaMenu.mp3");
                     musicaFondo.setLooping(true);
-                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
+                        efectoBoton.play();
+                        musicaFondo.play();}
 
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
@@ -288,7 +289,6 @@ public class PantallaProgreso extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     efectoBoton.play();
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -301,7 +301,6 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
@@ -328,8 +327,11 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    musicaFondoJuego.stop();
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
                         efectoBoton.play();
+                        musicaFondo.play();}
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU,  Pantallas.TipoPantalla.MENU));
                 }
@@ -347,7 +349,14 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+
                         efectoBoton.play();
+
+
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
                     madMom.tiempoJuego=10;
@@ -448,8 +457,11 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY))
+                    musicaFondoJuego.stop();
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)){
                         efectoBoton.play();
+                        musicaFondo.play();};
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
