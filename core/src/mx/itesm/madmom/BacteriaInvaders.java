@@ -385,7 +385,6 @@ public class BacteriaInvaders extends Pantalla
             //no dejar visible en la pantalla
             btnSonidoOn.setVisible(false);
 
-
             //Botón sonido OFF
             Texture texturaBtnSonidoOFF= manager.get("cuadroVacio.png");
             final TextureRegionDrawable trdBtnSonidoOff = new TextureRegionDrawable(new TextureRegion(texturaBtnSonidoOFF));
@@ -430,6 +429,8 @@ public class BacteriaInvaders extends Pantalla
                     btnSonidoOn.setVisible(true);
                     btnSonidoOn.setDisabled(false);
                 }});
+
+
         }
     }
 }
