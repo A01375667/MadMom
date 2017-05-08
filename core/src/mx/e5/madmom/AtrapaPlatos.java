@@ -80,9 +80,26 @@ public class AtrapaPlatos extends Pantalla {
 
 
 
+
+
     public AtrapaPlatos(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
+        switch (madMom.nivel){
+            case FACIL:
+                tiempoMin=2.0f;
+                tiempoMax=3.0f;
+                maxPlatos=5;
+                maxBasura=5;
+                break;
+            case DIFICIL:
+                tiempoMin=1.5f;
+                tiempoMax=2.5f;
+                maxPlatos=6;
+                maxBasura=6;
+                break;
+
+        }
     }
 
     @Override
@@ -231,13 +248,12 @@ public class AtrapaPlatos extends Pantalla {
         }
         for (objetoAtrapa basura: arrBasura){
             basura.actualizar();
-            //if (basura.colisiona(platos1)) platos1.setCountPlatos(false);
+
         }
 
 
         for (objetoAtrapa plato : arrPlatos) {
             plato.actualizar();
-            //if (plato.colisiona(platos1)) platos1.setCountPlatos(true);
         }
 
 

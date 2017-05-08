@@ -33,6 +33,7 @@ public class objetoAtrapa extends Objeto {
         else direccion=HORIZONTAL.IZQUIERDA;
         this.tipo=tipo;
 
+
     }
 
 

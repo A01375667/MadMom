@@ -86,6 +86,8 @@ public class PantallaNivel extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
+                madMom.nivel=Dificultades.FACIL;
+
                 int num=MathUtils.random(0,3);
                 if (num==1)
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
@@ -105,7 +107,15 @@ public class PantallaNivel extends Pantalla {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
-                //madMom.setScreen(new PantallaMenu(madMom));
+                madMom.nivel=Dificultades.DIFICIL;
+
+                int num=MathUtils.random(0,3);
+                if (num==1)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                else if (num==2)
+                    madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+
             }
         });
 
@@ -135,8 +145,8 @@ public class PantallaNivel extends Pantalla {
         borrarPantalla();
         escenaNivel.draw();
         batch.begin();
-        textoNivel1.mostrarMensaje(batch, "Parque",4*ANCHO/16, 7*ALTO/32 );
-        textoNivel2.mostrarMensaje(batch, "Disco",12*ANCHO/16, 7*ALTO/32);
+        textoNivel1.mostrarMensaje(batch, "Modo Historia",4*ANCHO/16, 7*ALTO/32 );
+        textoNivel2.mostrarMensaje(batch, "Modo Arcade",12*ANCHO/16, 7*ALTO/32);
         textoNivel.mostrarMensaje(batch,"DIFICULTAD",ANCHO/2,8*ALTO/9);
         batch.end();
 
