@@ -14,7 +14,7 @@ import static mx.e5.madmom.Pantalla.ANCHO;
 
 public class Platos extends Objeto {
     TextureRegion[][] texturaPlatos;
-    int max_platos=5;
+    int max_platos=9;
 
     //Max platos 4
     private int countPlatos=1;

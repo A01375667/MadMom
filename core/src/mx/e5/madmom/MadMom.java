@@ -17,6 +17,8 @@ public class MadMom extends Game
 	public int puntosJugador = 0;
 	public EstadoMusica estadoMusica = EstadoMusica.PLAY;
 	public Dificultades nivel;
+    public float tiempoJuego=10;
+    public int countJuegos=0;
 
 	public MadMom() {
 		assetManager = new AssetManager();

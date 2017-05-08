@@ -3,6 +3,7 @@ package mx.e5.madmom;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -88,6 +89,11 @@ public class PantallaNivel extends Pantalla {
             public void clicked(InputEvent event, float x, float y) {
 
                 madMom.nivel=Dificultades.FACIL;
+                Music musicaFondo = manager.get("musicaMenu.mp3");
+                musicaFondo.stop();
+                Music musicaFondoJuego=manager.get("SpaceSong.mp3");
+                musicaFondoJuego.setLooping(true);
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondoJuego.play();
 
                 int num=MathUtils.random(0,3);
                 if (num==1)
@@ -95,6 +101,7 @@ public class PantallaNivel extends Pantalla {
                 else if (num==2)
                     madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
                 else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+
             }
         });
 
@@ -107,6 +114,14 @@ public class PantallaNivel extends Pantalla {
         btnNivel2.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
+                Music musicaFondo = manager.get("musicaMenu.mp3");
+                musicaFondo.stop();
+                Music musicaFondoJuego=manager.get("SpaceSong.mp3");
+                musicaFondoJuego.setLooping(true);
+                if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondoJuego.play();
+
+
 
                 madMom.nivel=Dificultades.DIFICIL;
 
@@ -129,6 +144,7 @@ public class PantallaNivel extends Pantalla {
         btnBack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.MENU, Pantallas.TipoPantalla.MENU));
 
             }
@@ -148,7 +164,7 @@ public class PantallaNivel extends Pantalla {
         batch.begin();
         textoNivel1.mostrarMensaje(batch, "Modo Historia",4*ANCHO/16, 7*ALTO/32 );
         textoNivel2.mostrarMensaje(batch, "Modo Arcade",12*ANCHO/16, 7*ALTO/32);
-        textoNivel.mostrarMensaje(batch,"DIFICULTAD",ANCHO/2,8*ALTO/9);
+        textoNivel.mostrarMensaje(batch,"Modalidad",ANCHO/2,8*ALTO/9);
         batch.end();
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {

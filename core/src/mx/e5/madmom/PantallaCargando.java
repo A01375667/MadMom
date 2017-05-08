@@ -31,10 +31,6 @@ public class PantallaCargando extends Pantalla
 
     private Texture texturaCargando;
 
-    private boolean juegos;
-    private boolean progreso;
-
-
     public PantallaCargando(MadMom madMom, Pantallas siguientePantalla, Pantallas.TipoPantalla tipo) {
         this.madMom = madMom;
         this.siguientePantalla = siguientePantalla;
@@ -137,6 +133,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnPlay1.png", Texture.class);
         manager.load("btnAjustes.png", Texture.class);
         manager.load("musicaMenu.mp3", Music.class);
+        manager.load("boton.mp3", Sound.class);
     }
 
     private void cargarRecursosMataCucarachas() {
@@ -151,6 +148,7 @@ public class PantallaCargando extends Pantalla
         manager.load("cuadroPaloma.png", Texture.class);
 
 
+
     }
 
     private void cargarRecursosNivel() {
@@ -158,6 +156,7 @@ public class PantallaCargando extends Pantalla
         manager.load("btnNIVELparque.png", Texture.class);
         manager.load("btnNIVELdisco.png", Texture.class);
         manager.load("btnBack.png", Texture.class);
+        manager.load("SpaceSong.mp3", Music.class);
 
     }
 
@@ -180,14 +179,17 @@ public class PantallaCargando extends Pantalla
         manager.load("fondoAjustes.jpg", Texture.class);
         manager.load("btnPausa.png", Texture.class);
         manager.load("caraVida.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
+        manager.load("btnMENUU.png", Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
+
     }
 
     @Override
     public void render(float delta) {
        //borrarPantalla(1,1,1,1);
-
-        juegos= siguientePantalla.equals(Pantallas.INVADERS)||siguientePantalla.equals(Pantallas.ATRAPAPLATOS)||siguientePantalla.equals(Pantallas.MATACUCARACHAS);
-        progreso=siguientePantalla.equals(Pantallas.PROGRESO);
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();

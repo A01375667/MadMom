@@ -53,13 +53,13 @@ public class AtrapaPlatos extends Pantalla {
 
     private float posx;
     private int tipObjeto;
-    private float tiempoMax=3.0f;
-    private float tiempoMin=2.0f;
+    private float tiempoMax;
+    private float tiempoMin;
 
     //tiempo de espera entre objetos
     private float tiempoEsperaB;
-    private int maxBasura=5;
-    private int maxPlatos=5;
+    private int maxBasura;
+    private int maxPlatos;
 
     //Escenas
     private Stage escenaAtrapaPlatos;
@@ -73,7 +73,7 @@ public class AtrapaPlatos extends Pantalla {
     private float tiempoVisibleInstrucciones = 2.0f;
 
     // Tiempo del minijuego
-    private float tiempoMiniJuego = 10;
+    private float tiempoMiniJuego;
 
     // Textos
     private Texto textoInstruccion;
@@ -86,6 +86,8 @@ public class AtrapaPlatos extends Pantalla {
     public AtrapaPlatos(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
+        this.tiempoMiniJuego=madMom.tiempoJuego;
+
         switch (madMom.nivel){
             case FACIL:
                 tiempoMin=2.0f;
@@ -94,10 +96,14 @@ public class AtrapaPlatos extends Pantalla {
                 maxBasura=5;
                 break;
             case DIFICIL:
-                tiempoMin=1.5f;
+                tiempoMin=0.5f;
                 tiempoMax=2.5f;
-                maxPlatos=6;
-                maxBasura=6;
+                maxPlatos=(int)tiempoMiniJuego-1;
+                maxBasura=(int)tiempoMiniJuego+1;
+                if (madMom.countJuegos==4) {
+                    madMom.tiempoJuego-= madMom.tiempoJuego>5?1:0;
+                    madMom.countJuegos=0;
+                }
                 break;
 
         }
@@ -123,8 +129,6 @@ public class AtrapaPlatos extends Pantalla {
         platos1= new Platos(texturaPlatos, ANCHO/2, 100);
         arrBasura = new Array <objetoAtrapa> ();
         arrPlatos= new Array <objetoAtrapa> ();
-
-
 
         // Botón pausa
         btnPausa = new Objeto(texturaBtnPausa, ANCHO - 6*texturaBtnPausa.getWidth()/4, 18*texturaBtnPausa.getHeight()/4);
@@ -170,7 +174,7 @@ public class AtrapaPlatos extends Pantalla {
 
             tiempoVisibleInstrucciones -= delta;
             if (tiempoVisibleInstrucciones > 0) {
-                textoInstruccion.mostrarMensaje(batch, "PARA LA INVASIÓN", ANCHO / 2, 3 * ALTO / 4);
+                textoInstruccion.mostrarMensaje(batch, "¡No atrapes la basura!", ANCHO / 2, 3 * ALTO / 4);
             }
 
             if(tiempoMiniJuego <= 0){
@@ -178,7 +182,7 @@ public class AtrapaPlatos extends Pantalla {
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.MENU));
             }
 
-            else if (platos1.getCountPlatos()>=maxPlatos-1){
+            else if (platos1.getCountPlatos()>=maxPlatos-2){
                 madMom.puntosJugador+=175;
                 madMom.setScreen(new PantallaCargando(madMom, Pantallas.PROGRESO, Pantallas.TipoPantalla.MENU));
 
@@ -437,6 +441,11 @@ public class AtrapaPlatos extends Pantalla {
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
@@ -479,7 +488,7 @@ public class AtrapaPlatos extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -492,8 +501,9 @@ public class AtrapaPlatos extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
-                    musicaFondo.play();
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.play();
+
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
                     btnSonidoOn.setDisabled(false);

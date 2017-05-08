@@ -36,7 +36,7 @@ public class BacteriaInvaders extends Pantalla
     // Enemigos
     private Texture texturaBacteria;
     private Array<Bacteria> arrBacterias;
-    private int numBacterias = 3;
+    private int numBacterias;
     private int bacteriasAtrapadas = 0;
 
     // Burbujas para lanzar
@@ -48,7 +48,7 @@ public class BacteriaInvaders extends Pantalla
     // Tiempo visible de instrucciones
     private float tiempoVisibleInstrucciones = 2.0f;
     // Tiempo del minijuego
-    private float tiempoMiniJuego = 10;
+    private float tiempoMiniJuego;
     // Tiempo de recarga para disparar
     private float tiempoCarga = 0;
 
@@ -77,6 +77,21 @@ public class BacteriaInvaders extends Pantalla
         //super();
         this.madMom = madMom;
         manager = madMom.getAssetManager();
+        this.tiempoMiniJuego=madMom.tiempoJuego;
+        switch (madMom.nivel){
+            case FACIL:
+                numBacterias=4;
+                break;
+            case DIFICIL:
+                numBacterias=6;
+                if (madMom.countJuegos==4) {
+                    madMom.tiempoJuego-= madMom.tiempoJuego>5?1:0;;
+                    madMom.countJuegos=0;
+
+                }
+
+                break;
+        }
     }
 
 
@@ -238,6 +253,7 @@ public class BacteriaInvaders extends Pantalla
         manager.unload("btnPausa.png");
         manager.unload("bacteriaEncerrada.png");
 
+
     }
 
 
@@ -347,6 +363,11 @@ public class BacteriaInvaders extends Pantalla
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
@@ -389,7 +410,7 @@ public class BacteriaInvaders extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -402,7 +423,7 @@ public class BacteriaInvaders extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);

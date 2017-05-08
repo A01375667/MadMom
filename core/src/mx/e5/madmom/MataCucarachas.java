@@ -80,6 +80,19 @@ public class MataCucarachas extends Pantalla
     public MataCucarachas(MadMom madMom) {
         this.madMom = madMom;
         this.manager = madMom.getAssetManager();
+        switch (madMom.nivel){
+            case FACIL:
+                Num_Cucarachas=8;
+                break;
+            case DIFICIL:
+                Num_Cucarachas=13;
+                if (madMom.countJuegos==4) {
+                    madMom.tiempoJuego-= madMom.tiempoJuego>5?1:0;;
+                    madMom.countJuegos=0;
+
+                }
+                break;
+        }
     }
 
     @Override
@@ -317,6 +330,11 @@ public class MataCucarachas extends Pantalla
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
@@ -359,7 +377,7 @@ public class MataCucarachas extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -372,7 +390,7 @@ public class MataCucarachas extends Pantalla
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);

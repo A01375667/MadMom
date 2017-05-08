@@ -104,22 +104,38 @@ public class PantallaProgreso extends Pantalla {
         textoPuntos.mostrarMensaje(batch, "PUNTUACION:", ANCHO / 2, 6 * ALTO / 7);
         textoPuntos.mostrarMensaje(batch, Integer.toString(madMom.puntosJugador), ANCHO / 2, 5 * ALTO / 7);
         dibujarVidas();
-        tiempoPantalla -= delta;
 
+        if (estado==EstadoJuego.JUGANDO)
+            tiempoPantalla -= delta;
         batch.end();
+
+        if (tiempoPantalla <= 0){
+            if (num==1)
+            {
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;
+            }
+            else if (num==2){
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;
+            }
+            else{
+                madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;}
+        }
 
         if (estado == EstadoJuego.PAUSADO) {
             escenaPausa.draw();
-        } else if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
-
-        else if (estado == EstadoJuego.GANADO&&madMom.nivel.equals(Dificultades.FACIL)) escenaGana.draw();
-        else if (tiempoPantalla <= 0){
-            if (num==1)
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.MATACUCARACHAS, Pantallas.TipoPantalla.JUEGO));
-            else if (num==2)
-            madMom.setScreen(new PantallaCargando(madMom, Pantallas.INVADERS,  Pantallas.TipoPantalla.JUEGO));
-            else madMom.setScreen(new PantallaCargando(madMom,Pantallas.ATRAPAPLATOS,  Pantallas.TipoPantalla.JUEGO));
         }
+
+        if (estado == EstadoJuego.PIERDE) escenaPierde.draw();
+
+        if (estado == EstadoJuego.GANADO) escenaGana.draw();
+
+
+
+
+
 
     }
 
@@ -141,7 +157,7 @@ public class PantallaProgreso extends Pantalla {
             Gdx.input.setInputProcessor(escenaPierde);
         }
 
-        if (madMom.puntosJugador >= 1100) {
+        if (madMom.nivel.equals(Dificultades.FACIL)&&madMom.puntosJugador >= 1100) {
             estado = EstadoJuego.GANADO;
             if (escenaGana == null) {
                 escenaGana = new EscenaGana(vista, batch);
@@ -213,6 +229,12 @@ public class PantallaProgreso extends Pantalla {
             btnMenu.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Music musicaFondoJuego = manager.get("SpaceSong.mp3");
+                    musicaFondoJuego.stop();
+                    Music musicaFondo=manager.get("musicaMenu.mp3");
+                    musicaFondo.setLooping(true);
+                    if (madMom.estadoMusica.equals(EstadoMusica.PLAY)) musicaFondo.play();
+
                     // Regresa al menú
                     madMom.setScreen(new PantallaCargando(madMom,Pantallas.MENU, Pantallas.TipoPantalla.MENU));
                 }
@@ -255,7 +277,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.STOP;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
@@ -268,7 +290,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = EstadoMusica.PLAY;
-                    Music musicaFondo = manager.get("musicaMenu.mp3");
+                    Music musicaFondo = manager.get("SpaceSong.mp3");
                     musicaFondo.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
@@ -313,6 +335,8 @@ public class PantallaProgreso extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     // Reintentar el juego
                     estado = EstadoJuego.JUGANDO;
+                    madMom.tiempoJuego=10;
+
                     madMom.vidasJugador = 3;
                     madMom.puntosJugador = 0;
                     if (num==1)
