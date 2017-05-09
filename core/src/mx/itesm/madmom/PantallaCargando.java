@@ -93,6 +93,8 @@ public class PantallaCargando extends Pantalla
         manager.load("His4.jpg", Texture.class);
         manager.load("His5.jpg", Texture.class);
         manager.load("His6.jpg", Texture.class);
+        manager.load("His7.jpg", Texture.class);
+        manager.load("His8.jpg", Texture.class);
     }
 
     private void cargarRecursosAtrapaPlatos() {

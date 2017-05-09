@@ -26,6 +26,8 @@ public class PantallaHistoria extends Pantalla
     private Texture texturaFondo4;
     private Texture texturaFondo5;
     private Texture texturaFondo6;
+    private Texture texturaFondo7;
+    private Texture texturaFondo8;
 
     // Procesador
     private final ProcesadorEntrada procesadorEntrada = new ProcesadorEntrada();
@@ -43,6 +45,8 @@ public class PantallaHistoria extends Pantalla
         texturaFondo4 = manager.get("His4.jpg");
         texturaFondo5 = manager.get("His5.jpg");
         texturaFondo6 = manager.get("His6.jpg");
+        texturaFondo7 = manager.get("His7.jpg");
+        texturaFondo8 = manager.get("His8.jpg");
         fondo = new mx.itesm.madmom.Fondo(texturaFondo1);
 
         Gdx.input.setCatchBackKey(true);
@@ -79,6 +83,8 @@ public class PantallaHistoria extends Pantalla
         manager.unload("His4.jpg");
         manager.unload("His5.jpg");
         manager.unload("His6.jpg");
+        manager.unload("His7.jpg");
+        manager.unload("His8.jpg");
     }
 
     // Procesar entrada
@@ -113,6 +119,14 @@ public class PantallaHistoria extends Pantalla
                     fondo.textura = texturaFondo6;
                     break;
                 case 6:
+                    cont++;
+                    fondo.textura = texturaFondo7;
+                    break;
+                case 7:
+                    cont++;
+                    fondo.textura = texturaFondo8;
+                    break;
+                case 8:
                     int num= MathUtils.random(0,3);
                     if (num==1)
                         madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom,
