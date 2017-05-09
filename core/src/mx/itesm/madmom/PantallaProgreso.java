@@ -57,7 +57,7 @@ public class PantallaProgreso extends Pantalla {
 
     // Procesador de eventos
     private final Procesador procesadorEntrada = new Procesador();
-    float num =  MathUtils.random(0, 3);
+    int num =  MathUtils.random(0, 4);
 
     public PantallaProgreso(mx.itesm.madmom.MadMom madMom) {
         this.madMom = madMom;
@@ -118,19 +118,24 @@ public class PantallaProgreso extends Pantalla {
             tiempoPantalla -= delta;
         batch.end();
 
-        if (tiempoPantalla <= 0){
-            if (num<=1)
+        if (tiempoPantalla <= 0) {
+            if (num==1)
             {
                 madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.MATACUCARACHAS, mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
                 madMom.countJuegos++;
             }
-            else if (num>1 && num <=2){
+            else if (num==2 ){
                 madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.INVADERS,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
                 madMom.countJuegos++;
             }
-            else{
+            else if (num==3){
                 madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.ATRAPAPLATOS,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
                 madMom.countJuegos++;}
+            else {
+                madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, Pantallas.BUSCARANILLO,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
+                madMom.countJuegos++;
+
+            }
         }
 
         if (estado == mx.itesm.madmom.EstadoJuego.PAUSADO) {

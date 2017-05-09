@@ -14,6 +14,7 @@ public enum Pantallas {
     MATACUCARACHAS,
     INVADERS,
     ATRAPAPLATOS,
+    BUSCARANILLO,
     HISTORIA,
     PROGRESO;
 

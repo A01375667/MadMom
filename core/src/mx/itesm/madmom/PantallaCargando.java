@@ -78,12 +78,25 @@ public class PantallaCargando extends Pantalla
             case ATRAPAPLATOS:
                 cargarRecursosAtrapaPlatos();
                 break;
+            case BUSCARANILLO:
+                cargarRecursosBuscarAnillo();
+                break;
             case PROGRESO:
                 cargarRecursosProgreso();
                 break;
             case HISTORIA:
                 cargarRecursosHistoria();
         }
+    }
+
+    private void cargarRecursosBuscarAnillo() {
+        manager.load("fondoEcontrarAnillo.jpg", Texture.class);
+        manager.load("anilloEnc.png", Texture.class);
+        manager.load("fondoPausa.png", Texture.class);
+        manager.load("btnMusica.png", Texture.class);
+        manager.load("btnMENUU.png", Texture.class);
+        manager.load("cuadroVacio.png", Texture.class);
+        manager.load("cuadroPaloma.png", Texture.class);
     }
 
     private void cargarRecursosHistoria() {
@@ -248,6 +261,9 @@ public class PantallaCargando extends Pantalla
                     break;
                 case INVADERS:
                     madMom.setScreen(new BacteriaInvaders(madMom));
+                    break;
+                case BUSCARANILLO:
+                    madMom.setScreen(new BuscaAnillo(madMom));
                     break;
                 case PROGRESO:
                     madMom.setScreen(new PantallaProgreso(madMom));
