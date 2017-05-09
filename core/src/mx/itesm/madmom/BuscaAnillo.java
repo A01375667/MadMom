@@ -137,7 +137,7 @@ public class BuscaAnillo extends Pantalla {
             tiempoVisibleInstrucciones -= delta;
             if(tiempoVisibleInstrucciones > 0){
                 textoInstruccion.mostrarMensaje(batch, "BUSCA EL ANILLO", ANCHO/2, 3*ALTO/4);
-                textoTiempo.mostrarMensaje(batch, "(Tap en el anillo)", ANCHO/2, ALTO/2);
+                //textoTiempo.mostrarMensaje(batch, "(Tap en el anillo)", ANCHO/2, ALTO/2 + 100);
             }
             if(tiempoMiniJuego <= 0){
                 madMom.vidasJugador--;
