@@ -285,7 +285,7 @@ public class PantallaProgreso extends Pantalla {
                 public void clicked(InputEvent event, float x, float y) {
                     efectoBoton.play();
                     madMom.estadoMusica = mx.itesm.madmom.EstadoMusica.STOP;
-                    musicaFondo.stop();
+                    musicaFondoJuego.stop();
                     btnSonidoOn.setVisible(false);
                     btnSonidoOff.setVisible(true);
                     btnSonidoOff.setDisabled(false);
@@ -297,7 +297,7 @@ public class PantallaProgreso extends Pantalla {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     madMom.estadoMusica = mx.itesm.madmom.EstadoMusica.PLAY;
-                    musicaFondo.play();
+                    musicaFondoJuego.play();
                     btnSonidoOff.setVisible(false);
                     btnSonidoOn.setVisible(true);
                     btnSonidoOn.setDisabled(false);

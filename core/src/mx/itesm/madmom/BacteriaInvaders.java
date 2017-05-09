@@ -169,8 +169,8 @@ public class BacteriaInvaders extends Pantalla
         }
 
         tiempoMiniJuego -= delta;
-        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 8*ANCHO/10, 5*ALTO/32);
-        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 10*ANCHO/11, 5*ALTO/32);
+        textoTiempo.mostrarMensaje(batch, "TIEMPO: ",140, 13*ALTO/14);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego),  255,13*ALTO/14);
 
         tiempoVisibleInstrucciones -= delta;
         if(tiempoVisibleInstrucciones > 0){
