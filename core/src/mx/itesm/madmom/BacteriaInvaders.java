@@ -254,8 +254,6 @@ public class BacteriaInvaders extends Pantalla
         manager.unload("burbuja.png");
         manager.unload("btnPausa.png");
         manager.unload("bacteriaEncerrada.png");
-
-
     }
 
 

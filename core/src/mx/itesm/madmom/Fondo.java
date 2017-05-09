@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Fondo
 {
-    private Texture textura;
+    public Texture textura;
     private float x;
     private final float velocidad = 100;    // pixeles/seg.
 
