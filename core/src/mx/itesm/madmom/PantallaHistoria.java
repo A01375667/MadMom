@@ -60,9 +60,6 @@ public class PantallaHistoria extends Pantalla
         batch.begin();
         fondo.dibujar(batch, 0);
         batch.end();
-        if (Gdx.input.isKeyJustPressed(Input.Keys.BACK)) {
-            madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.MENU, mx.itesm.madmom.Pantallas.TipoPantalla.MENU));
-        }
     }
 
     @Override
