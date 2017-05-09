@@ -168,8 +168,8 @@ public class AtrapaPlatos extends Pantalla {
 
 
             tiempoMiniJuego -= delta;
-            textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 140, 13*ALTO/14);
-            textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 255,13*ALTO/14);
+            textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 150, 19*ALTO/20);
+            textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 265,19*ALTO/20);
 
             tiempoVisibleInstrucciones -= delta;
             if (tiempoVisibleInstrucciones > 0) {

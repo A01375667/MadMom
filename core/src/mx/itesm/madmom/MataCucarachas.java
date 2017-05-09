@@ -157,8 +157,8 @@ public class MataCucarachas extends Pantalla
         dibujarObjetos(arrCucarachas);
 
         tiempoMiniJuego -= delta;
-        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 140, 13*ALTO/14);
-        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego),  255,13*ALTO/14);
+        textoTiempo.mostrarMensaje(batch, "TIEMPO: ", 180, 18*ALTO/20 + 10);
+        textoTiempo.mostrarMensaje(batch, String.format("%.0f", tiempoMiniJuego), 295, 18*ALTO/20 + 10);
 
         tiempoVisibleInstrucciones -= delta;
         if(tiempoVisibleInstrucciones > 0){
@@ -167,7 +167,8 @@ public class MataCucarachas extends Pantalla
         }
         if(tiempoMiniJuego <= 0){
             madMom.vidasJugador--;
-            madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.PROGRESO, mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
+            madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom,
+                    mx.itesm.madmom.Pantallas.PROGRESO, mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
         }
 
 
