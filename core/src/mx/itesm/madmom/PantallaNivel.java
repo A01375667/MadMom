@@ -105,14 +105,7 @@ public class PantallaNivel extends Pantalla {
 
                 madMom.nivel= mx.itesm.madmom.Dificultades.FACIL;
 
-
-                int num=MathUtils.random(0,3);
-                if (num==1)
-                    madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.MATACUCARACHAS, mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
-                else if (num==2)
-                    madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.INVADERS,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
-                else madMom.setScreen(new mx.itesm.madmom.PantallaCargando(madMom, mx.itesm.madmom.Pantallas.ATRAPAPLATOS,  mx.itesm.madmom.Pantallas.TipoPantalla.JUEGO));
-
+                madMom.setScreen(new PantallaCargando(madMom, Pantallas.HISTORIA, Pantallas.TipoPantalla.MENU));
             }
         });
 

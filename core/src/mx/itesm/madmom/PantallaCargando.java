@@ -81,7 +81,18 @@ public class PantallaCargando extends Pantalla
             case PROGRESO:
                 cargarRecursosProgreso();
                 break;
+            case HISTORIA:
+                cargarRecursosHistoria();
         }
+    }
+
+    private void cargarRecursosHistoria() {
+        manager.load("His1.jpg", Texture.class);
+        manager.load("His2.jpg", Texture.class);
+        manager.load("His3.jpg", Texture.class);
+        manager.load("His4.jpg", Texture.class);
+        manager.load("His5.jpg", Texture.class);
+        manager.load("His6.jpg", Texture.class);
     }
 
     private void cargarRecursosAtrapaPlatos() {
@@ -203,8 +214,6 @@ public class PantallaCargando extends Pantalla
         if (timerAnimacion<=0) {
             timerAnimacion = TIEMPO_ENTRE_FRAMES;
             spriteCargando.rotate(20);
-
-
         }
 
         // Actualizar carga
@@ -244,6 +253,8 @@ public class PantallaCargando extends Pantalla
                 case ATRAPAPLATOS:
                     madMom.setScreen(new mx.itesm.madmom.AtrapaPlatos(madMom));
                     break;
+                case HISTORIA:
+                    madMom.setScreen(new mx.itesm.madmom.PantallaHistoria(madMom));
             }
         }
         avance = (int)(manager.getProgress()*100);
